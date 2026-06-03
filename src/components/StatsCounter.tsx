@@ -72,18 +72,18 @@ const StatCard: React.FC<StatItemProps> = ({ icon, target, prefix = "", suffix, 
   return (
     <div
       ref={cardRef}
-      className="relative flex flex-col items-start p-8 bg-slate-50 border border-slate-100 rounded-2xl hover:border-primary/30 hover:shadow-lg transition-all duration-300 group overflow-hidden"
+      className="relative flex flex-col items-start p-5 sm:p-8 bg-white border border-gray-300 rounded-2xl hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group overflow-hidden w-full"
     >
       {/* Icon with glowing brand background */}
-      <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 shadow-sm shrink-0">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 shadow-sm shrink-0 border border-primary/5">
         {icon}
       </div>
 
-      <div className="flex flex-col items-start mt-6">
-        <span className="text-xl md:text-2xl font-extrabold text-gray-900 leading-tight tracking-tight select-none">
+      <div className="flex flex-col items-start mt-4 sm:mt-6">
+        <span className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 leading-tight tracking-tight select-none">
           {prefix}{formatNumber(count)}{suffix}
         </span>
-        <span className="text-sm font-semibold text-gray-500 mt-2">
+        <span className="text-xs sm:text-sm font-semibold text-slate-505 text-slate-500 mt-1.5 sm:mt-2">
           {label}
         </span>
       </div>
@@ -93,17 +93,17 @@ const StatCard: React.FC<StatItemProps> = ({ icon, target, prefix = "", suffix, 
 
 export default function StatsCounter() {
   return (
-    <section className="relative py-16 bg-white border-y border-gray-100 overflow-hidden">
+    <section className="relative py-16 bg-white border-y border-slate-100 overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
 
         {/* Title matches screenshot */}
-        <h2 className="text-3xl md:text-5xl font-extrabold text-dark text-center mb-12 tracking-tight">
+        <h2 className="text-3xl md:text-5xl font-extrabold text-dark text-center mb-10 tracking-tight leading-tight">
           Powering Homes Across India
         </h2>
 
         {/* 4 Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <StatCard
             icon={<Home size={22} />}
             target={40000}
@@ -134,19 +134,24 @@ export default function StatsCounter() {
         </div>
 
         {/* Bottom Banner */}
-        <div className="bg-slate-50/50 border border-slate-100 rounded-3xl p-6 flex flex-col md:flex-row justify-between items-center gap-6 mt-8 w-full shadow-sm hover:shadow-md transition-shadow duration-300">
-          <div className="flex items-center gap-4">
-            <div className="relative w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center shrink-0">
-              <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping scale-75 opacity-75" />
-              <Map size={24} className="relative z-10" />
+        <div className="bg-gradient-to-r from-slate-50 to-emerald-50/20 border border-gray-300 rounded-xl p-6 md:p-8 flex flex-col lg:flex-row justify-between items-center gap-6 mt-10 w-full shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-4 text-center sm:text-left">
+            <div className="relative w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-primary/10">
+              {/* <div className="absolute inset-0 bg-primary/20 rounded-2xl animate-ping scale-75 opacity-75" /> */}
+              <Map size={26} className="relative z-10" />
             </div>
-            <p className="text-base font-semibold text-gray-800">
-              We are present in 29 Cities across 9 States, and are growing every day.
-            </p>
+            <div>
+              <p className="text-base md:text-lg font-bold text-slate-800 leading-tight">
+                Rapidly expanding across major cities
+              </p>
+              <p className="text-sm text-slate-505 text-slate-500 mt-1 font-medium leading-relaxed">
+                We are actively solarizing 29+ cities across 9 states, scaling our operations daily to build a greener India.
+              </p>
+            </div>
           </div>
           <a
             href="/contact"
-            className="w-full md:w-auto text-center bg-primary hover:bg-primary-hover text-white font-bold py-3.5 px-8 rounded-lg transition-all duration-300 shadow-lg shadow-primary/15 hover:shadow-primary/25 shrink-0"
+            className="w-full lg:w-auto text-center bg-primary hover:bg-primary-hover text-white font-extrabold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg shadow-primary/15 hover:shadow-primary/25 hover:scale-[1.01] active:scale-95 shrink-0 text-sm tracking-wide cursor-pointer"
           >
             Unlock Your Solar Savings
           </a>

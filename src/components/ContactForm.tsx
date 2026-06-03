@@ -235,7 +235,7 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
               </p>
             </div>
 
-            {/* Next Steps Timeline */}
+            {/* Next Steps Timeline
             <div className="bg-white border border-slate-100 rounded-2xl p-6 mb-8 shadow-sm">
               <h5 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-left mb-6 flex items-center gap-1.5">
                 <Info size={14} className="text-primary" />
@@ -243,7 +243,6 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
               </h5>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left relative">
-                {/* Step 1 */}
                 <div className="flex gap-4 md:flex-col md:gap-3">
                   <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-md shadow-emerald-500/20">
                     ✓
@@ -256,7 +255,6 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
                   </div>
                 </div>
 
-                {/* Step 2 */}
                 <div className="flex gap-4 md:flex-col md:gap-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 text-primary border border-primary/30 flex items-center justify-center text-xs font-bold shrink-0 animate-pulse">
                     2
@@ -269,7 +267,6 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
                   </div>
                 </div>
 
-                {/* Step 3 */}
                 <div className="flex gap-4 md:flex-col md:gap-3">
                   <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-400 border border-slate-200 flex items-center justify-center text-xs font-bold shrink-0">
                     3
@@ -284,7 +281,6 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
               </div>
             </div>
 
-            {/* Quick Links Section */}
             <div className="text-left mb-8">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-4">
                 Explore Respective Pages while you wait:
@@ -350,7 +346,7 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
                   <ArrowUpRight size={16} className="text-slate-400 group-hover:text-primary transition-colors" />
                 </Link>
               </div>
-            </div>
+            </div> */}
 
             {/* Direct Contacts Footer */}
             <div className="border-t border-slate-100 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-500">
@@ -385,10 +381,30 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
             {activeTab === "residential" && (
               <div className="mb-6 flex flex-col gap-1.5">
                 <h3 className="text-xl md:text-2xl font-black text-gray-900">
-                  Submit
+                  Book a Free Consultation
                 </h3>
                 <p className="text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
                   Get genuine advice from our solar experts. No pressure, book only if you are satisfied!
+                </p>
+              </div>
+            )}
+            {activeTab === "society" && (
+              <div className="mb-6 flex flex-col gap-1.5">
+                <h3 className="text-xl md:text-2xl font-black text-gray-900">
+                  Housing Society Solar
+                </h3>
+                <p className="text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                  Power common utilities, elevators, and streetlights with clean, high-savings solar.
+                </p>
+              </div>
+            )}
+            {activeTab === "commercial" && (
+              <div className="mb-6 flex flex-col gap-1.5">
+                <h3 className="text-xl md:text-2xl font-black text-gray-900">
+                  Commercial Solar Solutions
+                </h3>
+                <p className="text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                  Reduce business operational costs and meet clean energy goals with solar.
                 </p>
               </div>
             )}
@@ -465,14 +481,14 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
 
                 {/* Submit Action */}
                 <div className="relative mt-2">
-                  <span className="bg-[#FEF3C7] text-[#92400E] text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full absolute -top-3.5 right-4 z-10 shadow-sm border border-amber-250">
+                  {/* <span className="bg-[#FEF3C7] text-[#92400E] text-[10px] font-black uppercase tracking-wider py-1 px-3 rounded-full absolute -top-3.5 right-4 z-10 shadow-sm border border-amber-250">
                     Limited slots only!
-                  </span>
+                  </span> */}
                   <button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary-hover text-white font-extrabold py-4 px-6 rounded-xl text-center shadow-lg transition-all hover:scale-[1.01] active:scale-95 text-sm flex items-center justify-center gap-2 group cursor-pointer"
                   >
-                    <span>Book a FREE Consultation</span>
+                    <span>Submit Now</span>
                     <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>

@@ -71,90 +71,13 @@ export default function SolarCalculator() {
         </div>
 
         {/* Main Calculator Card */}
-        <div className="bg-white border border-gray-200/80  overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div className="bg-white border border-gray-300 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0">
 
           {/* Left Panel: Inputs & Graphic (Col 5) */}
-          <div className="lg:col-span-5 p-8 bg-slate-50/50 border-r border-gray-100 flex flex-col justify-between gap-8">
-            <div className="flex flex-col gap-6">
-
-              {/* Pin Code Input */}
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <MapPin size={14} className="text-primary" />
-                  <span>Pin code</span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    maxLength={6}
-                    value={pincode}
-                    onChange={(e) => setPincode(e.target.value.replace(/\D/g, ""))}
-                    placeholder="Enter 6-digit Pincode"
-                    className="w-full bg-white border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl py-3.5 px-4 text-sm font-semibold text-gray-800 transition-all shadow-sm outline-none placeholder:text-gray-400"
-                  />
-                  {isPincodeFilled && (
-                    <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
-                      {isValidLucknow ? (
-                        <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
-                          Lucknow
-                        </span>
-                      ) : (
-                        <span className="bg-red-50 text-red-600 text-[10px] font-bold py-1 px-2 rounded-full border border-red-200">
-                          Non-Lucknow
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </div>
-                {isPincodeFilled && !isValidLucknow && (
-                  <p className="text-[11px] text-amber-600 font-bold leading-relaxed">
-                    ⚠️ Currently serving Lucknow region only (pincodes starting with 226).
-                  </p>
-                )}
-                {!isPincodeFilled && (
-                  <p className="text-[11px] text-gray-400 font-semibold leading-relaxed">
-                    Enter your 6-digit Lucknow pincode to calculate.
-                  </p>
-                )}
-              </div>
-
-              {/* Bill Slider */}
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between items-center">
-                  <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>Avg electricity bill</span>
-                    <div className="group relative">
-                      <HelpCircle size={13} className="text-gray-400 hover:text-primary cursor-pointer transition-colors" />
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-dark text-white text-[10px] p-2.5 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-30 leading-normal font-medium">
-                        Your average monthly domestic electricity bill in Indian Rupees (INR).
-                      </div>
-                    </div>
-                  </label>
-                  <span className="bg-dark text-white text-xs font-black py-1 px-2.5 rounded">
-                    {formatRupee(bill)}
-                  </span>
-                </div>
-
-                <div className="relative mt-2">
-                  <input
-                    type="range"
-                    min={500}
-                    max={10000}
-                    step={100}
-                    value={bill}
-                    onChange={(e) => setBill(Number(e.target.value))}
-                    className="w-full accent-primary h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-2">
-                    <span>Min. ₹500</span>
-                    <span>Max. ₹10,000</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="lg:col-span-5 p-5 sm:p-8 bg-slate-50/50 border-b lg:border-b-0 lg:border-r border-gray-200 flex flex-col justify-between gap-6 sm:gap-8">
 
             {/* Illustration */}
-            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-gray-150 shadow-inner group">
+            <div className="relative aspect-[21/16] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden border border-gray-150 shadow-inner group order-1 lg:order-3">
               <Image
                 src="/assets/images/solar_savings_coins.webp"
                 alt="Solar savings illustration"
@@ -173,10 +96,85 @@ export default function SolarCalculator() {
               </div>
             </div>
 
+            {/* Pin Code Input */}
+            <div className="flex flex-col gap-2 order-2 lg:order-1">
+              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+                <MapPin size={14} className="text-primary" />
+                <span>Pin code</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value.replace(/\D/g, ""))}
+                  placeholder="Enter 6-digit Pincode"
+                  className="w-full bg-white border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary rounded-xl py-3.5 pl-4 pr-28 text-sm font-semibold text-gray-800 transition-all shadow-sm outline-none placeholder:text-gray-400"
+                />
+                {isPincodeFilled && (
+                  <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
+                    {isValidLucknow ? (
+                      <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
+                        Lucknow
+                      </span>
+                    ) : (
+                      <span className="bg-red-50 text-red-600 text-[10px] font-bold py-1 px-2 rounded-full border border-red-200">
+                        Non-Lucknow
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+              {isPincodeFilled && !isValidLucknow && (
+                <p className="text-[11px] text-amber-600 font-bold leading-relaxed">
+                  ⚠️ Currently serving Lucknow region only (pincodes starting with 226).
+                </p>
+              )}
+              {!isPincodeFilled && (
+                <p className="text-[11px] text-gray-400 font-semibold leading-relaxed">
+                  Enter your 6-digit Lucknow pincode to calculate.
+                </p>
+              )}
+            </div>
+
+            {/* Bill Slider */}
+            <div className="flex flex-col gap-3 order-3 lg:order-2">
+              <div className="flex justify-between items-center">
+                <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Avg electricity bill</span>
+                  <div className="group relative">
+                    <HelpCircle size={13} className="text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-dark text-white text-[10px] p-2.5 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-30 leading-normal font-medium">
+                      Your average monthly domestic electricity bill in Indian Rupees (INR).
+                    </div>
+                  </div>
+                </label>
+                <span className="bg-dark text-white text-xs font-black py-1 px-2.5 rounded">
+                  {formatRupee(bill)}
+                </span>
+              </div>
+
+              <div className="relative mt-2">
+                <input
+                  type="range"
+                  min={500}
+                  max={10000}
+                  step={100}
+                  value={bill}
+                  onChange={(e) => setBill(Number(e.target.value))}
+                  className="w-full accent-primary h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-gray-400 font-bold mt-2">
+                  <span>Min. ₹500</span>
+                  <span>Max. ₹10,000</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* Right Panel: Calculations (Col 7) */}
-          <div className="lg:col-span-7 p-8 md:p-10 flex flex-col justify-between gap-8">
+          <div className="lg:col-span-7 p-2 md:p-10 flex flex-col justify-between gap-8">
 
             {isValidLucknow ? (
               <div className="flex flex-col gap-8">
@@ -190,7 +188,7 @@ export default function SolarCalculator() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                     {/* System Size Box */}
-                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex items-center gap-4 group hover:border-primary/20 transition-all duration-300">
+                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-3 flex items-center gap-4 group hover:border-primary/20 transition-all duration-300">
                       <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 text-primary">
                         <Sun size={24} />
                       </div>
@@ -204,7 +202,7 @@ export default function SolarCalculator() {
                     </div>
 
                     {/* Roof Area Box */}
-                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 flex items-center gap-4 group hover:border-primary/20 transition-all duration-300">
+                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-3 flex items-center gap-4 group hover:border-primary/20 transition-all duration-300">
                       <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 text-primary">
                         <Maximize size={24} />
                       </div>

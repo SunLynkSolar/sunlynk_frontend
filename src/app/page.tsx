@@ -529,7 +529,7 @@ export default function Home() {
       <SolarCalculator />
 
       {/* Stats Counter Section */}
-      <StatsCounter />
+      {/* <StatsCounter /> */}
 
       {/* Problem Section — Why SunLynk */}
       <ProblemSection />
