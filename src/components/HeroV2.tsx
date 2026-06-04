@@ -86,12 +86,13 @@ export default function HeroV2() {
 
             {/* Heading */}
             <div>
-              <h1 className="text-white text-[2.75rem] sm:text-5xl md:text-[3.5rem] font-black  leading-[1.1] tracking-tight">
-                Say goodbye to
+              <h1 className="text-2xl lg:text-[42px] text-white  font-black  leading-[1.1] tacking-tight">
+                Guaranteed Solar Generation.
+                <span className="text-primary">
+                  &nbsp; Or We Pay You Back.
+                </span>
               </h1>
-              <h2 className="text-[2.75rem] sm:text-5xl md:text-[3.5rem] font-black text-primary leading-[1.1] tracking-tight">
-                electricity bills.
-              </h2>
+
             </div>
 
             {/* Subheading */}
@@ -100,8 +101,8 @@ export default function HeroV2() {
             </p>
 
             {/* Body */}
-            <p className="text-white text-sm text-gray-500 leading-relaxed max-w-md hidden lg:block">
-              SunLynk Solar brings you guaranteed solar generation with zero repair and zero replacement cost. We commit to your generation — and if we fall short, <span className="text-primary font-semibold">we pay you back.</span>
+            <p className="text-white/80 text-sm leading-relaxed max-w-md hidden lg:block">
+              As a premier <strong className="text-white font-extrabold">Solar Company in Lucknow</strong>, SunLynk Solar provides top-tier <strong className="text-white font-extrabold">Rooftop Solar Installation in Uttar Pradesh</strong>. We commit to your generation — and if we fall short, <span className="text-primary font-semibold">we pay you back.</span>
             </p>
 
             {/* CTAs */}

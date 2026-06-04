@@ -91,7 +91,7 @@ export default function Home() {
               Solar for Every Need
             </h2>
             <p className="text-sm sm:text-base text-gray-500 max-w-2xl leading-relaxed mt-2">
-              Whether it&apos;s your home, your society, or your business — we design custom solar solutions that slash electricity costs and deliver long-term value.
+              From <strong className="text-dark font-semibold">Residential Solar in Lucknow</strong> to robust <strong className="text-dark font-semibold">Housing Society Solar Solutions</strong> and setups engineered by a leading <strong className="text-dark font-semibold">Commercial Solar EPC Company</strong>, we design custom systems that slash electricity bills and deliver long-term value.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export default function Home() {
                   Homes
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Save up to 90% on your home electricity bills. Our rooftop solar systems are designed for maximum generation, backed by government subsidies, and installed hassle-free — so you start saving from day one.
+                  Save up to 90% on your home electricity bills. Our rooftop systems are engineered for maximum generation, providing reliable <strong className="text-dark font-semibold">Residential Solar in Lucknow</strong> and surrounding areas, backed by subsidies.
                 </p>
                 <Link
                   href="/contact"
@@ -156,7 +156,7 @@ export default function Home() {
                   Housing Societies
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Reduce common-area power costs and add long-term value to your society. We install shared solar systems for lifts, pumps, lighting, and EV charging — cutting your maintenance bills significantly.
+                  Reduce common-area power costs for lifts, pumps, and lighting. We install state-of-the-art <strong className="text-dark font-semibold">Housing Society Solar Solutions</strong> that cut maintenance bills significantly.
                 </p>
                 <Link
                   href="/contact"
@@ -191,7 +191,7 @@ export default function Home() {
                   Commercial
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Power your business with green energy and save on costs. From factories to office complexes, our commercial solar systems are engineered for high performance, quick ROI, and energy independence.
+                  Power your business with green energy. As a certified <strong className="text-dark font-semibold">Commercial Solar EPC Company</strong>, we engineer high-performance systems for quick ROI and absolute energy independence.
                 </p>
                 <Link
                   href="/contact"
