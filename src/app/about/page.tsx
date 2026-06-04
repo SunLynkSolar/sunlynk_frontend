@@ -14,7 +14,11 @@ import {
   Award,
   ArrowLeft,
   ArrowRight,
-  Mail
+  Mail,
+  Home,
+  Users,
+  Building2,
+  Layers
 } from "lucide-react";
 
 export default function About() {
@@ -97,10 +101,10 @@ export default function About() {
   ];
 
   return (
-    <div className="bg-light min-h-screen">
+    <div className=" min-h-screen">
       {/* Page Header Banner */}
       <section className="px-4 md:px-8 pt-6 pb-2">
-        <div className="max-w-7xl mx-auto relative rounded-3xl overflow-hidden py-24 md:py-32 bg-dark text-white flex items-center justify-center">
+        <div className="max-w-7xl mx-auto relative rounded-2xl overflow-hidden py-24 md:py-32 bg-dark text-white flex items-center justify-center">
           {/* Background image & gradient overlay */}
           <div className="absolute inset-0 z-0">
             <Image
@@ -110,7 +114,7 @@ export default function About() {
               className="object-cover opacity-35"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/80 via-teal-900/60 to-dark/95" />
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/70 via-teal-900/40 to-dark/95" />
           </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-center px-4">
@@ -129,10 +133,10 @@ export default function About() {
 
       {/* About Company Section */}
       <section className="py-20 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-1 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Column: Image with organic curves and circular stamp */}
           <div className="relative flex justify-center lg:justify-start">
-            <div className="relative w-full max-w-[500px] aspect-[4/3] rounded-[3rem] rounded-tr-[120px] rounded-bl-[120px] overflow-hidden shadow-2xl border-4 border-emerald-500/10">
+            <div className="relative w-full max-w-[500px] aspect-[1] rounded-[3rem] rounded-tr-[120px] rounded-bl-[120px] overflow-hidden shadow-2xl border-4 border-emerald-500/10">
               <Image
                 src="/assets/images/engineers_field.png"
                 alt="Clean energy engineers collaborating"
@@ -143,7 +147,7 @@ export default function About() {
             </div>
 
             {/* Curved rotating text stamp overlapping image edge */}
-            <div className="absolute -top-8 -right-8 w-36 h-36 animate-[spin_25s_linear_infinite] select-none pointer-events-none hidden md:block z-20 bg-white rounded-full p-1.5 shadow-xl border border-emerald-500/5">
+            <div className="absolute -top-8 right-10 w-36 h-36 animate-[spin_25s_linear_infinite] select-none pointer-events-none hidden md:block z-20 bg-white rounded-full p-1.5 shadow-xl border border-emerald-500/5">
               <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-800">
                 <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
                 <text className="text-[7px] font-extrabold uppercase tracking-[0.2em]" fill="currentColor">
@@ -158,11 +162,9 @@ export default function About() {
           {/* Right Column: Text content & tabs */}
           <div className="flex flex-col gap-6">
             <div>
-              <span className="inline-block bg-emerald-50 text-primary border border-emerald-100 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider mb-3">
-                About Company
-              </span>
-              <h2 className="text-3xl md:text-5xl font-black text-dark leading-tight tracking-tight">
-                Driving Change Through<br />Clean Wind Energy
+              <div className="inline-flex items-center gap-2"><span className="h-[2px] w-6 bg-primary"></span><span className="text-base uppercase tracking-wider font-bold text-primary">About Us</span><span className="h-[2px] w-6 bg-primary"></span></div>
+              <h2 className="text-3xl md:text-4xl font-black text-dark leading-tight tracking-tight">
+                A Future Where Every Rooftop Powers Progress
               </h2>
             </div>
 
@@ -172,8 +174,8 @@ export default function About() {
                 <button
                   onClick={() => setActiveTab("mission")}
                   className={`pb-3 font-bold text-sm uppercase tracking-wider border-b-2 transition-all relative ${activeTab === "mission"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-gray-400 hover:text-gray-600"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-gray-400 hover:text-gray-600"
                     }`}
                 >
                   Our Mission
@@ -181,8 +183,8 @@ export default function About() {
                 <button
                   onClick={() => setActiveTab("vision")}
                   className={`pb-3 font-bold text-sm uppercase tracking-wider border-b-2 transition-all relative ${activeTab === "vision"
-                      ? "border-primary text-primary"
-                      : "border-transparent text-gray-400 hover:text-gray-600"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-gray-400 hover:text-gray-600"
                     }`}
                 >
                   Our Vision
@@ -195,7 +197,7 @@ export default function About() {
               {activeTab === "mission" ? (
                 <>
                   <p>
-                    To provide affordable, reliable, and eco-friendly solar solutions that empower homes and businesses to save energy and protect the planet.
+                    To deliver innovative solar energy solutions that help customers save money, achieve energy independence, and contribute to a greener tomorrow.
                   </p>
                   <p>
                     Our mission is to make clean energy accessible to everyone while promoting sustainability and reducing carbon footprint.
@@ -204,10 +206,10 @@ export default function About() {
               ) : (
                 <>
                   <p>
-                    To accelerate the global transition to sustainable energy by delivering cutting-edge technologies and high-precision monitoring solutions.
+                    To power a brighter, cleaner, and more sustainable future by making solar energy accessible, reliable, and affordable for every home, business, and community.
                   </p>
                   <p>
-                    We envision a world where clean, renewable energy is the primary power source, ensuring a greener, more resilient planet for generations to come.
+                    At SunLynk Solar Energy, we envision a world where renewable energy is the primary source of power, reducing dependence on conventional fuels and creating a healthier planet for future generations.
                   </p>
                 </>
               )}
@@ -264,89 +266,87 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Wind Energy Solutions Section */}
-      <section className="py-20 bg-light border-t border-b border-gray-200/50">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+      {/* Our Solar Energy Solutions Section */}
+      <section className="py-20 bg-dark border-t border-b border-gray-900/50 relative overflow-hidden">
+        {/* Background image & gradient overlay */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none">
+          <Image
+            src="/assets/images/service/solar_homes.webp"
+            alt="Solar panels background"
+            fill
+            className="object-cover opacity-35"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/70 via-teal-900/40 to-dark/95" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-3">
-            <span className="inline-block bg-emerald-50 text-primary border border-emerald-100 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-wider">
-              Our Services
-            </span>
-            <h2 className="text-3xl md:text-5xl font-black text-dark tracking-tight">
-              Our Wind Energy Solutions
+            <div className="inline-flex items-center gap-2"><span className="h-[2px] w-6 bg-primary"></span><span className="text-base uppercase tracking-wider font-bold text-primary">Our Solutions</span><span className="h-[2px] w-6 bg-primary"></span></div>
+
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+              Our Solar Energy Solutions
             </h2>
-            <p className="text-sm text-gray-500 leading-relaxed max-w-2xl">
-              We provide innovative and sustainable wind energy services from residential turbines to large-scale offshore farms — designed to deliver clean, reliable, and cost-effective power for every need.
+            <p className="text-sm text-white/90 leading-relaxed max-w-2xl">
+              We provide innovative and sustainable solar energy services from residential rooftops to large-scale commercial installations — designed to deliver clean, reliable, and cost-effective power for every need.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Residential Wind Turbines */}
+            {/* Card 1: Residential Solar Systems */}
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6 group">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="w-8 h-8 fill-none stroke-current stroke-2">
-                  <path d="M12 2v20M5 12h14M12 12c0-3 3-5 5-5s4 2 4 4-2 4-5 4M12 12c0 3-3 5-5 5s-4-2-4-4 2-4 5-4" />
-                </svg>
+                <Home className="w-8 h-8 stroke-[1.75]" />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="text-lg font-bold text-dark group-hover:text-primary transition-colors">
-                  Residential Wind Turbines
+                  Residential Rooftop Solar
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Compact wind turbines designed to power homes with clean and sustainable electricity.
+                  Save up to 90% on home electricity bills. Systems designed for maximum generation, backed by government subsidies, and installed hassle-free.
                 </p>
               </div>
             </div>
 
-            {/* Card 2: Utility Wind Farms */}
+            {/* Card 2: Housing Society Solar */}
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6 group">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="w-8 h-8 fill-none stroke-current stroke-2">
-                  <path d="M8 22v-6M8 16c0-2 2-3 3-3s2 1 2 2-1 2-3 2M16 22v-8M16 14c0-2 2-3 3-3s2 1 2 2-1 2-3 2" />
-                </svg>
+                <Users className="w-8 h-8 stroke-[1.75]" />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="text-lg font-bold text-dark group-hover:text-primary transition-colors">
-                  Utility Wind Farms
+                  Housing Society Solar
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Large-scale wind installations engineered to deliver consistent renewable energy to communities.
+                  Reduce common-area power costs for lifts, pumps, lighting, and EV charging with shared solar systems that cut maintenance bills significantly.
                 </p>
               </div>
             </div>
 
-            {/* Card 3: Wind Monitoring Systems */}
+            {/* Card 3: Commercial & Industrial Solar */}
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6 group">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="w-8 h-8 fill-none stroke-current stroke-2">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  <path d="M2 12h20M12 6a6 6 0 1 1 0 12" />
-                </svg>
+                <Building2 className="w-8 h-8 stroke-[1.75]" />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="text-lg font-bold text-dark group-hover:text-primary transition-colors">
-                  Wind Monitoring Systems
+                  Commercial & Industrial Solar
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Advanced sensors and analytics to track wind patterns and optimize turbine efficiency.
+                  Power your business with green energy. Engineered for high performance, quick ROI, and energy independence for factories and offices.
                 </p>
               </div>
             </div>
 
-            {/* Card 4: Offshore Wind Installations */}
+            {/* Card 4: Solar PV Distribution */}
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6 group">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="w-8 h-8 fill-none stroke-current stroke-2">
-                  <path d="M2 20c4-4 6 4 10 0s6-4 10 0" />
-                  <path d="M12 2v14M7 8h10" />
-                </svg>
+                <Layers className="w-8 h-8 stroke-[1.75]" />
               </div>
               <div className="flex flex-col gap-3">
                 <h3 className="text-lg font-bold text-dark group-hover:text-primary transition-colors">
-                  Offshore Wind Installations
+                  Solar PV Distribution
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Powerful wind systems designed for high-output energy generation at sea.
+                  We distribute the most bankable technology and solar PV products to help developers and installers scale clean energy projects efficiently.
                 </p>
               </div>
             </div>
@@ -354,80 +354,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Core Values / Vision (Dark Background) */}
-      <section className="py-20 bg-dark text-white relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-5 pointer-events-none"
-          style={{ backgroundImage: "url(/assets/images/shapes/service-shape-2-1.webp)" }}
-        ></div>
-
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="max-w-xl mb-16 flex flex-col gap-3">
-            <div className="inline-flex items-center gap-2">
-              <Sun size={18} className="text-primary" />
-              <span className="text-base uppercase tracking-wider font-bold text-primary">Our Vision & Core Values</span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold leading-tight">
-              We Create Green Energy for Everyone
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {values.map((v) => (
-              <div
-                key={v.id}
-                className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 flex gap-6"
-              >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                  {v.icon}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <span className="text-xs text-primary font-bold">{v.id}</span>
-                  <h4 className="text-lg font-bold text-white">{v.title}</h4>
-                  <p className="text-sm text-gray-400 leading-relaxed text-justify">{v.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Cards */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col items-center gap-3">
-            <div className="inline-flex items-center gap-2">
-              <span className="h-[2px] w-6 bg-primary"></span>
-              <span className="text-base uppercase tracking-wider font-bold text-primary">Our Missions</span>
-              <span className="h-[2px] w-6 bg-primary"></span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-dark">
-              Core Pillars of Our Mission
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {missions.map((m, idx) => (
-              <div
-                key={idx}
-                className="bg-light border border-gray-100 rounded-2xl p-8 hover:shadow-lg transition-all flex flex-col gap-4"
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary text-white font-extrabold rounded-lg">
-                  {m.title}
-                </div>
-                <p className="text-sm text-gray-700 leading-relaxed text-justify">{m.text}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Full Mission Statement Card */}
-          <div className="mt-12 bg-primary/5 border border-primary/20 p-8 rounded-2xl text-center">
-            <p className="text-gray-700 leading-relaxed font-semibold max-w-4xl mx-auto">
-              &ldquo;At SunLynk Solar India, our mission is to empower the renewable energy sector with cutting-edge weather monitoring, SCADA, and energy storage solutions that drive efficiency, reliability, and sustainability. We are committed to delivering innovative, data-driven technologies that optimize power generation, enhance grid stability, and accelerate the global transition to clean energy.&rdquo;
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Leadership & Team Section */}
       <section className="py-20 bg-white border-t border-gray-150 overflow-hidden">
