@@ -86,7 +86,7 @@ export default function HeroV2() {
 
             {/* Heading */}
             <div>
-              <h1 className="text-2xl lg:text-[42px] text-white  font-black  leading-[1.1] tacking-tight">
+              <h1 className="text-2xl lg:text-[38px] text-white  font-black  leading-[1.1] tacking-tight">
                 Guaranteed Solar Generation.
                 <span className="text-primary">
                   &nbsp; Or We Pay You Back.
