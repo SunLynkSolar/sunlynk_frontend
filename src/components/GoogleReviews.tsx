@@ -81,21 +81,27 @@ const reviews: Review[] = [
   },
 ];
 
-function ReviewCard({ review }: { review: Review }) {
+function ReviewCard({ review, isDark = false }: { review: Review; isDark?: boolean }) {
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 flex flex-col justify-between h-full">
+    <div className={`rounded-2xl p-6 shadow-sm transition-all duration-300 flex flex-col justify-between h-full ${
+      isDark 
+        ? "bg-[#071813]/80 border border-emerald-950/45 hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/20" 
+        : "bg-white border border-gray-100 hover:border-primary/30 hover:shadow-md"
+    }`}>
       <div className="flex flex-col flex-grow">
         {/* Rating Stars & Google badge */}
         <div className="flex justify-between items-center mb-4">
           <StarRating size={4} />
           <GoogleGLogoTiny />
         </div>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+        <p className={`text-sm leading-relaxed mb-4 flex-grow ${isDark ? "text-slate-300" : "text-gray-600"}`}>
           &quot;{review.text}&quot;
         </p>
 
         {review.image && (
-          <div className="relative w-full h-40 rounded-xl overflow-hidden mb-6 group/img border border-slate-100 shrink-0">
+          <div className={`relative w-full h-40 rounded-xl overflow-hidden mb-6 group/img border shrink-0 ${
+            isDark ? "border-emerald-950/30" : "border-slate-100"
+          }`}>
             <Image
               src={review.image}
               alt={`${review.name}'s solar installation`}
@@ -111,20 +117,20 @@ function ReviewCard({ review }: { review: Review }) {
       </div>
 
       {/* User details */}
-      <div className="flex items-center gap-3 border-t border-gray-50 pt-4">
+      <div className={`flex items-center gap-3 border-t pt-4 ${isDark ? "border-emerald-950/40" : "border-gray-50"}`}>
         <div className={`w-10 h-10 ${review.avatarBg} ${review.avatarText} font-bold rounded-full flex items-center justify-center shrink-0`}>
           {review.initials}
         </div>
         <div>
-          <span className="block text-sm font-bold text-gray-800">{review.name}</span>
-          <span className="block text-[10px] text-gray-400">{review.time}</span>
+          <span className={`block text-sm font-bold ${isDark ? "text-white" : "text-gray-800"}`}>{review.name}</span>
+          <span className={`block text-[10px] ${isDark ? "text-slate-400" : "text-gray-400"}`}>{review.time}</span>
         </div>
       </div>
     </div>
   );
 }
 
-export default function GoogleReviews() {
+export default function GoogleReviews({ isDark = false }: { isDark?: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -156,36 +162,48 @@ export default function GoogleReviews() {
   };
 
   return (
-    <section className="py-16 bg-white border-t border-gray-100" id="google-reviews">
+    <section className={`py-16 border-t ${
+      isDark ? "bg-[#020C09] border-white/[0.06]" : "bg-white border-gray-100"
+    }`} id="google-reviews">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Header Area */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12 border-b border-gray-100 pb-10">
-          <div className="max-w-2xl">
+        <div className={`flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12 border-b pb-10 ${
+          isDark ? "border-white/[0.06]" : "border-gray-100"
+        }`}>
+          <div className="max-w-2xl text-left">
             <div className="inline-flex items-center gap-2 mb-3">
-              <span className="h-[2px] w-6 bg-primary"></span>
-              <span className="text-base uppercase tracking-wider font-bold text-primary">Reviews</span>
-              <span className="h-[2px] w-6 bg-primary"></span>
+              <span className={`h-[2px] w-6 ${isDark ? "bg-emerald-500" : "bg-primary"}`}></span>
+              <span className={`text-base uppercase tracking-wider font-bold ${isDark ? "text-emerald-400" : "text-primary"}`}>Reviews</span>
+              <span className={`h-[2px] w-6 ${isDark ? "bg-emerald-500" : "bg-primary"}`}></span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-dark leading-tight tracking-tight">
+            <h2 className={`text-3xl md:text-5xl font-extrabold leading-tight tracking-tight ${
+              isDark ? "text-white" : "text-dark"
+            }`}>
               Google Reviews & Customer Feedback
             </h2>
-            <p className="text-sm sm:text-base text-gray-500 mt-2">
+            <p className={`text-sm sm:text-base mt-2 ${
+              isDark ? "text-slate-300" : "text-gray-500"
+            }`}>
               Discover what our partners, clients, and homeowners say about our engineering standards, premium modules, and solar subsidy support.
             </p>
           </div>
 
           {/* Google Aggregate Box */}
-          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow duration-300 shrink-0">
+          <div className={`rounded-2xl p-6 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow duration-300 shrink-0 ${
+            isDark ? "bg-[#071813]/60 border border-emerald-900/20" : "bg-slate-50 border border-slate-100"
+          }`}>
             <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
               <GoogleGLogoSvg />
             </div>
-            <div>
+            <div className="text-left">
               <div className="flex items-center gap-1.5">
-                <span className="text-2xl font-black text-gray-800">4.9</span>
+                <span className={`text-2xl font-black ${isDark ? "text-white" : "text-gray-800"}`}>4.9</span>
                 <StarRating size={5} />
               </div>
-              <p className="text-xs text-gray-500 font-bold mt-1 uppercase tracking-wide">
+              <p className={`text-xs font-bold mt-1 uppercase tracking-wide ${
+                isDark ? "text-slate-400" : "text-gray-500"
+              }`}>
                 142 Reviews on Google
               </p>
             </div>
@@ -222,20 +240,24 @@ export default function GoogleReviews() {
                 data-review-card
                 className="snap-start shrink-0 w-[280px] sm:w-[320px] lg:w-[calc(25%-18px)]"
               >
-                <ReviewCard review={review} />
+                <ReviewCard review={review} isDark={isDark} />
               </div>
             ))}
           </div>
         </div>
 
         {/* Call to action */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 pt-4 border-t border-gray-50">
-          <span className="text-sm text-gray-500 font-medium">Are you a satisfied customer?</span>
+        <div className={`flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 pt-4 border-t ${
+          isDark ? "border-emerald-950/40" : "border-gray-50"
+        }`}>
+          <span className={`text-sm ${isDark ? "text-slate-400" : "text-gray-500"}`}>Are you a satisfied customer?</span>
           <a
             href="https://google.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
+            className={`inline-flex items-center gap-2 text-sm font-bold transition-colors ${
+              isDark ? "text-emerald-400 hover:text-emerald-300" : "text-primary hover:text-primary-hover"
+            }`}
           >
             <span>Write a Google Review</span>
             <ArrowRight size={14} />

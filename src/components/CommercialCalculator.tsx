@@ -80,7 +80,7 @@ export default function CommercialCalculator() {
         </div>
 
         {/* Main Calculator Card */}
-        <div className="bg-white border border-gray-300 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0">
+        <div className="bg-white border border-gray-300 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-3xl shadow-lg">
 
           {/* Left Panel: Inputs & Graphic */}
           <div className="lg:col-span-5 p-5 sm:p-8 bg-slate-50/50 border-b lg:border-b-0 lg:border-r border-gray-200 flex flex-col justify-between gap-6 sm:gap-8">
@@ -106,7 +106,7 @@ export default function CommercialCalculator() {
             </div>
 
             {/* Pin Code Input */}
-            <div className="flex flex-col gap-2 order-2 lg:order-1">
+            <div className="flex flex-col gap-2 order-2 lg:order-1 text-left">
               <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
                 <MapPin size={14} className="text-primary" />
                 <span>Operational Site Pincode</span>
@@ -140,7 +140,7 @@ export default function CommercialCalculator() {
             </div>
 
             {/* Bill Slider */}
-            <div className="flex flex-col gap-3 order-3 lg:order-2">
+            <div className="flex flex-col gap-3 order-3 lg:order-2 text-left">
               <div className="flex justify-between items-center">
                 <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
                   <span>Avg Monthly Bill (commercial rate)</span>
@@ -209,7 +209,7 @@ export default function CommercialCalculator() {
                     <div>
                       <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Roof Space Required</p>
                       <p className="text-xl sm:text-2xl font-black text-dark mt-0.5">
-                        {requiredRoofArea.toLocaleString()} <span className="text-xs font-bold text-gray-400">sq. ft.</span>
+                        {requiredRoofArea.toLocaleString()} <span className="text-xs font-bold text-slate-400">sq. ft.</span>
                       </p>
                       <p className="text-[10px] text-gray-400 font-semibold mt-1">(Usable shadow-free concrete/metal roof)</p>
                     </div>
