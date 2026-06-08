@@ -536,7 +536,7 @@ export default function Home() {
 
 
       {/* Products Grid Section */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col items-center gap-3">
             <div className="inline-flex items-center gap-2">
@@ -558,51 +558,50 @@ export default function Home() {
                 key={prod.id}
                 className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-full group"
               >
-                {/* Image */}
-                <div className="relative w-full aspect-[4/3] bg-gray-1000 overflow-hidden">
-                  <Image
-                    src={prod.image}
-                    alt={prod.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 bg-primary text-white text-[10px] uppercase font-bold py-1 px-2.5 rounded-full">
-                    {prod.categoryName}
-                  </div>
-                </div>
-
-                {/* Details */}
-                <div className="p-5 flex flex-col justify-between flex-grow">
-                  <div>
-                    <h4 className="font-bold text-gray-800 text-base mb-2 group-hover:text-primary transition-colors">
-                      {prod.title}
-                    </h4>
-                    <p className="text-xs text-gray-500 line-clamp-3">
-                      {prod.features[0]}
-                    </p>
-                  </div>
-                  <div className="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
-                    <span className="text-xs font-bold text-primary">{prod.powerRange}</span>
-                    <Link
-                      href={`/products/${prod.slug}`}
-                      className="text-xs font-bold text-dark hover:text-primary transition-colors flex items-center gap-1"
-                    >
-                      <span>View Details</span>
-                      <ArrowRight size={12} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-center mt-12">
-            <Link href="/products/n-type-bifacial-double-glass" className="btn-secondary">
-              <span>View All Products</span>
-            </Link>
-          </div>
+      <div className="relative w-full aspect-[4/3] bg-gray-1000 overflow-hidden">
+        <Image
+          src={prod.image}
+          alt={prod.title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute top-3 left-3 bg-primary text-white text-[10px] uppercase font-bold py-1 px-2.5 rounded-full">
+          {prod.categoryName}
         </div>
-      </section>
+      </div>
+
+     <div className="p-5 flex flex-col justify-between flex-grow">
+        <div>
+          <h4 className="font-bold text-gray-800 text-base mb-2 group-hover:text-primary transition-colors">
+            {prod.title}
+          </h4>
+          <p className="text-xs text-gray-500 line-clamp-3">
+            {prod.features[0]}
+          </p>
+        </div>
+        <div className="border-t border-gray-100 pt-4 mt-4 flex justify-between items-center">
+          <span className="text-xs font-bold text-primary">{prod.powerRange}</span>
+          <Link
+            href={`/products/${prod.slug}`}
+            className="text-xs font-bold text-dark hover:text-primary transition-colors flex items-center gap-1"
+          >
+            <span>View Details</span>
+            <ArrowRight size={12} />
+          </Link>
+        </div>
+      </div>
+    </div>
+  ))
+  }
+            </div >
+
+    <div className="flex justify-center mt-12">
+      <Link href="/products/n-type-bifacial-double-glass" className="btn-secondary">
+        <span>View All Products</span>
+      </Link>
+    </div>
+        </div >
+      </section > */}
 
 
 
@@ -1002,6 +1001,6 @@ export default function Home() {
         </div>
       </section> */}
 
-    </div>
+    </div >
   );
 }

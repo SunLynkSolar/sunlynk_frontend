@@ -48,3 +48,6 @@ https://preview.themeforest.net/item/energix-solar-energy-html-template/full_scr
 
 
 https://preview.themeforest.net/item/solario-solar-and-renewable-energy-html5-template/full_screen_preview/55432761
+
+
+https://madebydesignesia.com/themes/solaria/video/1.mp4

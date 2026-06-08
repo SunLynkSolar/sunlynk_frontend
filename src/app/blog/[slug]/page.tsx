@@ -1,30 +1,296 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import blogsData from "@/data/blogs.json";
-import { User, MessageSquare, Calendar, ChevronRight, Hash } from "lucide-react";
+import BlogSidebar from "@/components/BlogSidebar";
+import ClientCommentsSection from "@/components/ClientCommentsSection";
+import {
+  User,
+  MessageSquare,
+  Calendar,
+  Hash,
+  Layers,
+  ArrowLeft,
+} from "lucide-react";
+
+type Block = (typeof blogsData)[number]["blocks"][number];
+type BlogPost = (typeof blogsData)[number];
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return blogsData.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-export default async function BlogDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const post = blogsData.find((b) => b.slug === slug);
-
-  if (!post) {
-    notFound();
+  let dynamicBlogs: any[] = [];
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs`);
+    if (res.ok) {
+      dynamicBlogs = await res.json();
+    }
+  } catch (err) {
+    console.error("Failed to fetch dynamic blogs in generateStaticParams", err);
   }
 
-  // Sidebar posts (fallback/recent)
-  const recentPosts = blogsData.slice(0, 3);
+  const dynamicSlugs = dynamicBlogs.map((b) => ({ slug: b.slug }));
+  const staticSlugs = blogsData.map((post) => ({ slug: post.slug }));
+
+  const seen = new Set();
+  const combined = [];
+  for (const item of [...dynamicSlugs, ...staticSlugs]) {
+    if (!seen.has(item.slug)) {
+      seen.add(item.slug);
+      combined.push(item);
+    }
+  }
+  return combined;
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  
+  let post: BlogPost | null = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs/${slug}`, { next: { revalidate: 10 } });
+    if (res.ok) {
+      post = (await res.json()) as BlogPost;
+    }
+  } catch (err) {
+    // Fail silently, fallback to JSON
+  }
+
+  if (!post) {
+    post = blogsData.find((b) => b.slug === slug) as BlogPost | undefined || null;
+  }
+
+  if (!post) return { title: "Post Not Found | SunLynk Solar" };
+  return {
+    title: `${post.title} | SunLynk Solar Blog`,
+    description: post.excerpt,
+  };
+}
+
+// ─── Block Renderer ────────────────────────────────────────────────────────────
+function BlockRenderer({ block }: { block: Block }) {
+  switch (block.type) {
+    case "heading": {
+      const hb = block as { type: "heading"; level: number; text: string };
+      if (hb.level === 2) {
+        return (
+          <h2 className="text-xl md:text-2xl font-extrabold text-dark mt-8 mb-3 leading-tight border-l-4 border-primary pl-4">
+            {hb.text}
+          </h2>
+        );
+      }
+      return (
+        <h3 className="text-lg font-bold text-dark mt-6 mb-2 leading-tight">
+          {hb.text}
+        </h3>
+      );
+    }
+
+    case "paragraph": {
+      const pb = block as { type: "paragraph"; text: string };
+      return (
+        <p className="text-sm md:text-base text-gray-700 leading-relaxed text-justify">
+          {pb.text}
+        </p>
+      );
+    }
+
+    case "image": {
+      const imgb = block as { type: "image"; src: string; alt: string; caption?: string };
+      return (
+        <figure className="my-6">
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-md border border-gray-100">
+            <Image src={imgb.src} alt={imgb.alt} fill className="object-cover" />
+          </div>
+          {imgb.caption && (
+            <figcaption className="text-center text-xs text-gray-400 mt-2 italic">
+              {imgb.caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    }
+
+    case "two_column": {
+      const tc = block as {
+        type: "two_column";
+        left: Block[];
+        right: Block[];
+      };
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6 bg-gray-50 border border-gray-100 rounded-2xl p-6">
+          <div className="flex flex-col gap-3">
+            {tc.left.map((b, i) => <BlockRenderer key={i} block={b} />)}
+          </div>
+          <div className="flex flex-col gap-3 md:border-l md:border-gray-200 md:pl-6">
+            {tc.right.map((b, i) => <BlockRenderer key={i} block={b} />)}
+          </div>
+        </div>
+      );
+    }
+
+    case "list": {
+      const lb = block as { type: "list"; style: "bullet" | "ordered"; items: string[] };
+      if (lb.style === "ordered") {
+        return (
+          <ol className="list-decimal pl-6 flex flex-col gap-1.5 text-sm text-gray-700 leading-relaxed">
+            {lb.items.map((item, i) => <li key={i}>{item}</li>)}
+          </ol>
+        );
+      }
+      return (
+        <ul className="list-none pl-0 flex flex-col gap-1.5">
+          {lb.items.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-gray-700 leading-relaxed">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    case "grid": {
+      const gb = block as {
+        type: "grid";
+        columns: number;
+        items: { image: string; caption?: string }[];
+      };
+      const cols = gb.columns === 3 ? "grid-cols-1 sm:grid-cols-3" : "grid-cols-1 sm:grid-cols-2";
+      return (
+        <div className={`grid ${cols} gap-4 my-6`}>
+          {gb.items.map((item, i) => (
+            <figure key={i} className="flex flex-col gap-2">
+              <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow border border-gray-100">
+                <Image src={item.image} alt={item.caption || ""} fill className="object-cover" />
+              </div>
+              {item.caption && (
+                <figcaption className="text-center text-xs text-gray-400 italic">{item.caption}</figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      );
+    }
+
+    default:
+      return null;
+  }
+}
+
+// ─── Template Hero ────────────────────────────────────────────────────────────
+function TemplateHero({ post }: { post: BlogPost }) {
+  const template = post.template || "editorial";
+
+  if (template === "magazine") {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="relative w-full aspect-[4/3] bg-gray-100 rounded-2xl overflow-hidden shadow-md border border-gray-100">
+          <Image src={post.image} alt={post.title} fill className="object-cover" />
+          <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md flex flex-col items-center shadow">
+            <span className="text-sm font-extrabold leading-none">{post.day}</span>
+            <span className="text-[10px] uppercase leading-none mt-0.5">{post.month}</span>
+          </div>
+        </div>
+        <div className="flex flex-col justify-center gap-4">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-dark leading-tight">{post.title}</h2>
+          <p className="text-base text-gray-600 leading-relaxed">{post.excerpt}</p>
+          <div className="flex items-center gap-5 text-xs text-gray-400">
+            <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />{post.author}</span>
+            <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (template === "minimal") {
+    return (
+      <div className="mb-6 pb-6 border-b border-gray-100">
+        <h2 className="text-2xl md:text-4xl font-black text-dark leading-tight mb-4">{post.title}</h2>
+        <div className="flex items-center gap-5 text-xs text-gray-400">
+          <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />{post.author}</span>
+          <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
+          <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount} Comments</span>
+        </div>
+        <p className="text-base text-gray-600 mt-4 leading-relaxed border-l-4 border-primary pl-4">{post.excerpt}</p>
+      </div>
+    );
+  }
+
+  // editorial (default)
+  return (
+    <div className="mb-6">
+      <div className="relative w-full aspect-[16/9] bg-gray-100 rounded-2xl overflow-hidden shadow-md border border-gray-100">
+        <Image src={post.image} alt={post.title} fill className="object-cover" />
+        <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md flex flex-col items-center shadow">
+          <span className="text-sm font-extrabold leading-none">{post.day}</span>
+          <span className="text-[10px] uppercase leading-none mt-0.5">{post.month}</span>
+        </div>
+      </div>
+      <div className="flex items-center gap-5 text-xs text-gray-400 mt-4">
+        <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />by {post.author}</span>
+        <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount} Comments</span>
+        <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
+      </div>
+      <h2 className="text-2xl md:text-3xl font-extrabold text-dark mt-4 leading-tight">{post.title}</h2>
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+export default async function BlogDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+
+  let post: BlogPost | null = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs/${slug}`, { next: { revalidate: 10 } });
+    if (res.ok) {
+      post = (await res.json()) as BlogPost;
+    }
+  } catch (err) {
+    console.error("Failed to fetch blog post from API", err);
+  }
+
+  if (!post) {
+    post = blogsData.find((b) => b.slug === slug) as BlogPost | undefined || null;
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <h1 className="text-3xl font-black text-dark">Post Not Found</h1>
+        <Link href="/blog/" className="text-primary font-bold hover:underline">← Back to Blog</Link>
+      </div>
+    );
+  }
+
+  let allPosts = blogsData;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs`, { next: { revalidate: 10 } });
+    if (res.ok) {
+      const dynamicBlogs = await res.json();
+      const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));
+      const filteredJSON = blogsData.filter(b => !dynamicSlugs.has(b.slug));
+      allPosts = [...dynamicBlogs, ...filteredJSON];
+    }
+  } catch (err) {
+    console.error("Failed to fetch all blogs, using static JSON", err);
+  }
+
+  const relatedPosts = allPosts
+    .filter(
+      (p) =>
+        p.slug !== post.slug &&
+        (p.categories || []).some((c) => (post.categories || []).includes(c))
+    )
+    .slice(0, 3);
+
+  const postComments = (post as BlogPost & {
+    comments?: { author: string; avatar?: string; text: string; createdAt: string }[];
+  }).comments || [];
 
   return (
     <div>
@@ -33,174 +299,105 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none"
           style={{ backgroundImage: "url(/assets/images/backgrounds/page-header-bg-1-1.webp)" }}
-        ></div>
+        />
         <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <span className="text-primary font-bold text-xs uppercase tracking-widest block mb-2">News Details</span>
-          <h1 className="text-3xl md:text-5xl font-black">{post.title}</h1>
+          <span className="text-primary font-bold text-xs uppercase tracking-widest block mb-2">Article</span>
+          <h1 className="text-2xl md:text-4xl font-black max-w-3xl leading-tight">{post.title}</h1>
           <div className="mt-4 flex items-center gap-2 text-xs md:text-sm text-gray-400">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             <span>/</span>
-            <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
+            <Link href="/blog/" className="hover:text-primary transition-colors">Blog</Link>
             <span>/</span>
-            <span className="text-white">{post.title}</span>
+            <span className="text-white line-clamp-1">{post.title}</span>
           </div>
         </div>
       </section>
 
-      {/* Main Details content */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      {/* Main content + Sidebar */}
+      <section className="py-14 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-          {/* Left Column: Post content (col-span-8) */}
-          <div className="lg:col-span-8 flex flex-col gap-6 text-left">
-            {/* Image */}
-            <div className="relative w-full aspect-[16/9] bg-gray-1000 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md flex flex-col items-center shadow-md">
-                <span className="text-sm font-extrabold">{post.day}</span>
-                <span className="text-[10px] uppercase">{post.month}</span>
-              </div>
-            </div>
+            {/* LEFT: Post content */}
+            <div className="lg:col-span-8 flex flex-col gap-6">
+              <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm">
+                <Link
+                  href="/blog/"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-400 hover:text-primary transition-colors mb-6"
+                >
+                  <ArrowLeft size={13} />
+                  Back to Blog
+                </Link>
 
-            {/* Meta */}
-            <div className="flex items-center gap-6 text-xs text-gray-400 mt-2">
-              <span className="flex items-center gap-1.5">
-                <User size={14} className="text-primary" />
-                <span>by {post.author}</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <MessageSquare size={14} className="text-primary" />
-                <span>{post.commentsCount} Comments</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Calendar size={14} className="text-primary" />
-                <span>{post.date}</span>
-              </span>
-            </div>
+                <TemplateHero post={post} />
 
-            {/* Title */}
-            <h2 className="text-2xl md:text-3xl font-extrabold text-dark mt-2 leading-tight">
-              {post.title}
-            </h2>
-
-            {/* HTML Body */}
-            <div
-              className="text-sm md:text-base text-gray-700 leading-relaxed text-justify flex flex-col gap-4 mt-2"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            ></div>
-
-            {/* Tags and Categories */}
-            <div className="border-t border-b border-gray-100 py-6 my-6 flex flex-wrap gap-6 justify-between items-center text-xs">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-gray-800 uppercase tracking-wider">Categories:</span>
-                {post.categories.map((c, i) => (
-                  <span key={i} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-md">{c}</span>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-gray-800 uppercase tracking-wider">Tags:</span>
-                {post.tags.map((t, i) => (
-                  <span key={i} className="bg-primary/10 text-primary px-3 py-1 rounded-md font-semibold flex items-center gap-0.5">
-                    <Hash size={10} />
-                    <span>{t}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Comments Placeholder */}
-            <div className="mt-8 flex flex-col gap-6">
-              <h3 className="text-xl font-bold text-gray-800 border-b border-gray-100 pb-2">Comments (02)</h3>
-              <div className="flex flex-col gap-6">
-                <div className="flex gap-4 items-start p-5 bg-gray-1000 border border-gray-100 rounded-xl">
-                  <div className="relative w-12 h-12 bg-gray-200 rounded-full overflow-hidden shrink-0">
-                    <Image src="/assets/images/blog/blog-comment-1-1.webp" alt="User comment avatar" fill className="object-cover" />
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-gray-800 text-sm">Layerdrops</h5>
-                    <span className="text-[10px] text-gray-400">March 20, 2024 at 2:37 PM</span>
-                    <p className="text-xs text-gray-600 mt-2 leading-relaxed text-justify">
-                      Neque porro est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 items-start p-5 bg-gray-1000 border border-gray-100 rounded-xl">
-                  <div className="relative w-12 h-12 bg-gray-200 rounded-full overflow-hidden shrink-0">
-                    <Image src="/assets/images/blog/blog-comment-1-2.webp" alt="User comment avatar" fill className="object-cover" />
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-gray-800 text-sm">SolarExpert</h5>
-                    <span className="text-[10px] text-gray-400">March 21, 2024 at 10:15 AM</span>
-                    <p className="text-xs text-gray-600 mt-2 leading-relaxed text-justify">
-                      Great breakdown of the technical points regarding temperature coefficients and inverter clipping parameters.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Sidebar (col-span-4) */}
-          <div className="lg:col-span-4 flex flex-col gap-8">
-            {/* Recent Posts widget */}
-            <div className="bg-gray-1000 border border-gray-100 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-gray-800 text-base mb-4 border-b border-gray-200 pb-2">Recent Posts</h4>
-              <ul className="flex flex-col gap-4">
-                {recentPosts.map((rp) => (
-                  <li key={rp.id} className="flex gap-3 items-center group">
-                    <div className="relative w-16 h-12 bg-gray-100 rounded-md overflow-hidden shrink-0">
-                      <Image src={rp.image} alt={rp.title} fill className="object-cover" />
-                    </div>
-                    <div className="flex-1 text-left min-w-0">
-                      <span className="text-[10px] text-primary font-bold uppercase tracking-wider block">{rp.date}</span>
+                {/* Categories */}
+                {post.categories && post.categories.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {post.categories.map((cat) => (
                       <Link
-                        href={`/blog/${rp.slug}`}
-                        className="text-xs font-bold text-gray-700 hover:text-primary transition-colors line-clamp-2 mt-0.5"
+                        key={cat}
+                        href={`/blog/category/${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, "-"))}/`}
+                        className="inline-flex items-center gap-1 text-xs font-bold bg-primary/8 text-primary border border-primary/15 px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all"
                       >
-                        {rp.title}
+                        <Layers size={10} />
+                        {cat}
                       </Link>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                    ))}
+                  </div>
+                )}
+
+                {/* Rich blocks */}
+                <div className="flex flex-col gap-4">
+                  {post.blocks && post.blocks.length > 0 ? (
+                    post.blocks.map((block, i) => (
+                      <BlockRenderer key={i} block={block} />
+                    ))
+                  ) : (
+                    <div
+                      className="text-sm md:text-base text-gray-700 leading-relaxed text-justify flex flex-col gap-4"
+                      dangerouslySetInnerHTML={{
+                        __html: (post as BlogPost & { content?: string }).content || "",
+                      }}
+                    />
+                  )}
+                </div>
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="border-t border-b border-gray-100 py-5 mt-8 flex flex-wrap gap-2 items-center">
+                    <span className="font-bold text-gray-600 text-xs uppercase tracking-wider mr-1">Tags:</span>
+                    {post.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center gap-1 text-xs font-bold bg-primary/8 text-primary border border-primary/15 px-3 py-1.5 rounded-full"
+                      >
+                        <Hash size={10} />
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Comments — rendered client-side only */}
+              <ClientCommentsSection
+                postSlug={post.slug}
+                initialComments={postComments}
+              />
             </div>
 
-            {/* Categories list */}
-            <div className="bg-gray-1000 border border-gray-100 rounded-2xl p-6 shadow-sm">
-              <h4 className="font-bold text-gray-800 text-base mb-4 border-b border-gray-200 pb-2">Categories</h4>
-              <ul className="flex flex-col gap-2">
-                <li className="flex justify-between items-center text-xs font-bold text-gray-600">
-                  <span className="hover:text-primary cursor-pointer flex items-center gap-1">
-                    <ChevronRight size={12} />
-                    <span>Solar Modules</span>
-                  </span>
-                  <span>(4)</span>
-                </li>
-                <li className="flex justify-between items-center text-xs font-bold text-gray-600">
-                  <span className="hover:text-primary cursor-pointer flex items-center gap-1">
-                    <ChevronRight size={12} />
-                    <span>Solar Inverters</span>
-                  </span>
-                  <span>(2)</span>
-                </li>
-                <li className="flex justify-between items-center text-xs font-bold text-gray-600">
-                  <span className="hover:text-primary cursor-pointer flex items-center gap-1">
-                    <ChevronRight size={12} />
-                    <span>Weather Sensors</span>
-                  </span>
-                  <span>(3)</span>
-                </li>
-              </ul>
+            {/* RIGHT: Sidebar */}
+            <div className="lg:col-span-4">
+              <div className="sticky top-24">
+                <BlogSidebar
+                  allPosts={allPosts}
+                  currentSlug={post.slug}
+                  relatedPosts={relatedPosts}
+                />
+              </div>
             </div>
           </div>
-
         </div>
       </section>
     </div>

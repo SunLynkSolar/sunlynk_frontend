@@ -93,5 +93,97 @@
       "Intra-Day Nowcasting (15-min block updates).",
       "Historical error analysis reports."
     ]
+  },
+  {
+    "id": "on-grid-solar",
+    "slug": "on-grid-solar",
+    "title": "On-Grid Solar Systems",
+    "subtitle": "Maximize Savings with Grid-Connected Solar",
+    "description": "SunLynk's on-grid solar systems are designed for customers who want maximum financial savings from their solar investment. These systems generate electricity during the day and seamlessly integrate with the utility grid, allowing excess power to be exported through net metering where applicable.\n\nOur engineering team carefully designs each installation to deliver optimal performance, higher energy generation, and long-term reliability.",
+    "image": "/new_assets/Home-Hero-1.webp",
+    "benefits": [
+      "Lower upfront investment",
+      "Maximum reduction in electricity bills",
+      "Efficient use of available rooftop space",
+      "Grid-connected operation for seamless performance",
+      "Ideal for locations with reliable utility supply"
+    ],
+    "highlights": [
+      "Customized solar solutions tailored to every customer",
+      "Expert design and engineering for maximum generation",
+      "Premium-quality equipment from trusted manufacturers",
+      "Professional installation and project management",
+      "Real-time system monitoring",
+      "Dedicated after-sales support and maintenance",
+      "Transparent consultation and customer-first approach"
+    ],
+    "process": [
+      {
+        "title": "Consultation & Site Assessment",
+        "content": "We evaluate your energy consumption, roof space, and project requirements."
+      },
+      {
+        "title": "Customized Proposal",
+        "content": "Our experts design a solar solution tailored to your needs and expected savings."
+      },
+      {
+        "title": "Engineering & Installation",
+        "content": "Certified professionals execute the project with quality and safety at every stage."
+      },
+      {
+        "title": "Commissioning & Activation",
+        "content": "We test, commission, and ensure your system is operating efficiently."
+      },
+      {
+        "title": "Ongoing Support",
+        "content": "Our team remains available for monitoring, maintenance, and long-term performance support."
+      }
+    ]
+  },
+  {
+    "id": "hybrid-solar",
+    "slug": "hybrid-solar",
+    "title": "Hybrid Solar Systems",
+    "subtitle": "Reliable Power with Solar and Backup Energy",
+    "description": "Hybrid solar systems combine solar generation, battery storage, and grid connectivity to provide both savings and energy security. These systems ensure that critical loads continue operating during power outages while maximizing solar utilization.\n\nSunLynk designs hybrid solutions for customers who value uninterrupted power supply without compromising on long-term energy savings.",
+    "image": "/new_assets/home_hero.jpg",
+    "benefits": [
+      "Backup power during grid outages",
+      "Greater energy independence",
+      "Smart energy management",
+      "Enhanced reliability for homes and businesses",
+      "Optimized use of solar generation and battery storage"
+    ],
+    "highlights": [
+      "Customized solar solutions tailored to every customer",
+      "Expert design and engineering for maximum generation",
+      "Premium-quality equipment from trusted manufacturers",
+      "Professional installation and project management",
+      "Real-time system monitoring",
+      "Dedicated after-sales support and maintenance",
+      "Transparent consultation and customer-first approach"
+    ],
+    "process": [
+      {
+        "title": "Consultation & Site Assessment",
+        "content": "We evaluate your energy consumption, roof space, and project requirements."
+      },
+      {
+        "title": "Customized Proposal",
+        "content": "Our experts design a solar solution tailored to your needs and expected savings."
+      },
+      {
+        "title": "Engineering & Installation",
+        "content": "Certified professionals execute the project with quality and safety at every stage."
+      },
+      {
+        "title": "Commissioning & Activation",
+        "content": "We test, commission, and ensure your system is operating efficiently."
+      },
+      {
+        "title": "Ongoing Support",
+        "content": "Our team remains available for monitoring, maintenance, and long-term performance support."
+      }
+    ]
   }
 ]

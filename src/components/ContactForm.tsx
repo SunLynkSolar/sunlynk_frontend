@@ -8,21 +8,28 @@ type Tab = "residential" | "society" | "commercial";
 
 type ContactFormProps = {
   hideTabs?: boolean;
+  defaultTab?: Tab;
 };
 
-export default function ContactForm({ hideTabs = false }: ContactFormProps) {
-  const [activeTab, setActiveTab] = useState<Tab>("residential");
+export default function ContactForm({ hideTabs = false, defaultTab = "residential" }: ContactFormProps) {
+  const [activeTab, setActiveTab] = useState<Tab>(defaultTab);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    if (hideTabs) {
+      setActiveTab(defaultTab);
+      return;
+    }
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab");
       if (tabParam === "residential" || tabParam === "society" || tabParam === "commercial") {
         setActiveTab(tabParam as Tab);
+      } else {
+        setActiveTab(defaultTab);
       }
     }
-  }, []);
+  }, [defaultTab, hideTabs]);
 
   // Form State: Residential
   const [resForm, setResForm] = useState({
@@ -221,7 +228,7 @@ export default function ContactForm({ hideTabs = false }: ContactFormProps) {
       )}
 
       {/* Main Form Content Card */}
-      <div className="bg-[#F8FAFC] border border-gray-200/80 rounded-3xl p-6 md:p-8 shadow-xl text-left text-gray-900 relative">
+      <div className="bg-[#F8FAFC] p-6 md:p-8 text-left text-gray-900 relative">
         {submitted ? (
           <div className="py-8 md:py-12 px-4 text-center">
             {/* Header Success Section */}

@@ -94,13 +94,13 @@ export default function Header() {
                 <ChevronDown size={16} />
               </button>
               <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-xl rounded-md border border-gray-100 py-2 w-56 mt-1 transition-all duration-200">
-                <Link href="/contact?tab=residential" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                <Link href="/solutions/homes" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   Homes
                 </Link>
-                <Link href="/contact?tab=commercial" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                <Link href="/solutions/commercial" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   Commercial
                 </Link>
-                <Link href="/contact?tab=society" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                <Link href="/solutions/housing-societies" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   Housing Societies
                 </Link>
               </div>
@@ -113,13 +113,13 @@ export default function Header() {
                 <ChevronDown size={16} />
               </button>
               <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-xl rounded-md border border-gray-100 py-2 w-56 mt-1 transition-all duration-200">
-                <Link href="/solutions/energy-storage-solutions" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                {/* <Link href="/solutions/energy-storage-solutions" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   Off-Grid Solar
-                </Link>
-                <Link href="/solutions/scada-solutions" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                </Link> */}
+                <Link href="/solutions/on-grid-solar" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   On Grid Solar
                 </Link>
-                <Link href="/solutions/weather-monitoring-solutions" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
+                <Link href="/solutions/hybrid-solar" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-semibold">
                   Hybrid solar
                 </Link>
               </div>
@@ -198,9 +198,9 @@ export default function Header() {
                 </button>
                 {activeDropdown === "offerings" && (
                   <div className="pl-4 mt-2 flex flex-col gap-2 text-sm text-gray-700">
-                    <Link href="/contact?tab=residential" className="py-1">Homes</Link>
-                    <Link href="/contact?tab=commercial" className="py-1">Commercial</Link>
-                    <Link href="/contact?tab=society" className="py-1">Housing Societies</Link>
+                    <Link href="/solutions/homes" className="py-1">Homes</Link>
+                    <Link href="/solutions/commercial" className="py-1">Commercial</Link>
+                    <Link href="/solutions/housing-societies" className="py-1">Housing Societies</Link>
                   </div>
                 )}
               </div>
@@ -216,9 +216,9 @@ export default function Header() {
                 </button>
                 {activeDropdown === "solutions" && (
                   <div className="pl-4 mt-2 flex flex-col gap-2 text-sm text-gray-700">
-                    <Link href="/solutions/energy-storage-solutions" className="py-1">Off-Grid Solar</Link>
-                    <Link href="/solutions/scada-solutions" className="py-1">On Grid Solar</Link>
-                    <Link href="/solutions/weather-monitoring-solutions" className="py-1">Hybrid solar</Link>
+                    {/* <Link href="/solutions/energy-storage-solutions" className="py-1">Off-Grid Solar</Link> */}
+                    <Link href="/solutions/on-grid-solar" className="py-1">On Grid Solar</Link>
+                    <Link href="/solutions/hybrid-solar" className="py-1">Hybrid solar</Link>
                   </div>
                 )}
               </div>
