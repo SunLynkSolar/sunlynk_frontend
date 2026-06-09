@@ -390,6 +390,7 @@ export default function Home() {
 
       <LynkSureShowcase />
 
+      <ZeroInvestmentCalculator />
 
 
       {/* Trust Bar — 4 Pillars */}
@@ -398,148 +399,7 @@ export default function Home() {
       {/* Solar Savings Calculator */}
       <SolarCalculator />
 
-      {/* We Handle Everything Section */}
-      <section className="py-16 bg-[#065F46] border-y border-gray-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
 
-          {/* Mobile: images first, Desktop: side by side */}
-          <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-
-            {/* Left Column: Text + Why Choose Us Grid */}
-            <div className="lg:col-span-7 flex flex-col gap-8">
-              <div className="flex flex-col gap-3">
-                <div className="inline-flex items-center gap-2">
-                  <span className="h-[2px] w-6 bg-primary"></span>
-                  <span className="text-base uppercase tracking-wider font-bold text-primary">Why Choose Us</span>
-                  <span className="h-[2px] w-6 bg-primary"></span>
-                </div>
-                <h2 className="text-2xl sm:text-4xl md:text-4xl font-extrabold text-white leading-tight text-left">
-                  Why Partners & Homeowners <br className="hidden sm:inline" />
-                  <span className="text-primary font-black">Choose SunLynk</span>
-                </h2>
-                <p className="text-sm sm:text-base text-gray-300 max-w-xl text-left">
-                  We deliver top-tier engineering, long-term reliability, and guaranteed performance parameters for every solar solution.
-                </p>
-              </div>
-
-              {/* Core Advantages Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 text-left">
-
-                {/* Advantage 1 */}
-                <div className="flex gap-4 group">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
-                    <Users size={22} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-[15px] sm:text-base mb-1 group-hover:text-primary transition-colors duration-300">
-                      Experienced Team
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                      10+ years of trusted engineering expertise delivering higher quality installations.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Advantage 2 */}
-                <div className="flex gap-4 group">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
-                    <ShieldCheck size={22} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-[15px] sm:text-base mb-1 group-hover:text-primary transition-colors duration-300">
-                      25-Year Product Warranty
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                      Long-term performance and product reliability warranty for absolute peace of mind.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Advantage 4 */}
-                <div className="flex gap-4 group">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
-                    <Zap size={22} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-[15px] sm:text-base mb-1 group-hover:text-primary transition-colors duration-300">
-                      Quicker Project Execution
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                      Swift design engineering, rapid execution, and seamless grid commissioning.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Advantage 5 - spans full width on desktop */}
-                <div className="flex gap-4 group ">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
-                    <Sun size={22} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white text-[15px] sm:text-base mb-1 group-hover:text-primary transition-colors duration-300">
-                      Unit Generation Guarantee
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-xl">
-                      We guarantee specified electricity output and pay ₹8/unit for any generation deficit.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* CTA */}
-              <div className="text-left">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white font-bold py-3 px-7 rounded-lg transition-all duration-300 shadow-lg shadow-primary/15 hover:shadow-primary/25 text-sm"
-                >
-                  Get Free Solar Consultation
-                  <ArrowRight size={16} />
-                </a>
-              </div>
-            </div>
-
-            {/* Right Column: 2 Images Stacked Layout */}
-            <div className="lg:col-span-5 relative w-full">
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {/* Image 1 — Rooftop */}
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
-                  <Image
-                    src="/assets/images/handle_rooftop.webp"
-                    alt="Solar panels on Indian rooftop"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-
-                {/* Image 2 — Team + stat badge */}
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-gray-100 group mt-6 sm:mt-8">
-                  <Image
-                    src="/assets/images/teams.png"
-                    alt="SunLynk solar installation team"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-              </div>
-
-              {/* Floating Stat Badge */}
-              {/* <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white border border-gray-100 rounded-xl shadow-lg px-5 py-3 flex items-center gap-3 z-20">
-                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Sun className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <span className="text-lg font-black text-gray-900 leading-none">40,000+</span>
-                  <span className="block text-[10px] text-gray-500 font-semibold uppercase tracking-wide">Homes Solarized</span>
-                </div>
-              </div> */}
-            </div>
-
-          </div>
-        </div>
-      </section>
 
 
 
@@ -862,7 +722,6 @@ export default function Home() {
       </section> */}
 
 
-      <ZeroInvestmentCalculator />
 
       {/* Project Cases Section */}
       {/* <section className="py-18 bg-gray-1000">
