@@ -226,27 +226,6 @@ export default function HousingSocietiesPage() {
         </div>
       </section>
 
-      {/* Solutions Config */}
-      <section className="py-20 bg-slate-50/30 border-y border-slate-100/80" id="society-layouts-hub">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-
-          <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-2">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/50 rounded-full py-1 px-3.5 shadow-sm">
-              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-700">Configurations</span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-              Community Solar Layouts
-            </h2>
-            <p className="text-sm sm:text-base text-slate-500 max-w-2xl leading-relaxed mt-2 font-semibold">
-              Tailored layout engineering integrated directly with multi-flat energy distribution networks and common meters.
-            </p>
-          </div>
-
-          <SocietySolutionsSelector />
-
-        </div>
-      </section>
-
 
 
       {/* Creative Applications Micro-Cards */}
@@ -369,7 +348,7 @@ export default function HousingSocietiesPage() {
       {/* <SocietyCalculator /> */}
 
       {/* Real Society Installations */}
-      <section className="py-20 bg-white border-t border-slate-100">
+      {/* <section className="py-20 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-2">
             <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/50 rounded-full py-1 px-3.5 shadow-sm">
@@ -384,7 +363,6 @@ export default function HousingSocietiesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Project 1 */}
             <div className="group relative overflow-hidden rounded-3xl border border-slate-200/60 aspect-[4/3] shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
               <Image
                 src="/assets/images/service/solar_housing_society.webp"
@@ -399,7 +377,6 @@ export default function HousingSocietiesPage() {
               </div>
             </div>
 
-            {/* Project 2 */}
             <div className="group relative overflow-hidden rounded-3xl border border-slate-200/60 aspect-[4/3] shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
               <Image
                 src="/assets/IMAGE/project/p (5).avif"
@@ -414,7 +391,6 @@ export default function HousingSocietiesPage() {
               </div>
             </div>
 
-            {/* Project 3 */}
             <div className="group relative overflow-hidden rounded-3xl border border-slate-200/60 aspect-[4/3] shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
               <Image
                 src="/assets/images/handle_rooftop.webp"
@@ -430,7 +406,30 @@ export default function HousingSocietiesPage() {
             </div>
           </div>
         </div>
+      </section> */}
+
+
+      {/* Solutions Config */}
+      <section className="py-20 bg-slate-50/30 border-y border-slate-100/80" id="society-layouts-hub">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+
+          <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-2">
+            <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/50 rounded-full py-1 px-3.5 shadow-sm">
+              <span className="text-[10px] uppercase tracking-wider font-extrabold text-emerald-700">Configurations</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+              Community Solar Layouts
+            </h2>
+            <p className="text-sm sm:text-base text-slate-500 max-w-2xl leading-relaxed mt-2 font-semibold">
+              Tailored layout engineering integrated directly with multi-flat energy distribution networks and common meters.
+            </p>
+          </div>
+
+          <SocietySolutionsSelector />
+
+        </div>
       </section>
+
 
       {/* FAQ Section */}
       <section className="py-20 bg-white">

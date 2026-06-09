@@ -77,6 +77,7 @@ export default function Home() {
   return (
     <div>
       <HeroV2 />
+      <TrustBar />
 
       {/* Services Grid Section */}
       <section className="py-16 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100 overflow-hidden">
@@ -392,9 +393,6 @@ export default function Home() {
 
       <ZeroInvestmentCalculator />
 
-
-      {/* Trust Bar — 4 Pillars */}
-      {/* <TrustBar /> */}
 
       {/* Solar Savings Calculator */}
       <SolarCalculator />
