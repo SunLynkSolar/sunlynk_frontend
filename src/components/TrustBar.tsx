@@ -67,14 +67,13 @@ export default function TrustBar() {
   return (
     <section className="py-6 bg-white w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="bg-[#f4faf6]/80 border border-emerald-100/50 rounded-[2rem] shadow-[0_4px_20px_rgba(46,204,113,0.03)] py-5 px-6 md:px-10">
+        <div className="bg-[#f4faf6]/80 border border-emerald-100/50 rounded-sm shadow-[0_4px_20px_rgba(46,204,113,0.03)] py-5 px-6 md:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y sm:divide-y-0 md:divide-x divide-emerald-100/60 items-center">
             {pillars.map((pillar, idx) => (
-              <div 
-                key={idx} 
-                className={`flex gap-4 items-center text-left py-3 sm:py-2 ${
-                  idx === 0 ? "" : "sm:pt-2 md:pt-0 md:pl-6 lg:pl-10"
-                }`}
+              <div
+                key={idx}
+                className={`flex gap-4 items-center text-left py-3 sm:py-2 ${idx === 0 ? "" : "sm:pt-2 md:pt-0 md:pl-6 lg:pl-10"
+                  }`}
               >
                 {pillar.icon}
                 <div>

@@ -457,7 +457,7 @@ export default function CommercialPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
 
             {/* Left Column: Visual Showcase */}
             <div className="lg:col-span-6 flex flex-col justify-between text-left">

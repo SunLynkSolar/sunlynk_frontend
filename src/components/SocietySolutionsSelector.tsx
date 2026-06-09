@@ -131,9 +131,12 @@ const MATRIX = [
   },
 ];
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+interface MatrixCellProps {
+  cell: string | { icon: string; text: string };
+  isOnGrid: boolean;
+}
 
-function MatrixCell({ cell, isOnGrid }) {
+function MatrixCell({ cell, isOnGrid }: MatrixCellProps) {
   if (typeof cell === "string") return <span>{cell}</span>;
   return (
     <span className="flex items-start gap-2">
@@ -150,7 +153,7 @@ function MatrixCell({ cell, isOnGrid }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function SocietySolutionsSelector() {
-  const [tab, setTab] = useState("on-grid");
+  const [tab, setTab] = useState<"on-grid" | "hybrid">("on-grid");
   const d = DATA[tab];
 
   const isGreen = tab === "on-grid";
@@ -160,7 +163,7 @@ export default function SocietySolutionsSelector() {
 
       {/* ── Toggle ── */}
       <div className="flex gap-2 p-1.5 bg-zinc-100 rounded-2xl mb-8 max-w-lg mx-auto">
-        {["on-grid", "hybrid"].map((t) => {
+        {((["on-grid", "hybrid"] as const)).map((t) => {
           const active = tab === t;
           const td = DATA[t];
           return (

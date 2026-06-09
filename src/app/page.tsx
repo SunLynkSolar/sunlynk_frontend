@@ -22,7 +22,15 @@ import {
   Users,
   ShieldCheck,
   Umbrella,
-  Zap
+  Zap,
+  Clock,
+  Percent,
+  Coins,
+  Briefcase,
+  Home as HomeIcon,
+  TrendingUp,
+  Building2,
+  FileText
 } from "lucide-react";
 import GoogleReviews from "@/components/GoogleReviews";
 import ZeroInvestmentCalculator from "@/components/ZeroInvestmentCalculator";
@@ -102,104 +110,302 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 
             {/* Card 1: Homes */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
                   src="/new_assets/solarHome.png"
                   alt="Solar panels on a modern home rooftop"
-                  className="object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 {/* Stat Badge */}
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-emerald-700 text-xs font-extrabold py-1.5 px-3 rounded-full shadow-sm z-10">
+                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
                   Save up to 90%
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-4">
-                <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
-                  Homes
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Save up to 90% on your home electricity bills. Our rooftop systems are engineered for maximum generation, providing reliable <strong className="text-dark font-semibold">Residential Solar in Lucknow</strong> and surrounding areas, backed by subsidies.
+              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
+                {/* Title and Green Subtitle */}
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                    <HomeIcon size={22} />
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
+                      Homes
+                    </h3>
+                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                      Reduce Your Electricity Bill by Up to 90%
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed min-h-[40px]">
+                  Perfect for independent houses looking for maximum savings and government subsidies.
                 </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors duration-300 mt-auto pt-2 group/btn"
-                >
-                  <span>Know More</span>
-                  <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Link>
+
+                <div className="border-t border-dashed border-gray-200 my-1" />
+
+                {/* Specification Bar */}
+                <div className="grid grid-cols-3 gap-1 py-1 text-left">
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <Clock size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">Payback in</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">4 - 6 Years</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pl-1.5 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <ShieldCheck size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">25 Years</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Warranty</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 pl-1.5">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <Percent size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">Up to 90%</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Savings</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex items-center justify-between gap-4 mt-2">
+                  <Link
+                    href="/contact"
+                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    <span>Get Free Quote</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
+                  >
+                    <span>Know More</span>
+                    <ArrowRight size={14} className="text-emerald-600" />
+                  </Link>
+                </div>
+
+                {/* Bottom Best for Pill */}
+                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <TrendingUp size={15} className="text-emerald-600 shrink-0" />
+                  <span className="text-xs font-bold text-gray-700">
+                    Best for: <span className="font-normal text-gray-600">Independent Houses, Villas, Bungalows</span>
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Card 2: Housing Societies */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
                   src="/new_assets/housingSocities.png"
                   alt="Housing society with rooftop solar installation"
-                  className="object-cover object-bottom"
+                  className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 {/* Stat Badge */}
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-emerald-700 text-xs font-extrabold py-1.5 px-3 rounded-full shadow-sm z-10">
-                  Long Term Value
+                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
+                  Save Lakhs Every Year
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-4">
-                <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
-                  Housing Societies
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Reduce common-area power costs for lifts, pumps, and lighting. We install state-of-the-art <strong className="text-dark font-semibold">Housing Society Solar Solutions</strong> that cut maintenance bills significantly.
+              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
+                {/* Title and Green Subtitle */}
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                    <Building2 size={22} />
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
+                      Housing Societies
+                    </h3>
+                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                      Reduce Common Area Costs Significantly
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed min-h-[40px]">
+                  Smart solar solutions for RWAs & Apartment Complexes to lower electricity expenses.
                 </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors duration-300 mt-auto pt-2 group/btn"
-                >
-                  <span>Know More</span>
-                  <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Link>
+
+                <div className="border-t border-dashed border-gray-200 my-1" />
+
+                {/* Specification Bar */}
+                <div className="grid grid-cols-3 gap-1 py-1 text-left">
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <Coins size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">Save ₹10-50</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Lakhs Annually</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pl-1.5 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <Clock size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">Payback in</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">3 - 5 Years</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 pl-1.5">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <ShieldCheck size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">25 Years</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Warranty</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex items-center justify-between gap-4 mt-2">
+                  <Link
+                    href="/contact"
+                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    <span>Get Free Consultation</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
+                  >
+                    <span>Know More</span>
+                    <ArrowRight size={14} className="text-emerald-600" />
+                  </Link>
+                </div>
+
+                {/* Bottom Best for Pill */}
+                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <Users size={15} className="text-emerald-600 shrink-0" />
+                  <span className="text-xs font-bold text-gray-700">
+                    Best for: <span className="font-normal text-gray-600">Apartments, RWAs, Gated Communities</span>
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Card 3: Commercial */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
                   src="/new_assets/commercial.PNG"
                   alt="Commercial building with solar panel installation"
-                  className="object-cover transition-transform duration-700"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 {/* Stat Badge */}
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-indigo-700 text-xs font-extrabold py-1.5 px-3 rounded-full shadow-sm z-10">
-                  Green Energy
+                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
+                  Boost Your Profits
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-4">
-                <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
-                  Commercial
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed flex-grow">
-                  Power your business with green energy. As a certified <strong className="text-dark font-semibold">Commercial Solar EPC Company</strong>, we engineer high-performance systems for quick ROI and absolute energy independence.
+              <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
+                {/* Title and Green Subtitle */}
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                    <Briefcase size={22} />
+                  </div>
+                  <div className="flex flex-col">
+                    <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
+                      Commercial
+                    </h3>
+                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                      Lower Operating Costs. Increase Profits.
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed min-h-[40px]">
+                  High-performance solar systems for factories, warehouses, offices & commercial spaces.
                 </p>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors duration-300 mt-auto pt-2 group/btn"
-                >
-                  <span>Know More</span>
-                  <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Link>
+
+                <div className="border-t border-dashed border-gray-200 my-1" />
+
+                {/* Specification Bar */}
+                <div className="grid grid-cols-3 gap-1 py-1 text-left">
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <TrendingUp size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">ROI in</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">3 - 4 Years</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 border-r border-gray-100 pl-1.5 pr-1">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <FileText size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">Tax Benefits</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Available</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 pl-1.5">
+                    <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <ShieldCheck size={13} className="stroke-[2.5]" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-gray-400 font-bold uppercase leading-none">25 Years</span>
+                      <span className="text-[11px] font-extrabold text-gray-800 mt-0.5 leading-none">Warranty</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex items-center justify-between gap-4 mt-2">
+                  <Link
+                    href="/contact"
+                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300"
+                  >
+                    <span>Get Free Consultation</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
+                  >
+                    <span>Know More</span>
+                    <ArrowRight size={14} className="text-emerald-600" />
+                  </Link>
+                </div>
+
+                {/* Bottom Best for Pill */}
+                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <Building2 size={15} className="text-emerald-600 shrink-0" />
+                  <span className="text-xs font-bold text-gray-700">
+                    Best for: <span className="font-normal text-gray-600">Factories, Warehouses, Offices, Hotels</span>
+                  </span>
+                </div>
               </div>
             </div>
 
