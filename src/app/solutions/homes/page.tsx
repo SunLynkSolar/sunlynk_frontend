@@ -232,86 +232,10 @@ export default function HomesPage() {
         </div>
       </section>
 
-      {/* Creative Premium Benefits Grid */}
-      <section className="py-20 bg-[#065F46]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* Zero Investment EMI Calculator */}
+      <ZeroInvestmentCalculator />
 
-            {/* Left Column: Real Solar Image */}
-            <div className="lg:col-span-5 relative w-full">
-              <div className="relative aspect-[4/5] rounded-xl overflow-hidden shadow-xl border border-gray-150 group">
-                {/* <video
-                  src="/new_assets/_assist_video.mp4"
-                  className="w-full h-full absolute inset-0 object-cover group-hover:scale-102 transition-transform duration-500"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                /> */}
-                <img src="/new_assets/modisolar.avif" alt="solar modi yojna" className="w-full h-full absolute inset-0 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
 
-                {/* Floating stat card on the image */}
-                <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg text-left">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                      <Sparkles size={20} className="animate-pulse" />
-                    </div>
-                    <div>
-                      <span className="block text-gray-950 font-black text-sm">PM Surya Ghar Yojana</span>
-                      <span className="block text-[10px] text-gray-500 font-bold uppercase mt-0.5">Subsidy Support Assured</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Key Benefits Text & Items */}
-            <div className="lg:col-span-7 flex flex-col gap-6 text-left">
-              <div className="flex flex-col gap-3">
-                <div className="inline-flex items-center gap-2">
-                  <span className="h-[2px] w-6 bg-primary"></span>
-                  <span className="text-base uppercase tracking-wider font-bold text-primary">Key Benefits</span>
-                  <span className="h-[2px] w-6 bg-primary"></span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-                  Designed for Reliability and Optimal Returns
-                </h2>
-                <p className="text-sm text-gray-200 leading-relaxed text-justify">
-                  Transitioning to clean energy shouldn't be stressful. We ensure every panel operates at peak efficiency, utilizing top-tier engineering to yield reliable generation for 25+ years.
-                </p>
-              </div>
-
-              {/* Benefits micro-grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {benefits.map((b, idx) => {
-                  const IconComponent = b.icon;
-                  return (
-                    <div
-                      key={idx}
-                      className="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-left flex gap-4 items-start group"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                        <IconComponent className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-extrabold text-sm sm:text-base text-gray-950 group-hover:text-primary transition-colors duration-300">
-                          {b.title}
-                        </h3>
-                        <p className="text-[11px] sm:text-xs text-gray-500 leading-relaxed mt-1">
-                          {b.desc}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
       {/* The SunLynk Journey Section */}
       <section className="py-24 bg-white border-b border-gray-100 overflow-hidden">
@@ -675,8 +599,86 @@ export default function HomesPage() {
         </div>
       </section>
 
-      {/* Zero Investment EMI Calculator */}
-      <ZeroInvestmentCalculator />
+      {/* Creative Premium Benefits Grid */}
+      <section className="py-20 bg-[#065F46]">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+            {/* Left Column: Real Solar Image */}
+            <div className="lg:col-span-5 relative w-full">
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden shadow-xl border border-gray-150 group">
+                {/* <video
+                  src="/new_assets/_assist_video.mp4"
+                  className="w-full h-full absolute inset-0 object-cover group-hover:scale-102 transition-transform duration-500"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                /> */}
+                <img src="/new_assets/modisolar.avif" alt="solar modi yojna" className="w-full h-full absolute inset-0 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+
+                {/* Floating stat card on the image */}
+                <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg text-left">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Sparkles size={20} className="animate-pulse" />
+                    </div>
+                    <div>
+                      <span className="block text-gray-950 font-black text-sm">PM Surya Ghar Yojana</span>
+                      <span className="block text-[10px] text-gray-500 font-bold uppercase mt-0.5">Subsidy Support Assured</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Key Benefits Text & Items */}
+            <div className="lg:col-span-7 flex flex-col gap-6 text-left">
+              <div className="flex flex-col gap-3">
+                <div className="inline-flex items-center gap-2">
+                  <span className="h-[2px] w-6 bg-primary"></span>
+                  <span className="text-base uppercase tracking-wider font-bold text-primary">Key Benefits</span>
+                  <span className="h-[2px] w-6 bg-primary"></span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
+                  Designed for Reliability and Optimal Returns
+                </h2>
+                <p className="text-sm text-gray-200 leading-relaxed text-justify">
+                  Transitioning to clean energy shouldn't be stressful. We ensure every panel operates at peak efficiency, utilizing top-tier engineering to yield reliable generation for 25+ years.
+                </p>
+              </div>
+
+              {/* Benefits micro-grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {benefits.map((b, idx) => {
+                  const IconComponent = b.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-left flex gap-4 items-start group"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-sm sm:text-base text-gray-950 group-hover:text-primary transition-colors duration-300">
+                          {b.title}
+                        </h3>
+                        <p className="text-[11px] sm:text-xs text-gray-500 leading-relaxed mt-1">
+                          {b.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* Solar Savings Calculator */}
       {/* <SolarCalculator /> */}
