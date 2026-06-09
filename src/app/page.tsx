@@ -110,7 +110,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
 
             {/* Card 1: Homes */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
@@ -210,7 +210,7 @@ export default function Home() {
             </div>
 
             {/* Card 2: Housing Societies */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
@@ -310,7 +310,7 @@ export default function Home() {
             </div>
 
             {/* Card 3: Commercial */}
-            <div className="group relative bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 rounded-2xl overflow-hidden flex flex-col">
+            <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
               {/* Image Header */}
               <div className="relative h-60 overflow-hidden">
                 <img
