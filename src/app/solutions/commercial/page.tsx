@@ -28,7 +28,7 @@ export default function CommercialPage() {
     {
       name: "Factories",
       desc: "Offsets heavy daytime machinery loads and lowers per-unit utility tariffs.",
-      image: "/new_assets/commercial/factory.png"
+      image: "/new_assets/commercial/factories.webp"
     },
     {
       name: "Warehouses",
@@ -38,32 +38,32 @@ export default function CommercialPage() {
     {
       name: "Educational Institutions",
       desc: "Reduces high daytime lighting and computer lab loads while promoting green campus values.",
-      image: "/new_assets/commercial/education.png"
+      image: "/new_assets/commercial/school.jpeg"
     },
     {
       name: "Hospitals",
       desc: "Secures reliable hybrid solar backup for critical care units, cooling, and diagnostic loads.",
-      image: "/new_assets/commercial/hospital.png"
+      image: "/new_assets/commercial/hospital.jpg"
     },
     {
       name: "Hotels",
       desc: "Powers 24/7 central air conditioning, heating, and laundry systems with maximum savings.",
-      image: "/new_assets/commercial/hotel.png"
+      image: "/new_assets/commercial/hotels.jpg"
     },
     {
       name: "Office Buildings",
       desc: "Offsets heavy HVAC overheads and meets corporate ESG carbon compliance goals.",
-      image: "/new_assets/commercial/office.png"
+      image: "/new_assets/commercial/offices.png"
     },
     {
       name: "Retail Establishments",
       desc: "Cuts daytime lighting, elevators, and air conditioning costs for a lower carbon footprint.",
-      image: "/new_assets/commercial/sjopping.png"
+      image: "/new_assets/commercial/retail.webp"
     },
     {
       name: "Industrial Facilities",
       desc: "Leverages open-access grids, large-scale structures, and high Accelerated Depreciation tax benefits.",
-      image: "/new_assets/commercial/industry.png"
+      image: "/new_assets/commercial/industry.webp"
     }
   ];
 
@@ -277,20 +277,18 @@ export default function CommercialPage() {
             {suitableFor.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#071813]/90 border border-emerald-950/45 rounded-2xl overflow-hidden hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/40 hover:-translate-y-1.5 transition-all duration-500 text-left group flex flex-col"
+                className="bg-[#071813]/90 border border-emerald-950/45 rounded-md overflow-hidden hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/40 hover:-translate-y-1.5 transition-all duration-500 text-left group flex flex-col"
               >
                 {/* Image Showcase */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-emerald-950/20">
-                  <Image
+                  <img
                     src={item.image}
                     alt={`${item.name} with solar panel installation`}
-                    fill
+
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 bg-[#0A1E17] text-emerald-300 border border-emerald-800/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-sm">
-                    0{idx + 1}
-                  </span>
+
                 </div>
 
                 {/* Card Content */}
