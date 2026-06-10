@@ -5,7 +5,7 @@ import Image from "next/image";
 import { X, Sun, Phone, MapPin, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
 const POPUP_INTERVAL_MS = 60_000; // 1 minute interval
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface FormState {
   fullName: string;

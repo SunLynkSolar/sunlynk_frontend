@@ -23,7 +23,7 @@ interface PageProps {
 export async function generateStaticParams() {
   let dynamicBlogs: any[] = [];
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
     if (res.ok) {
       dynamicBlogs = await res.json();
     }
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps) {
   
   let post: BlogPost | null = null;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs/${slug}`, { next: { revalidate: 10 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${slug}`, { next: { revalidate: 10 } });
     if (res.ok) {
       post = (await res.json()) as BlogPost;
     }
@@ -246,7 +246,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   let post: BlogPost | null = null;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs/${slug}`, { next: { revalidate: 10 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${slug}`, { next: { revalidate: 10 } });
     if (res.ok) {
       post = (await res.json()) as BlogPost;
     }
@@ -269,7 +269,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
   let allPosts = blogsData;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs`, { next: { revalidate: 10 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, { next: { revalidate: 10 } });
     if (res.ok) {
       const dynamicBlogs = await res.json();
       const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));

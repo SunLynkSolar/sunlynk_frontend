@@ -105,7 +105,7 @@ function PostCard({ post }: { post: BlogPost }) {
 export default async function BlogList() {
   let dynamicBlogs = [];
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/blogs`, { next: { revalidate: 10 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, { next: { revalidate: 10 } });
     if (res.ok) {
       dynamicBlogs = await res.json();
     }

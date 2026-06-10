@@ -93,7 +93,7 @@ interface Blog {
   blocks: ContentBlock[];
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -299,18 +299,20 @@ export default function AdminDashboard() {
         { type: "heading", level: 2, text: "Required Equipment & Pre-requisites" },
         { type: "list", style: "ordered", items: ["SunLynk Hybrid Inverter", "Battery energy storage pack", "SCADA connection cable"] },
         { type: "heading", level: 2, text: "Configuration Interface" },
-        { type: "two_column", left: [
-          { type: "heading", level: 3, text: "Left Column: Settings" },
-          { type: "paragraph", text: "Adjust the inverter charge settings under the advanced parameters tab." }
-        ], right: [
-          { type: "heading", level: 3, text: "Right Column: Results" },
-          { type: "paragraph", text: "Ensure the telemetry light shows green and the dashboard logs show status 200." }
-        ] },
+        {
+          type: "two_column", left: [
+            { type: "heading", level: 3, text: "Left Column: Settings" },
+            { type: "paragraph", text: "Adjust the inverter charge settings under the advanced parameters tab." }
+          ], right: [
+            { type: "heading", level: 3, text: "Right Column: Results" },
+            { type: "paragraph", text: "Ensure the telemetry light shows green and the dashboard logs show status 200." }
+          ]
+        },
         { type: "heading", level: 2, text: "Conclusion & Troubleshooting" },
         { type: "paragraph", text: "If you encounter errors, refer to the console debugger or contact the SunLynk support center." }
       ];
     }
-    
+
     setBlogBlocks(templates);
     setMarkdownContent(parseBlocksToMarkdown(templates));
   };
@@ -446,6 +448,30 @@ export default function AdminDashboard() {
       if (selectedLead?._id === leadId) setSelectedLead(null);
     } catch { alert("Error deleting lead"); }
     finally { setActionLoading(false); }
+  };
+
+  const exportLeadsToCSV = async () => {
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/leads/export`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error();
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `leads_export_${new Date().toISOString().split("T")[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch {
+      alert("Error exporting leads to CSV");
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   // ─── User Actions ─────────────────────────────────────────────────────────
@@ -691,6 +717,18 @@ export default function AdminDashboard() {
                         <p className="text-xs text-slate-500 text-left">Real-time submissions from contact form</p>
                       </div>
                       <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={exportLeadsToCSV}
+                          disabled={actionLoading || leads.length === 0}
+                          className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-50 py-1.5 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-sm shadow-emerald-600/10"
+                        >
+                          {actionLoading ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <FileSpreadsheet size={14} />
+                          )}
+                          <span>Export CSV</span>
+                        </button>
                         <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}
                           className="bg-white border border-slate-200 rounded-lg py-1.5 px-3 text-xs font-bold text-slate-700 focus:outline-none focus:border-primary">
                           <option value="all">All Types</option>
@@ -1055,7 +1093,7 @@ export default function AdminDashboard() {
 
                       {/* CENTER CANVAS & EDITOR HEADERS */}
                       <div className="flex-1 bg-slate-100 flex flex-col overflow-hidden">
-                        
+
                         {/* Canvas toolbar */}
                         <div className="bg-slate-50 border-b border-slate-200 px-6 py-2.5 flex flex-wrap items-center justify-between shrink-0 gap-3">
                           <div className="flex bg-slate-200/70 p-0.5 rounded-lg border border-slate-300/40">
@@ -1114,12 +1152,12 @@ export default function AdminDashboard() {
                             if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, blogBlocks.length);
                             setDragFrom(null); setDragOverIdx(null);
                           }}>
-                          
+
                           {editorMode === "markdown" ? (
                             <div className="max-w-3xl mx-auto my-6 px-4 flex flex-col h-[calc(100%-3rem)] min-h-[480px]">
                               <div className="flex items-center justify-between mb-2">
                                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Standard Markdown</span>
-                                <button 
+                                <button
                                   type="button"
                                   onClick={() => {
                                     const parsed = parseMarkdownToBlocks(markdownContent);
@@ -1205,7 +1243,7 @@ export default function AdminDashboard() {
                                       onDragEnd={() => { setDragFrom(null); setDragOverIdx(null); }}
                                       onClick={() => setSelectedBlockIdx(selectedBlockIdx === idx ? null : idx)}
                                       className={`relative rounded-xl border-2 cursor-grab active:cursor-grabbing transition-all group ${selectedBlockIdx === idx ? "border-primary shadow-md shadow-primary/15" : "border-transparent hover:border-slate-200"}`}>
-                                      
+
                                       {/* Action bar */}
                                       <div className={`absolute -top-3 right-2 flex items-center gap-0.5 transition-opacity z-10 ${selectedBlockIdx === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
                                         <span className="bg-primary text-white text-[9px] font-black px-2 py-0.5 rounded-full mr-1 uppercase tracking-wider">{block.type.replace("_", " ")}</span>
