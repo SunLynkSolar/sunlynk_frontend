@@ -4,8 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, Sun, Phone, MapPin, User, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
-const POPUP_DELAY_MS = 60_000; // 1 minute
-const SESSION_KEY = "sunlynk_popup_shown";
+const POPUP_INTERVAL_MS = 60_000; // 1 minute interval
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 interface FormState {
@@ -22,6 +21,71 @@ export default function PopupForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [mounted, setMounted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 30,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    if (!isVisible) return;
+    setMounted(true);
+
+    // Check localStorage for target date to make the timer feel real and persistent
+    const targetKey = "sunlynk_subsidy_target_date";
+    let targetTime = 0;
+
+    try {
+      const stored = localStorage.getItem(targetKey);
+      if (stored) {
+        targetTime = parseInt(stored, 10);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    const now = Date.now();
+    // If no target time or it is in the past, set a new target 30 days from now
+    if (!targetTime || targetTime <= now) {
+      targetTime = now + 30 * 24 * 60 * 60 * 1000;
+      try {
+        localStorage.setItem(targetKey, targetTime.toString());
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const calculateTimeLeft = () => {
+      const difference = targetTime - Date.now();
+      if (difference <= 0) {
+        // Reset to another 30 days if it expired to keep the urgent banner active
+        const newTarget = Date.now() + 30 * 24 * 60 * 60 * 1000;
+        try {
+          localStorage.setItem(targetKey, newTarget.toString());
+        } catch (e) { }
+        return { days: 30, hours: 0, minutes: 0, seconds: 0 };
+      }
+
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    };
+
+    // Set initial
+    setTimeLeft(calculateTimeLeft());
+
+    const interval = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
   const openPopup = useCallback(() => {
     setIsVisible(true);
     setTimeout(() => setIsAnimating(true), 10); // Trigger CSS enter animation
@@ -30,16 +94,21 @@ export default function PopupForm() {
   const closePopup = useCallback(() => {
     setIsAnimating(false);
     setTimeout(() => setIsVisible(false), 300); // Wait for CSS leave animation
-    sessionStorage.setItem(SESSION_KEY, "true");
   }, []);
 
   useEffect(() => {
-    // Only show once per session
-    if (sessionStorage.getItem(SESSION_KEY)) return;
+    if (isVisible) return;
 
-    const timer = setTimeout(openPopup, POPUP_DELAY_MS);
+    // Do not show the popup if the user has already successfully submitted it
+    try {
+      if (localStorage.getItem("sunlynk_popup_submitted") === "true") return;
+    } catch (e) {
+      console.error(e);
+    }
+
+    const timer = setTimeout(openPopup, POPUP_INTERVAL_MS);
     return () => clearTimeout(timer);
-  }, [openPopup]);
+  }, [isVisible, openPopup]);
 
   // Close on Escape key
   useEffect(() => {
@@ -97,6 +166,13 @@ export default function PopupForm() {
 
       if (!res.ok) throw new Error("Submission failed");
 
+      // Mark popup as successfully submitted in localStorage
+      try {
+        localStorage.setItem("sunlynk_popup_submitted", "true");
+      } catch (e) {
+        console.error(e);
+      }
+
       setStatus("success");
       setTimeout(() => {
         closePopup();
@@ -113,9 +189,8 @@ export default function PopupForm() {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[9998] transition-all duration-300 ${
-          isAnimating ? "bg-black/60 backdrop-blur-sm" : "bg-black/0 backdrop-blur-none"
-        }`}
+        className={`fixed inset-0 z-[9998] transition-all duration-300 ${isAnimating ? "bg-black/60 backdrop-blur-sm" : "bg-black/0 backdrop-blur-none"
+          }`}
         onClick={closePopup}
         aria-hidden="true"
       />
@@ -141,50 +216,88 @@ export default function PopupForm() {
           onClick={(e) => e.stopPropagation()}
         >
           {/* ─── Left Panel: Image + headline ─── */}
-          <div className="relative md:w-[42%] flex-shrink-0 min-h-[220px] md:min-h-[auto] overflow-hidden bg-emerald-900">
+          <div className="relative md:w-[42%] flex-shrink-0 min-h-[260px] md:min-h-[auto] overflow-hidden bg-emerald-900">
             <Image
-              src="/popup_solar_banner.png"
+              src="/new_assets/popupImage.png"
               alt="Get a free solar quote - SunLynk Solar"
               fill
               className="object-cover object-center"
               priority
             />
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/90 via-emerald-900/40 to-transparent md:bg-gradient-to-r md:from-transparent md:via-emerald-900/20 md:to-emerald-950/80" />
+            {/* Dark gradient overlay for superior text contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 to-black/20" />
 
             {/* Content on image */}
-            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-7">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-amber-400 shadow-lg">
-                  <Sun size={16} className="text-emerald-900 fill-emerald-900" />
+            <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6.5 z-10">
+              {/* Top tag */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-400 shadow-md animate-pulse">
+                  <Sun size={14} className="text-emerald-950 fill-emerald-950" />
                 </div>
-                <span className="text-xs font-bold text-amber-300 uppercase tracking-widest">
+                <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest bg-black/45 px-2 py-0.5 rounded border border-white/5">
                   Limited Time Offer
                 </span>
               </div>
-              <h2
-                id="popup-form-title"
-                className="text-2xl md:text-3xl font-black text-white leading-tight"
-              >
-                Get Your{" "}
-                <span className="text-amber-400">FREE</span>{" "}
-                Solar Quote
-              </h2>
-              <p className="text-sm text-emerald-100 mt-1.5 leading-relaxed max-w-[240px]">
-                Save up to <strong className="text-amber-400">90%</strong> on electricity bills.
-                Expert consultation, zero obligation.
-              </p>
 
-              {/* Trust badges */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                {["500+ Installations", "25yr Warranty", "Govt Subsidy"].map((badge) => (
-                  <span
-                    key={badge}
-                    className="text-[10px] font-bold text-emerald-100 bg-white/10 border border-white/20 rounded-full px-2.5 py-1 backdrop-blur-sm"
+              {/* Bottom text + Timer */}
+              <div className="flex flex-col gap-3">
+                <div>
+                  <h2
+                    id="popup-form-title"
+                    className="text-xl md:text-2xl font-black text-white leading-tight"
                   >
-                    {badge}
+                    Get up to <span className="text-amber-400 font-extrabold">₹1.8 Lakhs</span> in Government Subsidy!
+                  </h2>
+                  <p className="text-[11px] text-white/85 mt-1 leading-normal">
+                    Lock in Lucknow's premier solar rates and save up to 90% on electricity bills.
+                  </p>
+                </div>
+
+                {/* Subsidiy Countdown Timer widget */}
+                <div className="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex flex-col gap-2 shadow-inner">
+                  <span className="text-[9px] font-bold text-white/50 tracking-wider uppercase block">
+                    Offer Expires In:
                   </span>
-                ))}
+
+                  <div className="grid grid-cols-4 gap-1.5 text-center">
+                    <div className="bg-black/35 rounded-lg py-1 px-1 flex flex-col items-center">
+                      <span className="text-base font-black text-white tracking-tight tabular-nums leading-none">
+                        {mounted ? String(timeLeft.days).padStart(2, "0") : "30"}
+                      </span>
+                      <span className="text-[8px] font-bold text-white/40 tracking-wider mt-0.5 uppercase">Days</span>
+                    </div>
+                    <div className="bg-black/35 rounded-lg py-1 px-1 flex flex-col items-center">
+                      <span className="text-base font-black text-white tracking-tight tabular-nums leading-none">
+                        {mounted ? String(timeLeft.hours).padStart(2, "0") : "00"}
+                      </span>
+                      <span className="text-[8px] font-bold text-white/40 tracking-wider mt-0.5 uppercase">Hrs</span>
+                    </div>
+                    <div className="bg-black/35 rounded-lg py-1 px-1 flex flex-col items-center">
+                      <span className="text-base font-black text-white tracking-tight tabular-nums leading-none">
+                        {mounted ? String(timeLeft.minutes).padStart(2, "0") : "00"}
+                      </span>
+                      <span className="text-[8px] font-bold text-white/40 tracking-wider mt-0.5 uppercase">Mins</span>
+                    </div>
+                    <div className="bg-black/35 rounded-lg py-1 px-1 flex flex-col items-center">
+                      <span className="text-base font-black text-amber-400 tracking-tight tabular-nums leading-none animate-pulse">
+                        {mounted ? String(timeLeft.seconds).padStart(2, "0") : "00"}
+                      </span>
+                      <span className="text-[8px] font-bold text-white/40 tracking-wider mt-0.5 uppercase">Secs</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trust badges */}
+                <div className="flex flex-wrap gap-1.5 mt-1">
+                  {["25yr Warranty", "Govt Approved", "Subsidy Support up to 1.8Lakhs"].map((badge) => (
+                    <span
+                      key={badge}
+                      className="text-[9px] font-bold text-white/80 bg-white/10 border border-white/10 rounded px-2 py-0.5 backdrop-blur-sm"
+                    >
+                      {badge}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

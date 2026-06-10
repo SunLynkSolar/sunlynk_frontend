@@ -128,7 +128,7 @@ export default function Home() {
             <div className="inline-flex items-center gap-3.5 bg-white/5 border border-white/10 rounded-full py-1.5 pl-2 pr-5 shadow-lg mt-4 hover:border-primary/20 transition-all duration-300 backdrop-blur-md">
               <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/20 shadow-sm shrink-0">
                 <Image
-                  src="/assets/images/sunlynk_guy.webp"
+                  src="/new_assets/small_image.png"
                   alt="SunLynk Guide"
                   fill
                   className="object-cover"
@@ -648,7 +648,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-4">
             <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gray-100 shadow-md">
               <Image
-                src="/assets/IMAGE/solar.webp"
+                src="/new_assets/faq.png"
                 alt="Faq Intro"
                 fill
                 className="object-cover"
@@ -657,7 +657,7 @@ export default function Home() {
             <div className="flex flex-col gap-4 justify-between">
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gray-100 shadow-md">
                 <Image
-                  src="/assets/IMAGE/forecasting.webp"
+                  src="/assets/IMAGE/solar.webp"
                   alt="Faq Detail"
                   fill
                   className="object-cover"
@@ -668,8 +668,8 @@ export default function Home() {
                 <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mb-3">
                   <Sun size={20} />
                 </div>
-                <h5 className="font-bold text-gray-800 text-sm">Watch Our Intro</h5>
-                <p className="text-xs text-gray-500 mt-1">Solar PV & SCADA Solutions Overview</p>
+                {/* <h5 className="font-bold text-gray-800 text-sm">Watch Our Intro</h5> */}
+                <p className="text-xs text-gray-500 mt-1">Solar Solutions Overview</p>
               </div>
             </div>
           </div>
