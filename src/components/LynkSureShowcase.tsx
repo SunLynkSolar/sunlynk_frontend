@@ -99,11 +99,11 @@ export default function LynkSureShowcase() {
             <span className="text-[10px] sm:text-xs uppercase tracking-wider font-extrabold text-emerald-700">SunLynk Core Technology</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            Engineered with <span className="text-emerald-600">LynkShield™</span> for 25 Yrs.<br className="hidden sm:inline" />
+            Engineered with <span className="text-emerald-600">LynkShield</span> for 25 Yrs.<br className="hidden sm:inline" />
             Backed for <span className="text-emerald-600">5 Years</span>.
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed">
-            Discover the proprietary LynkShield™ structural engineering and the complete peace-of-mind guarantee package that sets our solar installations apart.
+            Discover the proprietary LynkShield structural engineering and the complete peace-of-mind guarantee package that sets our solar installations apart.
           </p>
         </div>
 
@@ -446,152 +446,73 @@ export default function LynkSureShowcase() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
 
-              {/* Subsidy Process Card */}
-              <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg">
-                <div className="flex items-center gap-3.5 mb-8">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60 shadow-sm">
-                    <FileText size={22} />
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest block">
-                      Hassle-Free Approval
-                    </span>
-                    <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900">
-                      Rooftop Subsidy Process
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Steps Visual Layout */}
-                <div className="flex flex-col gap-8 relative before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
-
-                  {/* Step 1 */}
-                  <div className="flex items-start gap-5 relative group">
-                    <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
-                      1
-                    </div>
-                    <div>
-                      <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Portal Registration</h4>
-                      <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
-                        We register your roof layout and customer metrics on the PM Surya Ghar National Portal.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step 2 */}
-                  <div className="flex items-start gap-5 relative group">
-                    <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
-                      2
-                    </div>
-                    <div>
-                      <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">DISCOM Liaisoning</h4>
-                      <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
-                        We file feasibility reports with grid operators and obtain administrative approvals. No follow-ups needed on your end.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step 3 */}
-                  <div className="flex items-start gap-5 relative group">
-                    <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
-                      3
-                    </div>
-                    <div>
-                      <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Net-Metering Sync</h4>
-                      <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
-                        Following physical installation, we synchronize bidirectional net-meter setups to start tracking power return.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Step 4 */}
-                  <div className="flex items-start gap-5 relative group">
-                    <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
-                      4
-                    </div>
-                    <div>
-                      <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Direct Subsidy Credit</h4>
-                      <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
-                        Under PM Surya Ghar Muft Bijli Yojana, up to ₹1,08,000 subsidy is deposited directly into your bank account.
-                      </p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-              {/* PSU Bank Loans Card */}
-              <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg flex flex-col justify-between">
-                <div>
+                {/* Subsidy Process Card */}
+                <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg">
                   <div className="flex items-center gap-3.5 mb-8">
                     <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60 shadow-sm">
-                      <Building2 size={22} />
+                      <FileText size={22} />
                     </div>
                     <div>
                       <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest block">
-                        Official Bank Financing
+                        Hassle-Free Approval
                       </span>
                       <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900">
-                        PSU Solar Loans
+                        Rooftop Subsidy Process
                       </h3>
                     </div>
                   </div>
 
-                  {/* Financing Points */}
-                  <div className="flex flex-col gap-6">
+                  {/* Steps Visual Layout */}
+                  <div className="flex flex-col gap-8 relative before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-100">
 
-                    <div className="flex gap-4 group">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                        <TrendingUp size={16} />
+                    {/* Step 1 */}
+                    <div className="flex items-start gap-5 relative group">
+                      <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
+                        1
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
-                          Low Interest Rates
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-normal">
-                          Interest rates starting as low as 7.00% p.a. through official national banking tie-ups.
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Portal Registration</h4>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                          We register your roof layout and customer metrics on the PM Surya Ghar National Portal.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4 group">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                        <Shield size={16} />
+                    {/* Step 2 */}
+                    <div className="flex items-start gap-5 relative group">
+                      <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
+                        2
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
-                          Collateral-Free Option
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-normal">
-                          Get loan sanctions up to ₹10 Lakhs with zero collateral required for residential properties.
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">DISCOM Liaisoning</h4>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                          We file feasibility reports with grid operators and obtain administrative approvals. No follow-ups needed on your end.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4 group">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                        <Coins size={16} />
+                    {/* Step 3 */}
+                    <div className="flex items-start gap-5 relative group">
+                      <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
+                        3
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
-                          Self-Paying EMI Scheme
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-normal">
-                          Zero out-of-pocket investment: monthly solar bill savings are larger than your monthly EMI.
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Net-Metering Sync</h4>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                          Following physical installation, we synchronize bidirectional net-meter setups to start tracking power return.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4 group">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                        <CheckCircle2 size={16} />
+                    {/* Step 4 */}
+                    <div className="flex items-start gap-5 relative group">
+                      <div className="w-7.5 h-7.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0 mt-0.5 z-10 border-4 border-white shadow-md transition-transform duration-300 group-hover:scale-110">
+                        4
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
-                          Fast &amp; Simple Sanctions
-                        </h4>
-                        <p className="text-xs sm:text-sm text-slate-600 leading-normal">
-                          Streamlined application process through partnered nationalized banks with minimal documentation.
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Direct Subsidy Credit</h4>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                          Under PM Surya Ghar Muft Bijli Yojana, up to ₹1,08,000 subsidy is deposited directly into your bank account.
                         </p>
                       </div>
                     </div>
@@ -599,29 +520,108 @@ export default function LynkSureShowcase() {
                   </div>
                 </div>
 
-                <div className="mt-10 border-t border-slate-100 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                {/* PSU Bank Loans Card */}
+                <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
-                      Official Lending Partners
-                    </span>
-                    <span className="text-sm font-black text-slate-700 mt-1 block">
-                      SBI • PNB • Bank of Baroda
-                    </span>
-                  </div>
-                  <a
-                  href="https://wa.me/918573003001?text=Hi%2C%20I%20am%20interested%20in%20the%20solar%20loan%20scheme.%20Please%20provide%20more%20details."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-3 px-6 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all self-start sm:self-center cursor-pointer outline-none"
-                  >
-                    Check Loan Eligibility
-                    <ArrowRight size={13} />
-                  </a>
-                </div>
-              </div>
+                    <div className="flex items-center gap-3.5 mb-8">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60 shadow-sm">
+                        <Building2 size={22} />
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest block">
+                          Official Bank Financing
+                        </span>
+                        <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900">
+                          PSU Solar Loans
+                        </h3>
+                      </div>
+                    </div>
 
+                    {/* Financing Points */}
+                    <div className="flex flex-col gap-6">
+
+                      <div className="flex gap-4 group">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                          <TrendingUp size={16} />
+                        </div>
+                        <div>
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                            Low Interest Rates
+                          </h4>
+                          <p className="text-xs sm:text-sm text-slate-600 leading-normal">
+                            Interest rates starting as low as 7.00% p.a. through official national banking tie-ups.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 group">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                          <Shield size={16} />
+                        </div>
+                        <div>
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                            Collateral-Free Option
+                          </h4>
+                          <p className="text-xs sm:text-sm text-slate-600 leading-normal">
+                            Get loan sanctions up to ₹10 Lakhs with zero collateral required for residential properties.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 group">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                          <Coins size={16} />
+                        </div>
+                        <div>
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                            Self-Paying EMI Scheme
+                          </h4>
+                          <p className="text-xs sm:text-sm text-slate-600 leading-normal">
+                            Zero out-of-pocket investment: monthly solar bill savings are larger than your monthly EMI.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4 group">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                          <CheckCircle2 size={16} />
+                        </div>
+                        <div>
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                            Fast &amp; Simple Sanctions
+                          </h4>
+                          <p className="text-xs sm:text-sm text-slate-600 leading-normal">
+                            Streamlined application process through partnered nationalized banks with minimal documentation.
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div className="mt-10 border-t border-slate-100 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block">
+                        Official Lending Partners
+                      </span>
+                      <span className="text-sm font-black text-slate-700 mt-1 block">
+                        SBI • PNB • Bank of Baroda
+                      </span>
+                    </div>
+                    <a
+                      href="https://wa.me/918573003001?text=Hi%2C%20I%20am%20interested%20in%20the%20solar%20loan%20scheme.%20Please%20provide%20more%20details."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-3 px-6 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all self-start sm:self-center cursor-pointer outline-none"
+                    >
+                      Check Loan Eligibility
+                      <ArrowRight size={13} />
+                    </a>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
           )}
 
         </div>
