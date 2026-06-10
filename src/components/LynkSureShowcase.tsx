@@ -109,7 +109,7 @@ export default function LynkSureShowcase() {
 
         {/* Dynamic Glassmorphic Tabs Selector */}
         <div className="flex justify-center mb-16">
-          <div className="inline-flex flex-wrap sm:flex-nowrap gap-2 p-1.5 bg-slate-100 border border-slate-200/80 rounded-2xl w-full max-w-2xl justify-center sm:justify-between shadow-sm relative">
+          <div className="inline-flex flex-wrap sm:flex-nowrap gap-2 p-1.5 bg-slate-100 border border-slate-200/80 rounded-2xl w-full max-w-4xl justify-center sm:justify-between shadow-sm relative">
             {tabs.map((tab) => {
               const TabIcon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -147,7 +147,7 @@ export default function LynkSureShowcase() {
                     Proprietary Structure
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                    LynkShield™ Platform
+                    LynkShield Mounting Structure
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
                     Hover over the features below to highlight their exact locations on the structural engineering layout.
@@ -320,7 +320,7 @@ export default function LynkSureShowcase() {
                   Complete peace-of-mind backing
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">
-                  The LynkSure™ Warranty Promise
+                  The LynkSure Warranty Promise
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   We don&apos;t just install panels and walk away. Our 5-year guarantee ensures your solar powerhouse performs at peak parameters with absolutely zero maintenance headaches.
@@ -384,7 +384,7 @@ export default function LynkSureShowcase() {
                       <Headphones size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">5yr+</span>
+                      <span className="text-3xl font-black text-emerald-600">5 yrs+</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dedicated Care</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -408,7 +408,7 @@ export default function LynkSureShowcase() {
                       <Calendar size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">5 Yr</span>
+                      <span className="text-3xl font-black text-emerald-600">30 yrs</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Commitment</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -595,13 +595,15 @@ export default function LynkSureShowcase() {
                       SBI • PNB • Bank of Baroda
                     </span>
                   </div>
-                  <Link
-                    href="/contact"
+                  <a
+                    href="https://wa.me/918062180511?msg=Hi%2C%20I%20am%20interested%20in%20the%20solar%20loan%20scheme.%20Please%20provide%20more%20details."
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-3 px-6 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all self-start sm:self-center cursor-pointer outline-none"
                   >
                     Check Loan Eligibility
                     <ArrowRight size={13} />
-                  </Link>
+                  </a>
                 </div>
               </div>
 

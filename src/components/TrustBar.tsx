@@ -16,7 +16,7 @@ export default function TrustBar() {
     },
     {
       title: "Govt. Subsidy Support",
-      subtitle: "Up to ₹78,000",
+      subtitle: "Up to ₹1,08,000",
       icon: (
         <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <BadgeCheck className="w-6 h-6 stroke-[2]" />
@@ -25,7 +25,7 @@ export default function TrustBar() {
     },
     {
       title: "Hassle-Free Installation",
-      subtitle: "In Just 7-15 Days",
+      subtitle: "In Just 8 Hours",
       icon: (
         <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <Wrench className="w-6 h-6 stroke-[2]" />

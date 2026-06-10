@@ -68,7 +68,7 @@ const reviews: Review[] = [
     text: "Superb installation and paperwork support for solar subsidy. Highly professional team, they handled all the government approvals without me having to follow up even once. Excellent solar energy generation!",
     avatarBg: "bg-dark",
     avatarText: "text-white",
-    image: "/new_assets/reviewimage.PNG",
+    image: "/new_assets/reviewimage.png",
   },
   {
     initials: "NV",
@@ -84,8 +84,8 @@ const reviews: Review[] = [
 function ReviewCard({ review, isDark = false }: { review: Review; isDark?: boolean }) {
   return (
     <div className={`rounded-2xl p-6 shadow-sm transition-all duration-300 flex flex-col justify-between h-full ${isDark
-        ? "bg-[#071813]/80 border border-emerald-950/45 hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/20"
-        : "bg-white border border-gray-100 hover:border-primary/30 hover:shadow-md"
+      ? "bg-[#071813]/80 border border-emerald-950/45 hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/20"
+      : "bg-white border border-gray-100 hover:border-primary/30 hover:shadow-md"
       }`}>
       <div className="flex flex-col flex-grow">
         {/* Rating Stars & Google badge */}
