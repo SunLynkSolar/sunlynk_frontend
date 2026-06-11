@@ -19,16 +19,31 @@ type BlogPost = (typeof blogsData)[number];
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
+async function fetchFromApi(path: string, options: RequestInit = {}) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl || !apiUrl.startsWith("http")) {
+    return null;
+  }
+  try {
+    const res = await fetch(`${apiUrl}${path}`, {
+      ...options,
+      signal: AbortSignal.timeout(3000), // 3-second timeout
+    });
+    return res;
+  } catch (err) {
+    return null;
+  }
+}
 
 export async function generateStaticParams() {
   let dynamicBlogs: any[] = [];
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
-    if (res.ok) {
+  const res = await fetchFromApi("/api/blogs");
+  if (res && res.ok) {
+    try {
       dynamicBlogs = await res.json();
+    } catch (err) {
+      console.error("Failed to parse dynamic blogs in generateStaticParams", err);
     }
-  } catch (err) {
-    console.error("Failed to fetch dynamic blogs in generateStaticParams", err);
   }
 
   const dynamicSlugs = dynamicBlogs.map((b) => ({ slug: b.slug }));
@@ -49,13 +64,13 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   
   let post: BlogPost | null = null;
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${slug}`, { next: { revalidate: 10 } });
-    if (res.ok) {
+  const res = await fetchFromApi(`/api/blogs/${slug}`, { next: { revalidate: 10 } });
+  if (res && res.ok) {
+    try {
       post = (await res.json()) as BlogPost;
+    } catch (err) {
+      // Fail silently
     }
-  } catch (err) {
-    // Fail silently, fallback to JSON
   }
 
   if (!post) {
@@ -245,13 +260,13 @@ export default async function BlogDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
   let post: BlogPost | null = null;
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${slug}`, { next: { revalidate: 10 } });
-    if (res.ok) {
+  const res = await fetchFromApi(`/api/blogs/${slug}`, { next: { revalidate: 10 } });
+  if (res && res.ok) {
+    try {
       post = (await res.json()) as BlogPost;
+    } catch (err) {
+      console.error("Failed to parse blog post from API", err);
     }
-  } catch (err) {
-    console.error("Failed to fetch blog post from API", err);
   }
 
   if (!post) {
@@ -268,16 +283,16 @@ export default async function BlogDetailPage({ params }: PageProps) {
   }
 
   let allPosts = blogsData;
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, { next: { revalidate: 10 } });
-    if (res.ok) {
-      const dynamicBlogs = await res.json();
+  const allRes = await fetchFromApi("/api/blogs", { next: { revalidate: 10 } });
+  if (allRes && allRes.ok) {
+    try {
+      const dynamicBlogs = await allRes.json();
       const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));
       const filteredJSON = blogsData.filter(b => !dynamicSlugs.has(b.slug));
       allPosts = [...dynamicBlogs, ...filteredJSON];
+    } catch (err) {
+      console.error("Failed to parse all blogs from API, using static JSON", err);
     }
-  } catch (err) {
-    console.error("Failed to fetch all blogs, using static JSON", err);
   }
 
   const relatedPosts = allPosts

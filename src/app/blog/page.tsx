@@ -104,13 +104,19 @@ function PostCard({ post }: { post: BlogPost }) {
 
 export default async function BlogList() {
   let dynamicBlogs = [];
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, { next: { revalidate: 10 } });
-    if (res.ok) {
-      dynamicBlogs = await res.json();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (apiUrl && apiUrl.startsWith("http")) {
+    try {
+      const res = await fetch(`${apiUrl}/api/blogs`, {
+        next: { revalidate: 10 },
+        signal: AbortSignal.timeout(3000)
+      });
+      if (res.ok) {
+        dynamicBlogs = await res.json();
+      }
+    } catch (err) {
+      console.error("Failed to fetch dynamic blogs from API, using local fallback only", err);
     }
-  } catch (err) {
-    console.error("Failed to fetch dynamic blogs from API, using local fallback only", err);
   }
 
   const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));
