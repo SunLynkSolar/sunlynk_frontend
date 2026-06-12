@@ -464,7 +464,7 @@ export default function CommercialPage() {
               <div>
                 <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl border border-slate-200/60 bg-slate-100">
                   <Image
-                    src="/assets/images/sunlynk_guy.webp"
+                    src="/new_assets/small_image.webp"
                     alt="SunLynk Commercial Solar Expert"
                     fill
                     className="object-cover"

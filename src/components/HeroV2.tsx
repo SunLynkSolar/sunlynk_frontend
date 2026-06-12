@@ -81,34 +81,35 @@ function CountdownTimer() {
   const displayTime = mounted ? timeLeft : placeholderTime;
 
   return (
-    <div className="w-full bg-gradient-to-r from-emerald-950 via-slate-900 to-emerald-950 border-y border-emerald-500/20 py-4 px-4 sm:px-6 flex flex-col md:flex-row lg:flex-col xl:flex-row items-center justify-between gap-4 shadow-lg -mx-4 md:-mx-8 lg:mx-0 lg:rounded-xl lg:border">
-      <div className="flex flex-col text-center md:text-left lg:text-center xl:text-left">
-        <span className="text-secondary font-black text-xs uppercase tracking-widest flex items-center gap-1.5 justify-center md:justify-start lg:justify-center xl:justify-start">
+    <div className="w-full bg-[#033325] border-y border-emerald-900/30 py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-inner">
+      <div className="flex flex-col text-center sm:text-left">
+        <span className="text-secondary font-black text-xs uppercase tracking-widest flex items-center gap-1.5 justify-center sm:justify-start">
           <span className="animate-pulse text-sm">⚡</span> Limited Time Subsidy Offer
         </span>
-        <span className="text-white font-bold text-xs sm:text-sm mt-1">
+        <span className="text-white/90 font-medium text-[11px] sm:text-xs mt-0.5">
           Avail Govt Subsidy under PM Surya Ghar Yojana before March 31, 2027
         </span>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="flex flex-col items-center bg-emerald-900/30 border border-emerald-500/20 px-3 py-1.5 rounded-lg min-w-[52px]">
-          <span className="text-secondary font-black text-lg sm:text-xl leading-none">{displayTime.days}</span>
-          <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold mt-1">Days</span>
+
+      <div className="flex items-center gap-3 font-mono text-sm sm:text-base text-white">
+        <div className="flex items-baseline gap-0.5">
+          <span className="text-secondary font-black text-base sm:text-lg">{displayTime.days}</span>
+          <span className="text-[9px] text-white/50 uppercase font-bold ml-0.5">d</span>
         </div>
-        <span className="text-secondary font-bold text-lg leading-none animate-pulse">:</span>
-        <div className="flex flex-col items-center bg-emerald-900/30 border border-emerald-500/20 px-3 py-1.5 rounded-lg min-w-[52px]">
-          <span className="text-secondary font-black text-lg sm:text-xl leading-none">{displayTime.hours}</span>
-          <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold mt-1">Hrs</span>
+        <span className="text-white/30 font-bold">:</span>
+        <div className="flex items-baseline gap-0.5">
+          <span className="text-secondary font-black text-base sm:text-lg">{displayTime.hours}</span>
+          <span className="text-[9px] text-white/50 uppercase font-bold ml-0.5">h</span>
         </div>
-        <span className="text-secondary font-bold text-lg leading-none animate-pulse">:</span>
-        <div className="flex flex-col items-center bg-emerald-900/30 border border-emerald-500/20 px-3 py-1.5 rounded-lg min-w-[52px]">
-          <span className="text-secondary font-black text-lg sm:text-xl leading-none">{displayTime.minutes}</span>
-          <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold mt-1">Mins</span>
+        <span className="text-white/30 font-bold">:</span>
+        <div className="flex items-baseline gap-0.5">
+          <span className="text-secondary font-black text-base sm:text-lg">{displayTime.minutes}</span>
+          <span className="text-[9px] text-white/50 uppercase font-bold ml-0.5">m</span>
         </div>
-        <span className="text-secondary font-bold text-lg leading-none animate-pulse">:</span>
-        <div className="flex flex-col items-center bg-emerald-900/30 border border-emerald-500/20 px-3 py-1.5 rounded-lg min-w-[52px]">
-          <span className="text-secondary font-black text-lg sm:text-xl leading-none">{displayTime.seconds}</span>
-          <span className="text-[9px] uppercase tracking-wider text-emerald-400 font-bold mt-1">Secs</span>
+        <span className="text-white/30 font-bold">:</span>
+        <div className="flex items-baseline gap-0.5">
+          <span className="text-secondary font-black text-base sm:text-lg animate-pulse">{displayTime.seconds}</span>
+          <span className="text-[9px] text-white/50 uppercase font-bold ml-0.5">s</span>
         </div>
       </div>
     </div>
@@ -139,21 +140,21 @@ export default function HeroV2() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 lg:gap-8 items-stretch">
 
           {/* Left Column — Text Content + Mobile Banner Background */}
-          <div className="relative flex flex-col justify-between z-10 m-auto">
+          <div className="relative flex flex-col justify-between text-left h-[80vh] lg:h-auto pt-16 pb-0 lg:py-16 -mx-4 sm:-mx-6 md:-mx-8 lg:mx-0 lg:px-0 z-10">
             {/* Mobile Background image */}
             <div className="lg:hidden absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
               <Image
-                src="/new_assets/hero_banner.webp"
+                src="/new_assets/home_hero_mobile_main.webp"
                 alt="Solar background image"
                 fill
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-black/85 to-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/80 to-black/60" />
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 px-4 pt-12 pb-6 md:px-8 lg:px-0 lg:py-0 flex flex-col gap-5 lg:gap-6 max-w-xl">
+            <div className="relative z-10 px-4 pt-12 pb-6 md:px-8 lg:px-0 lg:py-0 flex flex-col gap-5 lg:gap-6 max-w-xl mb-6 lg:mb-0 mt-auto">
               {/* Badge */}
               <div className="inline-flex self-start">
                 <span className="text-white inline-flex items-center gap-2 rounded-full py-1.5 px-4 text-xs font-bold text-primary tracking-wide border border-primary/20 bg-black/20 backdrop-blur-sm lg:bg-transparent">
@@ -165,7 +166,7 @@ export default function HeroV2() {
               </div>
 
               {/* Heading */}
-              <div>
+              <div className="px-4">
                 <h1 className="text-2xl lg:text-[38px] text-white font-black leading-[1.1] tracking-tight">
                   Guaranteed Solar Generation.
                   <span className="text-primary">
@@ -175,17 +176,17 @@ export default function HeroV2() {
               </div>
 
               {/* Subheading */}
-              <p className="text-white text-base sm:text-lg font-medium leading-relaxed -mt-2">
+              <p className="px-4 text-white text-base sm:text-lg font-medium leading-relaxed -mt-2">
                 For the next <span className="text-secondary font-extrabold">25 years</span> — and beyond.*
               </p>
 
               {/* Body */}
-              <p className="text-white/80 text-sm leading-relaxed max-w-md hidden lg:block">
+              <p className="px-4 text-white/80 text-sm leading-relaxed max-w-md hidden lg:block">
                 As a premier <strong className="text-white font-extrabold">Solar Company in Lucknow</strong>, SunLynk Solar provides top-tier <strong className="text-white font-extrabold">Rooftop Solar Installation in Uttar Pradesh</strong>. We commit to your generation — and if we fall short, <span className="text-primary font-semibold">we pay you back.</span>
               </p>
 
               {/* Trust mini */}
-              <div className="flex items-center gap-6 pt-6 border-t border-gray-100">
+              <div className="px-4 flex items-center gap-6 pt-6 border-t border-gray-100">
                 <div className="flex items-center gap-2">
                   <div className="flex text-secondary">
                     {[...Array(5)].map((_, i) => (
@@ -202,7 +203,7 @@ export default function HeroV2() {
             </div>
 
             {/* Subsidy Countdown Timer Separator */}
-            {/* <div className="relative z-10 w-full mt-8 lg:mt-10">
+            {/* <div className="relative z-10 w-full lg:hidden">
               <CountdownTimer />
             </div> */}
 

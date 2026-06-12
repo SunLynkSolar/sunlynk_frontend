@@ -116,7 +116,7 @@ export default function HomesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-12 items-start min-h-[unset] lg:min-h-[600px]">
 
             {/* ── Left: Headline + badge ── */}
-            <div className="lg:col-span-7 relative flex flex-col justify-between text-left pt-8 sm:pt-10 pb-0 lg:py-16 -mx-4 sm:-mx-6 md:-mx-8 lg:mx-0 lg:px-0">
+            <div className="lg:col-span-7 relative flex flex-col justify-between text-left h-screen lg:h-auto pt-16 pb-0 lg:py-16 -mx-4 sm:-mx-6 md:-mx-8 lg:mx-0 lg:px-0">
 
               {/* Mobile-only background image banner */}
               <div className="lg:hidden absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
@@ -128,11 +128,11 @@ export default function HomesPage() {
                   priority
                 />
                 {/* Dark overlay for superior text contrast on mobile */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/80 to-black/60" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/80 to-black/60" />
               </div>
 
               {/* Text content container */}
-              <div className="relative z-10 flex flex-col gap-4 sm:gap-5 px-4 sm:px-0 mb-6 lg:mb-0">
+              <div className="relative z-10 flex flex-col gap-4 sm:gap-5 px-4 sm:px-0 mb-6 lg:mb-0 mt-auto">
                 {/* Star badge */}
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full py-1.5 px-3.5 self-start text-[11px] sm:text-xs font-bold text-white shadow-sm lg:bg-white lg:border-gray-200 lg:text-slate-600">
                   <span className="text-amber-400 lg:text-amber-500 text-sm leading-none">★★★★★</span>
