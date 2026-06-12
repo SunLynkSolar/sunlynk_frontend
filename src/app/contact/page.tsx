@@ -10,15 +10,12 @@ export default function Contact() {
   const offices = [
     {
       title: "Mailing Address",
-      desc: "Commercial Complex, Regus Centre Saket Pvt Ltd, Level 4, Rectangle 1, D-4, Saket, New Delhi, Delhi - 110017",
+      desc: "D 67 Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
     },
-    {
-      title: "Factory Location",
-      desc: "T.C. 34/752, Survey No. 920/D10, SRA 45, Behind Valiyathura Police Station, Beach P.O., Thiruvananthapuram, Kerala - 695007",
-    },
+
     {
       title: "Regional Office",
-      desc: "Mapa Centre, (Opp. Lulu Hyper Market), No.766/767, 1st Floor, Puliyakulam Road, PN Palayam, Coimbatore, Tamil Nadu - 641037",
+      desc: "D 67 Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh - 226010",
     },
   ];
 
@@ -55,12 +52,10 @@ export default function Contact() {
                 Please fill the form and we will get in touch with you for the consultation
               </p>
             </div>
-            <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border border-gray-150 group">
-              <Image
-                src="/assets/images/resources/cntact-1-1.webp"
+            <div className="relative w-full aspect-[4/3] rounded-3xl">
+              <img
+                src="/new_assets/teams.webp"
                 alt="Contact SunLynk Solar"
-                fill
-                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
             </div>
           </div>
@@ -73,21 +68,21 @@ export default function Contact() {
       </section>
 
       {/* Locations and Map */}
-      <section className="py-16 bg-gray-1000 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <section className="pb-16 pt-6 bg-gray-1000 ">
+        <div className="mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
 
           {/* Map */}
-          <div className="lg:col-span-6 rounded-2xl overflow-hidden shadow-md border border-gray-200 aspect-[4/3] bg-gray-200 relative min-h-[350px]">
+          <div className="lg:col-span-12 rounded-2xl overflow-hidden shadow-md border border-gray-200 bg-gray-200 relative min-h-[350px]">
             <iframe
-              title="SunLynkSaket Location Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.6865249568936!2d77.21146747533166!3d28.534080775719323!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1e3e00000001%3A0x64e622f6d0f622d0!2sSaket%20District%20Centre%2C%20Sector%206%2C%20Pushp%20Vihar%2C%20New%20Delhi%2C%20Delhi%20110017!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+              title="SunLynk Lucknow Location Map"
+              src="https://maps.google.com/maps?q=D%2067%20Vibhuti%20Khand%20Gomti%20Nagar%20Lucknow&t=&z=16&ie=UTF8&iwloc=&output=embed"
               className="w-full h-full border-0 absolute inset-0"
               allowFullScreen
             ></iframe>
           </div>
 
           {/* Location Cards */}
-          <div className="lg:col-span-6 flex flex-col gap-6">
+          {/* <div className="lg:col-span-6 flex flex-col gap-6">
             {offices.map((off, idx) => (
               <div
                 key={idx}
@@ -102,7 +97,7 @@ export default function Contact() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
         </div>
       </section>

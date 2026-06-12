@@ -78,10 +78,9 @@ export default function SolarCalculator() {
 
             {/* Illustration */}
             <div className="relative aspect-[21/16] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden border border-gray-150 shadow-inner group order-1 lg:order-3">
-              <Image
-                src="/assets/images/solar_savings_coins.webp"
+              <img
+                src="/new_assets/solarCalculator.webp"
                 alt="Solar savings illustration"
-                fill
                 className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/40 via-transparent to-transparent pointer-events-none" />

@@ -225,7 +225,7 @@ export default function PrivacyPolicy() {
                       <div className="md:col-span-2">
                         <span className="block text-slate-400 font-semibold uppercase tracking-wider mb-0.5">Corporate Address</span>
                         <span className="text-slate-700 font-bold leading-relaxed">
-                          SunLynk Solar Energy Private Limited, Level 4, Rectangle 1, D-4, District Centre Saket, New Delhi - 110017
+                          SunLynk Solar Energy Private Limited, D 67 Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh - 226010
                         </span>
                       </div>
                       <div>
