@@ -40,10 +40,10 @@ export default function SolutionsCountdownTimer() {
           <span className="animate-pulse text-sm">⚡</span> Govt Solar Subsidy Alert
         </span>
         <span className="text-white/90 font-medium text-[11px] sm:text-xs mt-0.5">
-          Secure your ₹78,000 subsidy benefits before March 31, 2027!
+          Secure your ₹1,08,000 subsidy benefits before March 31, 2027!
         </span>
       </div>
-      
+
       <div className="flex items-center gap-3 font-mono text-sm sm:text-base text-white">
         <div className="flex items-baseline gap-0.5">
           <span className="text-secondary font-black text-base sm:text-lg">{displayTime.days}</span>
