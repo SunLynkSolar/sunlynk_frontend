@@ -150,7 +150,7 @@ export default function HeroV2() {
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/80 to-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-black/80" />
             </div>
 
             {/* Content Container */}

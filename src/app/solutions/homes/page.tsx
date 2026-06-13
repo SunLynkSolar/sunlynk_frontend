@@ -128,7 +128,7 @@ export default function HomesPage() {
                   priority
                 />
                 {/* Dark overlay for superior text contrast on mobile */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/80 to-black/60" />
+                <div className="absolute inset-0 bg-linear-to-b from-black/10 via-black/50 to-black/80" />
               </div>
 
               {/* Text content container */}
