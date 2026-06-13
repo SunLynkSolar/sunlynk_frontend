@@ -12,12 +12,35 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const allCategories = Array.from(
+  const staticCategories = Array.from(
     new Set(blogsData.flatMap((p) => p.categories || []))
   );
-  return allCategories.map((cat) => ({
-    cat: cat.toLowerCase().replace(/\s+/g, "-"),
+
+  let dbCategories: { name: string; slug: string }[] = [];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (apiUrl && apiUrl.startsWith("http")) {
+    try {
+      const res = await fetch(`${apiUrl}/api/categories`, {
+        signal: AbortSignal.timeout(3000),
+      });
+      if (res.ok) {
+        dbCategories = await res.json();
+      }
+    } catch (err) {
+      console.error("Failed to fetch categories in generateStaticParams", err);
+    }
+  }
+
+  const categoriesSet = new Set<string>();
+  staticCategories.forEach(c => categoriesSet.add(c.toLowerCase().replace(/\s+/g, "-")));
+  dbCategories.forEach(c => categoriesSet.add(c.slug.toLowerCase()));
+
+  const paramsList = Array.from(categoriesSet).map((cat) => ({
+    cat,
   }));
+
+  console.log("=== GENERATED STATIC PARAMS FOR CATEGORY ===", paramsList);
+  return paramsList;
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -30,26 +53,41 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-function PostCard({ post, cat }: { post: BlogPost; cat: string }) {
+function PostCard({ post, cat }: { post: any; cat: string }) {
+  const getImageUrl = (img: string) => {
+    if (!img) return "/assets/images/blog_bifacial_panels.webp";
+    if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
+      return img;
+    }
+    if (img.startsWith("/uploads/") || img.startsWith("uploads/")) {
+      const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const relative = img.startsWith("/") ? img : `/${img}`;
+      return `${base}${relative}`;
+    }
+    return img;
+  };
+
   return (
     <article className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
       <div className="relative aspect-[16/9] w-full bg-gray-100 overflow-hidden">
         <Image
-          src={post.image}
+          src={getImageUrl(post.image)}
           alt={post.title}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-lg flex flex-col items-center shadow-md">
-          <span className="text-sm font-extrabold leading-none">{post.day}</span>
-          <span className="text-[10px] uppercase leading-none mt-0.5">{post.month}</span>
+          <span className="text-sm font-extrabold leading-none">{post.day || new Date(post.createdAt || post.date).getDate() || "13"}</span>
+          <span className="text-[10px] uppercase leading-none mt-0.5">
+            {post.month || new Date(post.createdAt || post.date).toLocaleString('default', { month: 'short' }) || "Jun"}
+          </span>
         </div>
       </div>
 
       <div className="p-6 flex flex-col flex-grow text-left">
         {post.categories && post.categories.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-3">
-            {post.categories.slice(0, 2).map((c) => (
+            {post.categories.slice(0, 2).map((c: string) => (
               <Link
                 key={c}
                 href={`/blog/category/${encodeURIComponent(c.toLowerCase().replace(/\s+/g, "-"))}/`}
@@ -69,7 +107,7 @@ function PostCard({ post, cat }: { post: BlogPost; cat: string }) {
           </span>
           <span className="flex items-center gap-1.5">
             <MessageSquare size={12} className="text-primary" />
-            <span>{post.commentsCount} Comments</span>
+            <span>{post.commentsCount || 0} Comments</span>
           </span>
         </div>
 
@@ -96,19 +134,50 @@ function PostCard({ post, cat }: { post: BlogPost; cat: string }) {
 export default async function CategoryPage({ params }: PageProps) {
   const { cat } = await params;
 
-  const allCategories = Array.from(
-    new Set(blogsData.flatMap((p) => p.categories || []))
-  );
+  let dynamicBlogs = [];
+  let dbCategories: { _id: string; name: string; slug: string }[] = [];
+  let dbTags: { _id: string; name: string; slug: string }[] = [];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Find display name from slug
-  const displayName =
-    allCategories.find(
-      (c) => c.toLowerCase().replace(/\s+/g, "-") === cat
-    ) ?? decodeURIComponent(cat).replace(/-/g, " ");
+  if (apiUrl && apiUrl.startsWith("http")) {
+    try {
+      const res = await fetch(`${apiUrl}/api/blogs`, {
+        next: { revalidate: 10 },
+        signal: AbortSignal.timeout(3000)
+      });
+      if (res.ok) {
+        dynamicBlogs = await res.json();
+      }
+    } catch (err) {
+      console.error("Failed to fetch dynamic blogs", err);
+    }
 
-  const filteredPosts = blogsData.filter((p) =>
+    try {
+      const [catsRes, tagsRes] = await Promise.allSettled([
+        fetch(`${apiUrl}/api/categories`, { next: { revalidate: 10 }, signal: AbortSignal.timeout(3000) }).then(r => r.ok ? r.json() : []),
+        fetch(`${apiUrl}/api/tags`, { next: { revalidate: 10 }, signal: AbortSignal.timeout(3000) }).then(r => r.ok ? r.json() : [])
+      ]);
+      if (catsRes.status === "fulfilled") dbCategories = catsRes.value;
+      if (tagsRes.status === "fulfilled") dbTags = tagsRes.value;
+    } catch (err) {
+      console.error("Failed to fetch categories and tags from API", err);
+    }
+  }
+
+  const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));
+  const staticBlogs = blogsData.filter(b => !dynamicSlugs.has(b.slug));
+  const allPosts = [...dynamicBlogs, ...staticBlogs];
+
+  // Get categories to display in filter bar (purely from database, no fallback/dummy data)
+  const displayCategories = dbCategories.map(c => ({ name: c.name, slug: c.slug }));
+
+  // Find dynamic display name from slug or fallback
+  const foundCat = displayCategories.find(c => c.slug === cat);
+  const displayName = foundCat ? foundCat.name : decodeURIComponent(cat).replace(/-/g, " ");
+
+  const filteredPosts = allPosts.filter((p) =>
     (p.categories || []).some(
-      (c) => c.toLowerCase().replace(/\s+/g, "-") === cat
+      (c: string) => c.toLowerCase().replace(/\s+/g, "-") === cat.toLowerCase()
     )
   );
 
@@ -144,19 +213,22 @@ export default async function CategoryPage({ params }: PageProps) {
           >
             All Posts
           </Link>
-          {allCategories.map((c) => (
-            <Link
-              key={c}
-              href={`/blog/category/${encodeURIComponent(c.toLowerCase().replace(/\s+/g, "-"))}/`}
-              className={`text-xs font-bold px-4 py-2 rounded-full border transition-all ${
-                c.toLowerCase().replace(/\s+/g, "-") === cat
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
-              }`}
-            >
-              {c}
-            </Link>
-          ))}
+          {displayCategories.map((c) => {
+            const isActive = c.slug === cat.toLowerCase();
+            return (
+              <Link
+                key={c.slug}
+                href={`/blog/category/${c.slug}/`}
+                className={`text-xs font-bold px-4 py-2 rounded-full border transition-all ${
+                  isActive
+                    ? "bg-primary text-white border-primary"
+                    : "bg-white text-gray-600 border-gray-200 hover:border-primary hover:text-primary"
+                }`}
+              >
+                {c.name}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -174,7 +246,7 @@ export default async function CategoryPage({ params }: PageProps) {
               </div>
 
               {filteredPosts.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-24 text-center">
+                <div className="flex flex-col items-center justify-center py-24 text-center bg-white border border-gray-100 rounded-2xl shadow-sm">
                   <p className="text-sm text-gray-400">No posts in this category yet.</p>
                   <Link href="/blog/" className="mt-4 text-sm font-bold text-primary hover:underline">
                     ← View all posts
@@ -183,7 +255,7 @@ export default async function CategoryPage({ params }: PageProps) {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {filteredPosts.map((post) => (
-                    <PostCard key={post.id} post={post} cat={cat} />
+                    <PostCard key={post.slug} post={post} cat={cat} />
                   ))}
                 </div>
               )}
@@ -192,7 +264,7 @@ export default async function CategoryPage({ params }: PageProps) {
             {/* RIGHT: Sidebar */}
             <div className="lg:col-span-4">
               <div className="sticky top-24">
-                <BlogSidebar allPosts={blogsData} activeCategory={displayName} />
+                <BlogSidebar allPosts={allPosts as any} activeCategory={displayName} dbCategories={dbCategories} dbTags={dbTags} />
               </div>
             </div>
           </div>

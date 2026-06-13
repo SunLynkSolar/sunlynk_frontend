@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Check, ShieldAlert, Send } from "lucide-react";
+import { Check, ShieldAlert, Send, Loader2 } from "lucide-react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Warranty() {
   const [formData, setFormData] = useState({
@@ -14,12 +16,24 @@ export default function Warranty() {
     issueDescription: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`${API_URL}/api/warranty`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to submit warranty claim");
+      }
+      setSubmitted(true);
       setFormData({
         name: "",
         email: "",
@@ -28,7 +42,11 @@ export default function Warranty() {
         purchaseDate: "",
         issueDescription: "",
       });
-    }, 3000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,6 +88,12 @@ export default function Warranty() {
               If your solar module, inverter, or weather station sensor is showing defects or performance drop under the warranty period, please fill out this claim form. Our service engineers will verify the claim criteria and contact you for replacement or repair service.
             </p>
 
+            {error && (
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 text-sm py-3.5 px-4 rounded-xl">
+                {error}
+              </div>
+            )}
+
             {submitted ? (
               <div className="flex flex-col items-center justify-center py-12 text-center bg-white border border-gray-200 rounded-xl shadow-sm">
                 <div className="w-12 h-12 bg-primary/10 text-primary border border-primary/25 rounded-full flex items-center justify-center mb-3">
@@ -77,6 +101,12 @@ export default function Warranty() {
                 </div>
                 <h4 className="font-bold text-lg text-gray-800">Claim Registered Successfully!</h4>
                 <p className="text-sm text-gray-500 mt-1">Our support staff will get in touch with you within 24 to 48 business hours.</p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-6 text-xs font-bold text-primary hover:underline"
+                >
+                  Submit another claim
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -161,10 +191,11 @@ export default function Warranty() {
 
                 <button
                   type="submit"
-                  className="btn-primary mt-2 flex items-center justify-center gap-2"
+                  disabled={loading}
+                  className="btn-primary mt-2 flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  <Send size={16} />
-                  <span>Register Claim</span>
+                  {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                  <span>{loading ? "Submitting..." : "Register Claim"}</span>
                 </button>
               </form>
             )}

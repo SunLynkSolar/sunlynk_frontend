@@ -31,6 +31,9 @@ interface BlogSidebarProps {
   currentSlug?: string;
   relatedPosts?: RelatedPost[];
   activeCategory?: string;
+  activeTag?: string;
+  dbCategories?: { name: string; slug: string }[];
+  dbTags?: { name: string; slug: string }[];
 }
 
 function getCategoryCounts(posts: BlogPost[]): Record<string, number> {
@@ -43,23 +46,42 @@ function getCategoryCounts(posts: BlogPost[]): Record<string, number> {
   return counts;
 }
 
-function getAllTags(posts: BlogPost[]): string[] {
-  const tagSet = new Set<string>();
-  posts.forEach((p) => (p.tags || []).forEach((t) => tagSet.add(t)));
-  return Array.from(tagSet);
-}
-
 export default function BlogSidebar({
   allPosts,
   currentSlug,
   relatedPosts,
   activeCategory,
+  activeTag,
+  dbCategories,
+  dbTags,
 }: BlogSidebarProps) {
   const recentPosts = allPosts
     .filter((p) => p.slug !== currentSlug)
     .slice(0, 5);
-  const categoryCounts = getCategoryCounts(allPosts);
-  const allTags = getAllTags(allPosts);
+  const rawCategoryCounts = getCategoryCounts(allPosts);
+  const categoryCounts: Record<string, number> = {};
+  if (dbCategories) {
+    dbCategories.forEach((cat) => {
+      const matchedKey = Object.keys(rawCategoryCounts).find(
+        (key) => key.toLowerCase() === cat.name.toLowerCase()
+      );
+      categoryCounts[cat.name] = matchedKey ? rawCategoryCounts[matchedKey] : 0;
+    });
+  }
+  const allTags = dbTags ? dbTags.map((t) => t.name) : [];
+
+  const getImageUrl = (img: string) => {
+    if (!img) return "/assets/images/blog_bifacial_panels.webp";
+    if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
+      return img;
+    }
+    if (img.startsWith("/uploads/") || img.startsWith("uploads/")) {
+      const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const relative = img.startsWith("/") ? img : `/${img}`;
+      return `${base}${relative}`;
+    }
+    return img;
+  };
 
   return (
     <aside className="flex flex-col gap-6">
@@ -76,10 +98,10 @@ export default function BlogSidebar({
             </li>
           )}
           {recentPosts.map((rp) => (
-            <li key={rp.id} className="flex gap-3 items-center group">
+            <li key={rp.slug} className="flex gap-3 items-center group">
               <div className="relative w-16 h-12 bg-gray-100 rounded-lg overflow-hidden shrink-0 border border-gray-100">
                 <Image
-                  src={rp.image}
+                  src={getImageUrl(rp.image)}
                   alt={rp.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -112,29 +134,26 @@ export default function BlogSidebar({
             <li key={cat}>
               <Link
                 href={`/blog/category/${encodeURIComponent(cat.toLowerCase().replace(/\s+/g, "-"))}/`}
-                className={`flex justify-between items-center text-xs font-semibold py-2.5 px-3 rounded-lg transition-all group ${
-                  activeCategory?.toLowerCase() === cat.toLowerCase()
-                    ? "bg-primary text-white"
-                    : "text-gray-600 hover:bg-primary/5 hover:text-primary"
-                }`}
+                className={`flex justify-between items-center text-xs font-semibold py-2.5 px-3 rounded-lg transition-all group ${activeCategory?.toLowerCase() === cat.toLowerCase()
+                  ? "bg-primary text-white"
+                  : "text-gray-600 hover:bg-primary/5 hover:text-primary"
+                  }`}
               >
                 <span className="flex items-center gap-2">
                   <ChevronRight
                     size={12}
-                    className={`transition-transform group-hover:translate-x-0.5 ${
-                      activeCategory?.toLowerCase() === cat.toLowerCase()
-                        ? "text-white"
-                        : "text-primary"
-                    }`}
+                    className={`transition-transform group-hover:translate-x-0.5 ${activeCategory?.toLowerCase() === cat.toLowerCase()
+                      ? "text-white"
+                      : "text-primary"
+                      }`}
                   />
                   {cat}
                 </span>
                 <span
-                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                    activeCategory?.toLowerCase() === cat.toLowerCase()
-                      ? "bg-white/20 text-white"
-                      : "bg-gray-100 text-gray-500"
-                  }`}
+                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeCategory?.toLowerCase() === cat.toLowerCase()
+                    ? "bg-white/20 text-white"
+                    : "bg-gray-100 text-gray-500"
+                    }`}
                 >
                   {count}
                 </span>
@@ -152,15 +171,24 @@ export default function BlogSidebar({
             Tags
           </h4>
           <div className="flex flex-wrap gap-2">
-            {allTags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center gap-1 text-[11px] font-bold bg-primary/8 text-primary border border-primary/15 px-3 py-1.5 rounded-full"
-              >
-                <Hash size={9} />
-                {tag}
-              </span>
-            ))}
+            {allTags.map((tag) => {
+              const tagSlug = tag.toLowerCase().replace(/\s+/g, "-");
+              const isSelected = activeTag?.toLowerCase() === tagSlug;
+              return (
+                <Link
+                  key={tag}
+                  href={isSelected ? "/blog/" : `/blog?tag=${encodeURIComponent(tagSlug)}`}
+                  className={`inline-flex items-center gap-1 text-[11px] font-bold border px-3 py-1.5 rounded-full transition-all ${
+                    isSelected
+                      ? "bg-primary text-white border-primary shadow-sm"
+                      : "bg-primary/8 text-primary border-primary/15 hover:bg-primary hover:text-white"
+                  }`}
+                >
+                  <Hash size={9} />
+                  {tag}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
@@ -173,10 +201,10 @@ export default function BlogSidebar({
           </h4>
           <ul className="flex flex-col gap-4">
             {relatedPosts.map((rp) => (
-              <li key={rp.id} className="flex gap-3 items-center group">
+              <li key={rp.slug} className="flex gap-3 items-center group">
                 <div className="relative w-16 h-12 bg-gray-100 rounded-lg overflow-hidden shrink-0">
                   <Image
-                    src={rp.image}
+                    src={getImageUrl(rp.image)}
                     alt={rp.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"

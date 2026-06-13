@@ -84,6 +84,19 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
+const getImageUrl = (img: string) => {
+  if (!img) return "/assets/images/blog_bifacial_panels.webp";
+  if (img.startsWith("http://") || img.startsWith("https://") || img.startsWith("data:")) {
+    return img;
+  }
+  if (img.startsWith("/uploads/") || img.startsWith("uploads/")) {
+    const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const relative = img.startsWith("/") ? img : `/${img}`;
+    return `${base}${relative}`;
+  }
+  return img;
+};
+
 // ─── Block Renderer ────────────────────────────────────────────────────────────
 function BlockRenderer({ block }: { block: Block }) {
   switch (block.type) {
@@ -117,7 +130,7 @@ function BlockRenderer({ block }: { block: Block }) {
       return (
         <figure className="my-6">
           <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-md border border-gray-100">
-            <Image src={imgb.src} alt={imgb.alt} fill className="object-cover" />
+            <Image src={getImageUrl(imgb.src)} alt={imgb.alt} fill className="object-cover" />
           </div>
           {imgb.caption && (
             <figcaption className="text-center text-xs text-gray-400 mt-2 italic">
@@ -179,7 +192,7 @@ function BlockRenderer({ block }: { block: Block }) {
           {gb.items.map((item, i) => (
             <figure key={i} className="flex flex-col gap-2">
               <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow border border-gray-100">
-                <Image src={item.image} alt={item.caption || ""} fill className="object-cover" />
+                <Image src={getImageUrl(item.image)} alt={item.caption || ""} fill className="object-cover" />
               </div>
               {item.caption && (
                 <figcaption className="text-center text-xs text-gray-400 italic">{item.caption}</figcaption>
@@ -196,17 +209,19 @@ function BlockRenderer({ block }: { block: Block }) {
 }
 
 // ─── Template Hero ────────────────────────────────────────────────────────────
-function TemplateHero({ post }: { post: BlogPost }) {
+function TemplateHero({ post }: { post: any }) {
   const template = post.template || "editorial";
 
   if (template === "magazine") {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div className="relative w-full aspect-[4/3] bg-gray-100 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-          <Image src={post.image} alt={post.title} fill className="object-cover" />
+          <Image src={getImageUrl(post.image)} alt={post.title} fill className="object-cover" />
           <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md flex flex-col items-center shadow">
-            <span className="text-sm font-extrabold leading-none">{post.day}</span>
-            <span className="text-[10px] uppercase leading-none mt-0.5">{post.month}</span>
+            <span className="text-sm font-extrabold leading-none">{post.day || new Date(post.createdAt || post.date).getDate() || "13"}</span>
+            <span className="text-[10px] uppercase leading-none mt-0.5">
+              {post.month || new Date(post.createdAt || post.date).toLocaleString('default', { month: 'short' }) || "Jun"}
+            </span>
           </div>
         </div>
         <div className="flex flex-col justify-center gap-4">
@@ -214,7 +229,7 @@ function TemplateHero({ post }: { post: BlogPost }) {
           <p className="text-base text-gray-600 leading-relaxed">{post.excerpt}</p>
           <div className="flex items-center gap-5 text-xs text-gray-400">
             <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />{post.author}</span>
-            <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
+            <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date || new Date(post.createdAt).toLocaleDateString()}</span>
           </div>
         </div>
       </div>
@@ -227,8 +242,8 @@ function TemplateHero({ post }: { post: BlogPost }) {
         <h2 className="text-2xl md:text-4xl font-black text-dark leading-tight mb-4">{post.title}</h2>
         <div className="flex items-center gap-5 text-xs text-gray-400">
           <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />{post.author}</span>
-          <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
-          <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount} Comments</span>
+          <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date || new Date(post.createdAt).toLocaleDateString()}</span>
+          <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount || 0} Comments</span>
         </div>
         <p className="text-base text-gray-600 mt-4 leading-relaxed border-l-4 border-primary pl-4">{post.excerpt}</p>
       </div>
@@ -239,16 +254,18 @@ function TemplateHero({ post }: { post: BlogPost }) {
   return (
     <div className="mb-6">
       <div className="relative w-full aspect-[16/9] bg-gray-100 rounded-2xl overflow-hidden shadow-md border border-gray-100">
-        <Image src={post.image} alt={post.title} fill className="object-cover" />
+        <Image src={getImageUrl(post.image)} alt={post.title} fill className="object-cover" />
         <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-md flex flex-col items-center shadow">
-          <span className="text-sm font-extrabold leading-none">{post.day}</span>
-          <span className="text-[10px] uppercase leading-none mt-0.5">{post.month}</span>
+          <span className="text-sm font-extrabold leading-none">{post.day || new Date(post.createdAt || post.date).getDate() || "13"}</span>
+          <span className="text-[10px] uppercase leading-none mt-0.5">
+            {post.month || new Date(post.createdAt || post.date).toLocaleString('default', { month: 'short' }) || "Jun"}
+          </span>
         </div>
       </div>
       <div className="flex items-center gap-5 text-xs text-gray-400 mt-4">
         <span className="flex items-center gap-1.5"><User size={13} className="text-primary" />by {post.author}</span>
-        <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount} Comments</span>
-        <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date}</span>
+        <span className="flex items-center gap-1.5"><MessageSquare size={13} className="text-primary" />{post.commentsCount || 0} Comments</span>
+        <span className="flex items-center gap-1.5"><Calendar size={13} className="text-primary" />{post.date || new Date(post.createdAt).toLocaleDateString()}</span>
       </div>
       <h2 className="text-2xl md:text-3xl font-extrabold text-dark mt-4 leading-tight">{post.title}</h2>
     </div>
@@ -283,15 +300,39 @@ export default async function BlogDetailPage({ params }: PageProps) {
   }
 
   let allPosts = blogsData;
-  const allRes = await fetchFromApi("/api/blogs", { next: { revalidate: 10 } });
-  if (allRes && allRes.ok) {
+  let dbCategories: { _id: string; name: string; slug: string }[] = [];
+  let dbTags: { _id: string; name: string; slug: string }[] = [];
+
+  const [allRes, catsRes, tagsRes] = await Promise.allSettled([
+    fetchFromApi("/api/blogs", { next: { revalidate: 10 } }),
+    fetchFromApi("/api/categories", { next: { revalidate: 10 } }),
+    fetchFromApi("/api/tags", { next: { revalidate: 10 } })
+  ]);
+
+  if (allRes.status === "fulfilled" && allRes.value && allRes.value.ok) {
     try {
-      const dynamicBlogs = await allRes.json();
+      const dynamicBlogs = await allRes.value.json();
       const dynamicSlugs = new Set(dynamicBlogs.map((b: any) => b.slug));
       const filteredJSON = blogsData.filter(b => !dynamicSlugs.has(b.slug));
       allPosts = [...dynamicBlogs, ...filteredJSON];
     } catch (err) {
       console.error("Failed to parse all blogs from API, using static JSON", err);
+    }
+  }
+
+  if (catsRes.status === "fulfilled" && catsRes.value && catsRes.value.ok) {
+    try {
+      dbCategories = await catsRes.value.json();
+    } catch (err) {
+      console.error("Failed to parse categories from API", err);
+    }
+  }
+
+  if (tagsRes.status === "fulfilled" && tagsRes.value && tagsRes.value.ok) {
+    try {
+      dbTags = await tagsRes.value.json();
+    } catch (err) {
+      console.error("Failed to parse tags from API", err);
     }
   }
 
@@ -409,6 +450,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                   allPosts={allPosts}
                   currentSlug={post.slug}
                   relatedPosts={relatedPosts}
+                  dbCategories={dbCategories}
+                  dbTags={dbTags}
                 />
               </div>
             </div>

@@ -29,6 +29,11 @@ import {
   Newspaper,
   Minimize2,
   Edit3,
+  ShieldCheck,
+  Briefcase,
+  ToggleLeft,
+  ToggleRight,
+  ExternalLink,
 } from "lucide-react";
 import {
   parseMarkdownToBlocks,
@@ -73,7 +78,45 @@ interface User {
   _id: string;
   name: string;
   email: string;
-  role: "admin" | "bde" | "content_editor";
+  role: "superadmin" | "co_admin" | "bde" | "content_editor";
+  createdAt: string;
+}
+
+interface WarrantyClaim {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  productSerial: string;
+  purchaseDate: string;
+  issueDescription: string;
+  status: "Pending" | "Under Review" | "Resolved" | "Rejected";
+  adminNotes: string;
+  createdAt: string;
+}
+
+interface Job {
+  _id: string;
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string[];
+  isActive: boolean;
+  createdAt: string;
+}
+
+interface JobApplication {
+  _id: string;
+  jobId: string;
+  jobTitle: string;
+  name: string;
+  email: string;
+  phone: string;
+  resumeLink: string;
+  coverNote: string;
+  status: "New" | "Reviewed" | "Shortlisted" | "Rejected";
   createdAt: string;
 }
 
@@ -100,7 +143,7 @@ export default function AdminDashboard() {
   const [role, setRole] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [userName, setUserName] = useState("");
-  const [activeTab, setActiveTab] = useState<"leads" | "blogs" | "users">("leads");
+  const [activeTab, setActiveTab] = useState<"leads" | "blogs" | "users" | "warranty" | "careers">("leads");
 
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -109,6 +152,12 @@ export default function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [warranties, setWarranties] = useState<WarrantyClaim[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [applications, setApplications] = useState<JobApplication[]>([]);
+  const [selectedJobForApps, setSelectedJobForApps] = useState<Job | null>(null);
+  const [warrantyStatusFilter, setWarrantyStatusFilter] = useState("all");
+  const [appStatusFilter, setAppStatusFilter] = useState("all");
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [newComment, setNewComment] = useState("");
@@ -119,8 +168,26 @@ export default function AdminDashboard() {
 
   const [newUser, setNewUser] = useState({
     name: "", email: "", password: "",
-    role: "bde" as "admin" | "bde" | "content_editor",
+    role: "bde" as "superadmin" | "co_admin" | "bde" | "content_editor",
   });
+
+  const [careersSubTab, setCareersSubTab] = useState<"jobs" | "applications">("jobs");
+  const [blogsSubTab, setBlogsSubTab] = useState<"articles" | "editor" | "categories" | "tags">("articles");
+
+  const [categories, setCategories] = useState<{ _id: string; name: string; slug: string }[]>([]);
+  const [tags, setTags] = useState<{ _id: string; name: string; slug: string }[]>([]);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [newTagName, setNewTagName] = useState("");
+  const [uploadLoading, setUploadLoading] = useState(false);
+
+  // Job Form state
+  const [jobForm, setJobForm] = useState({
+    title: "", department: "", location: "", type: "Full-Time", description: "",
+  });
+  const [jobRequirements, setJobRequirements] = useState<string[]>([]);
+  const [newRequirement, setNewRequirement] = useState("");
+  const [editingJobId, setEditingJobId] = useState<string | null>(null);
+  const [jobFormLoading, setJobFormLoading] = useState(false);
 
   const [editingBlogId, setEditingBlogId] = useState<string | null>(null);
   const [blogForm, setBlogForm] = useState({
@@ -130,7 +197,7 @@ export default function AdminDashboard() {
   });
   const [blogBlocks, setBlogBlocks] = useState<ContentBlock[]>([]);
   const [blogTags, setBlogTags] = useState<string[]>([]);
-  const [blogCategories, setBlogCategories] = useState<string[]>(["Technology"]);
+  const [blogCategories, setBlogCategories] = useState<string[]>([]);
   const [newTagInput, setNewTagInput] = useState("");
   const [newCategoryInput, setNewCategoryInput] = useState("");
   const [blogEditorView, setBlogEditorView] = useState<"editor" | "preview">("editor");
@@ -149,11 +216,6 @@ export default function AdminDashboard() {
   const [markdownContent, setMarkdownContent] = useState("");
   const [hasDraft, setHasDraft] = useState(false);
   const [draftTime, setDraftTime] = useState("");
-
-  const PREDEFINED_CATEGORIES = [
-    "Technology", "Engineering", "Solutions", "Subsidies",
-    "Products", "Solar Inverter", "Monitoring", "Energy Storage",
-  ];
 
   // ─── Block Helpers ────────────────────────────────────────────────────────
   const addBlock = useCallback((type: ContentBlock["type"]) => {
@@ -337,21 +399,35 @@ export default function AdminDashboard() {
     setError("");
     try {
       const headers = { Authorization: `Bearer ${authToken}` };
-      if (userRole === "admin") {
-        const [leadsRes, blogsRes, usersRes] = await Promise.all([
+      if (userRole === "superadmin" || userRole === "co_admin") {
+        const [leadsRes, blogsRes, usersRes, warrantiesRes, jobsRes, categoriesRes, tagsRes] = await Promise.all([
           fetch(`${API_URL}/api/leads`, { headers }),
           fetch(`${API_URL}/api/blogs`),
           fetch(`${API_URL}/api/auth/users`, { headers }),
+          fetch(`${API_URL}/api/warranty`, { headers }),
+          fetch(`${API_URL}/api/jobs/all`, { headers }),
+          fetch(`${API_URL}/api/categories`),
+          fetch(`${API_URL}/api/tags`),
         ]);
         if (leadsRes.ok) setLeads(await leadsRes.json());
         if (blogsRes.ok) setBlogs(await blogsRes.json());
         if (usersRes.ok) setUsers(await usersRes.json());
+        if (warrantiesRes.ok) setWarranties(await warrantiesRes.json());
+        if (jobsRes.ok) setJobs(await jobsRes.json());
+        if (categoriesRes.ok) setCategories(await categoriesRes.json());
+        if (tagsRes.ok) setTags(await tagsRes.json());
       } else if (userRole === "bde") {
         const leadsRes = await fetch(`${API_URL}/api/leads`, { headers });
         if (leadsRes.ok) setLeads(await leadsRes.json());
       } else if (userRole === "content_editor") {
-        const blogsRes = await fetch(`${API_URL}/api/blogs`);
+        const [blogsRes, categoriesRes, tagsRes] = await Promise.all([
+          fetch(`${API_URL}/api/blogs`),
+          fetch(`${API_URL}/api/categories`),
+          fetch(`${API_URL}/api/tags`),
+        ]);
         if (blogsRes.ok) setBlogs(await blogsRes.json());
+        if (categoriesRes.ok) setCategories(await categoriesRes.json());
+        if (tagsRes.ok) setTags(await tagsRes.json());
       }
     } catch {
       setError("Failed to connect to the backend server. Please make sure the API is running.");
@@ -592,7 +668,7 @@ export default function AdminDashboard() {
     setBlogCategories(blog.categories || [blog.category]);
     setSelectedBlockIdx(null);
     setBlogEditorView("editor");
-    // Scroll editor into view
+    setBlogsSubTab("editor");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -606,6 +682,244 @@ export default function AdminDashboard() {
       if (!res.ok) throw new Error();
       setBlogs(blogs.filter((b) => b._id !== blogId));
     } catch { alert("Error deleting blog"); }
+    finally { setActionLoading(false); }
+  };
+
+  // ─── Category CRUD ────────────────────────────────────────────────────────
+  const handleCreateCategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newCategoryName.trim()) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/categories`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ name: newCategoryName.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to create category");
+      }
+      const saved = await res.json();
+      setCategories((prev) => [...prev, saved].sort((a, b) => a.name.localeCompare(b.name)));
+      setNewCategoryName("");
+    } catch (err: any) {
+      alert(err.message || "Error creating category");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteCategory = async (catId: string) => {
+    if (!confirm("Are you sure you want to delete this category?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/categories/${catId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to delete category");
+      }
+      setCategories((prev) => prev.filter((c) => c._id !== catId));
+    } catch (err: any) {
+      alert(err.message || "Error deleting category");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  // ─── Tag CRUD ─────────────────────────────────────────────────────────────
+  const handleCreateTag = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTagName.trim()) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/tags`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ name: newTagName.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to create tag");
+      }
+      const saved = await res.json();
+      setTags((prev) => [...prev, saved].sort((a, b) => a.name.localeCompare(b.name)));
+      setNewTagName("");
+    } catch (err: any) {
+      alert(err.message || "Error creating tag");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteTag = async (tagId: string) => {
+    if (!confirm("Are you sure you want to delete this tag?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/tags/${tagId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to delete tag");
+      }
+      setTags((prev) => prev.filter((t) => t._id !== tagId));
+    } catch (err: any) {
+      alert(err.message || "Error deleting tag");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  // ─── Multer Upload helper ─────────────────────────────────────────────────
+  const handleImageFileUpload = async (file: File, onSuccess: (url: string) => void) => {
+    setUploadLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await fetch(`${API_URL}/api/upload/image`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to upload image file");
+      }
+      const data = await res.json();
+      onSuccess(data.url);
+    } catch (err: any) {
+      alert(err.message || "Error uploading image");
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
+  // ─── Warranty Actions ─────────────────────────────────────────────────────
+  const updateWarrantyStatus = async (id: string, status: string, adminNotes?: string) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/warranty/${id}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ status, adminNotes }),
+      });
+      if (!res.ok) throw new Error();
+      const updated = await res.json();
+      setWarranties(warranties.map((w) => (w._id === id ? updated : w)));
+    } catch { alert("Error updating warranty status"); }
+    finally { setActionLoading(false); }
+  };
+
+  const deleteWarranty = async (id: string) => {
+    if (!confirm("Permanently delete this warranty claim?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/warranty/${id}`, {
+        method: "DELETE", headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error();
+      setWarranties(warranties.filter((w) => w._id !== id));
+    } catch { alert("Error deleting warranty claim"); }
+    finally { setActionLoading(false); }
+  };
+
+  // ─── Job Actions ──────────────────────────────────────────────────────────
+  const handleJobSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setJobFormLoading(true);
+    try {
+      const url = editingJobId ? `${API_URL}/api/jobs/${editingJobId}` : `${API_URL}/api/jobs`;
+      const method = editingJobId ? "PUT" : "POST";
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ ...jobForm, requirements: jobRequirements }),
+      });
+      if (!res.ok) throw new Error();
+      const saved = await res.json();
+      if (editingJobId) {
+        setJobs(jobs.map((j) => (j._id === editingJobId ? saved : j)));
+        setEditingJobId(null);
+      } else {
+        setJobs([saved, ...jobs]);
+      }
+      setJobForm({ title: "", department: "", location: "", type: "Full-Time", description: "" });
+      setJobRequirements([]);
+      alert(editingJobId ? "Job updated!" : "Job posted successfully!");
+    } catch { alert("Error saving job"); }
+    finally { setJobFormLoading(false); }
+  };
+
+  const handleToggleJob = async (jobId: string) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/${jobId}/toggle`, {
+        method: "PATCH", headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error();
+      const updated = await res.json();
+      setJobs(jobs.map((j) => (j._id === jobId ? updated : j)));
+    } catch { alert("Error toggling job status"); }
+    finally { setActionLoading(false); }
+  };
+
+  const handleDeleteJob = async (jobId: string) => {
+    if (!confirm("Permanently delete this job posting?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/${jobId}`, {
+        method: "DELETE", headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error();
+      setJobs(jobs.filter((j) => j._id !== jobId));
+      if (selectedJobForApps?._id === jobId) setSelectedJobForApps(null);
+    } catch { alert("Error deleting job"); }
+    finally { setActionLoading(false); }
+  };
+
+  const fetchApplicationsForJob = async (job: Job) => {
+    setSelectedJobForApps(job);
+    setCareersSubTab("applications");
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/${job._id}/applications`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) setApplications(await res.json());
+    } catch { alert("Error fetching applications"); }
+    finally { setActionLoading(false); }
+  };
+
+  const updateApplicationStatus = async (appId: string, status: string) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/applications/${appId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) throw new Error();
+      const updated = await res.json();
+      setApplications(applications.map((a) => (a._id === appId ? updated : a)));
+    } catch { alert("Error updating application status"); }
+    finally { setActionLoading(false); }
+  };
+
+  const deleteApplication = async (appId: string) => {
+    if (!confirm("Permanently delete this application?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/applications/${appId}`, {
+        method: "DELETE", headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error();
+      setApplications(applications.filter((a) => a._id !== appId));
+    } catch { alert("Error deleting application"); }
     finally { setActionLoading(false); }
   };
 
@@ -648,32 +962,50 @@ export default function AdminDashboard() {
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
 
         {/* ── Sidebar ── */}
-        <aside className="w-full md:w-60 bg-white border-r border-slate-200 flex flex-row md:flex-col py-2 md:py-6 px-4 md:px-3 gap-2 shrink-0 md:justify-start justify-center">
+        <aside className="w-full md:w-60 bg-white border-r border-slate-200 flex flex-row md:flex-col py-2 md:py-6 px-4 md:px-3 gap-2 shrink-0 md:justify-start justify-center overflow-x-auto">
           {role !== "content_editor" && (
             <button
               onClick={() => setActiveTab("leads")}
               className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "leads" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
             >
               <FileSpreadsheet size={16} />
-              <span>Leads Management</span>
+              <span className="whitespace-nowrap">Leads Management</span>
             </button>
           )}
-          {(role === "admin" || role === "content_editor") && (
+          {(role === "superadmin" || role === "co_admin" || role === "content_editor") && (
             <button
               onClick={() => setActiveTab("blogs")}
               className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "blogs" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
             >
               <FileText size={16} />
-              <span>Blog Articles</span>
+              <span className="whitespace-nowrap">Blog Articles</span>
             </button>
           )}
-          {role === "admin" && (
+          {(role === "superadmin" || role === "co_admin") && (
+            <button
+              onClick={() => setActiveTab("warranty")}
+              className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "warranty" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
+            >
+              <ShieldCheck size={16} />
+              <span className="whitespace-nowrap">Warranty Claims</span>
+            </button>
+          )}
+          {(role === "superadmin" || role === "co_admin") && (
+            <button
+              onClick={() => setActiveTab("careers")}
+              className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "careers" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
+            >
+              <Briefcase size={16} />
+              <span className="whitespace-nowrap">Careers & Jobs</span>
+            </button>
+          )}
+          {(role === "superadmin" || role === "co_admin") && (
             <button
               onClick={() => setActiveTab("users")}
               className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "users" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
             >
               <Users size={16} />
-              <span>Staff Accounts</span>
+              <span className="whitespace-nowrap">Staff Accounts</span>
             </button>
           )}
         </aside>
@@ -790,9 +1122,10 @@ export default function AdminDashboard() {
                                         className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold py-1 px-2.5 rounded transition-all cursor-pointer">
                                         View
                                       </button>
-                                      {role === "admin" && (
+                                      {role === "superadmin" && (
                                         <button onClick={() => deleteLeadRecord(lead._id)}
-                                          className="text-red-600 p-1 rounded hover:bg-red-50 transition-all cursor-pointer">
+                                          className="text-red-650 hover:text-red-705 p-1 rounded hover:bg-red-50 transition-all cursor-pointer"
+                                        >
                                           <Trash2 size={14} />
                                         </button>
                                       )}
@@ -932,527 +1265,633 @@ export default function AdminDashboard() {
               )}
 
               {/* ═══════════════ BLOGS TAB ═══════════════ */}
-              {activeTab === "blogs" && (role === "admin" || role === "content_editor") && (
-                <div className="flex-1 flex flex-col gap-8">
+              {activeTab === "blogs" && (role === "superadmin" || role === "co_admin" || role === "content_editor") && (
+                <div className="flex-1 flex flex-col gap-6">
 
-                  {/* ── Elementor-style Editor ── */}
-                  <form onSubmit={handleBlogSubmit}>
-                    <div className="flex rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white"
-                      style={{ height: "calc(100vh - 230px)", minHeight: 600 }}>
+                  {/* Blogs Sub-tabs */}
+                  <div className="flex border-b border-slate-200 mb-6 shrink-0 bg-white p-2 rounded-2xl shadow-sm gap-2">
+                    {([
+                      { id: "articles", label: "Published Articles", icon: Newspaper },
+                      { id: "editor", label: editingBlogId ? "Edit Article" : "Write Article", icon: PenLine },
+                      { id: "categories", label: "Categories", icon: List },
+                      { id: "tags", label: "Tags", icon: Hash },
+                    ] as const).map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          type="button"
+                          onClick={() => {
+                            setBlogsSubTab(tab.id);
+                            if (tab.id !== "editor" && !editingBlogId) resetBlogForm();
+                          }}
+                          className={`flex items-center gap-2 py-2 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${blogsSubTab === tab.id
+                              ? "bg-primary text-white shadow-md shadow-primary/10"
+                              : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                            }`}
+                        >
+                          <Icon size={14} />
+                          <span>{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                      {/* LEFT PANEL */}
-                      <div className="w-72 shrink-0 bg-[#1a1f2e] flex flex-col overflow-hidden border-r border-slate-700">
-                        <div className="px-4 py-3 border-b border-slate-700 flex items-center justify-between shrink-0">
-                          <div className="flex items-center gap-2">
-                            <Sun size={16} className="text-primary" />
-                            <span className="text-white text-xs font-extrabold tracking-wider uppercase">Blog Editor</span>
+                  {/* SUB-TAB: Articles List */}
+                  {blogsSubTab === "articles" && (
+                    <div className="flex flex-col gap-5 text-left">
+                      <div>
+                        <h2 className="text-xl font-bold text-slate-900">Published Articles</h2>
+                        <p className="text-xs text-slate-500">Manage blog content displayed on the public website</p>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {blogs.length === 0 ? (
+                          <div className="col-span-3 text-center py-12 bg-white border border-slate-200 rounded-2xl text-slate-400 font-semibold">
+                            No blog posts found. Write one in the editor tab!
                           </div>
-                          <span className="text-[10px] text-slate-400 font-mono">{blogBlocks.length} blocks</span>
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto">
-                          {/* Settings accordion */}
-                          <div className="border-b border-slate-700">
-                            <button type="button" onClick={() => setSettingsOpen(!settingsOpen)}
-                              className="w-full px-4 py-3 flex items-center justify-between text-slate-300 hover:text-white hover:bg-slate-700/40 transition-colors cursor-pointer">
-                              <span className="text-[10px] font-black uppercase tracking-widest">Article Settings</span>
-                              <ChevronDown size={13} className={`transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
-                            </button>
-                            {settingsOpen && (
-                              <div className="px-4 pb-4 flex flex-col gap-3">
-                                {/* Template */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Template</label>
-                                  <div className="grid grid-cols-3 gap-1.5">
-                                    {(["editorial", "magazine", "minimal"] as const).map((t) => (
-                                      <button key={t} type="button" onClick={() => setBlogForm({ ...blogForm, template: t })}
-                                        className={`py-2 rounded-lg text-[10px] font-bold capitalize transition-all cursor-pointer ${blogForm.template === t ? "bg-primary text-white" : "bg-slate-700 text-slate-300 hover:bg-slate-600"}`}>
-                                        {t}
-                                      </button>
+                        ) : (
+                          blogs.map((blog) => (
+                            <div key={blog._id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                              <div>
+                                <div className="relative aspect-[16/9] w-full bg-slate-100 overflow-hidden border-b border-slate-200">
+                                  <div className="absolute inset-0 bg-slate-100 flex items-center justify-center text-slate-300 font-bold text-xs">[ Image ]</div>
+                                  <img src={blog.image.startsWith("/uploads") ? `${API_URL}${blog.image}` : blog.image} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
+                                  <div className="absolute top-3 left-3 flex gap-1 flex-wrap">
+                                    {(blog.categories || [blog.category]).slice(0, 2).map((cat) => (
+                                      <span key={cat} className="bg-primary text-white text-[9px] uppercase font-bold py-0.5 px-2 rounded-md">{cat}</span>
                                     ))}
                                   </div>
+                                  {blog.template && (
+                                    <span className="absolute top-3 right-3 bg-black/70 text-white text-[9px] uppercase font-bold py-0.5 px-2 rounded-full">{blog.template}</span>
+                                  )}
                                 </div>
-                                {/* Title */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Title *</label>
-                                  <input required value={blogForm.title} onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
-                                    placeholder="Article title"
-                                    className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
-                                </div>
-                                {/* Excerpt */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Excerpt *</label>
-                                  <textarea required rows={2} value={blogForm.excerpt} onChange={(e) => setBlogForm({ ...blogForm, excerpt: e.target.value })}
-                                    placeholder="Short description..."
-                                    className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500 resize-none" />
-                                </div>
-                                {/* Image */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Hero Image URL *</label>
-                                  <input required value={blogForm.image} onChange={(e) => setBlogForm({ ...blogForm, image: e.target.value })}
-                                    placeholder="/assets/images/..."
-                                    className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
-                                  {blogForm.image && (
-                                    <div className="mt-2 rounded-lg overflow-hidden aspect-video border border-slate-600 bg-slate-900">
-                                      <img src={blogForm.image} alt="hero" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
+                                <div className="p-5">
+                                  <span className="text-[10px] text-slate-500 font-bold block mb-1">{blog.date} • {blog.author}</span>
+                                  <h4 className="font-extrabold text-slate-900 text-sm leading-snug mb-2 line-clamp-2">{blog.title}</h4>
+                                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{blog.excerpt}</p>
+                                  {(blog.tags || []).length > 0 && (
+                                    <div className="flex gap-1 flex-wrap mt-2">
+                                      {(blog.tags || []).slice(0, 3).map((tag) => (
+                                        <span key={tag} className="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-semibold">#{tag}</span>
+                                      ))}
                                     </div>
                                   )}
                                 </div>
-                                {/* Author */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Author</label>
-                                  <input value={blogForm.author} onChange={(e) => setBlogForm({ ...blogForm, author: e.target.value })}
-                                    placeholder={`Default: ${userName}`}
-                                    className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
-                                </div>
-                                {/* Categories */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Categories</label>
-                                  <div className="flex flex-wrap gap-1 mb-2">
-                                    {blogCategories.map((cat) => (
-                                      <span key={cat} className="inline-flex items-center gap-1 text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 pl-2 pr-1 py-0.5 rounded-full">
-                                        {cat}
-                                        <button type="button" onClick={() => setBlogCategories(blogCategories.filter((c) => c !== cat))} className="cursor-pointer"><XCircle size={9} /></button>
-                                      </span>
-                                    ))}
-                                  </div>
-                                  <div className="flex flex-wrap gap-1 mb-1">
-                                    {PREDEFINED_CATEGORIES.filter((c) => !blogCategories.includes(c)).map((cat) => (
-                                      <button key={cat} type="button" onClick={() => setBlogCategories([...blogCategories, cat])}
-                                        className="text-[9px] font-bold text-slate-400 border border-slate-600 px-2 py-1 rounded-full hover:border-primary hover:text-primary transition-all cursor-pointer bg-slate-800">{cat}</button>
-                                    ))}
-                                  </div>
-                                  <input value={newCategoryInput} onChange={(e) => setNewCategoryInput(e.target.value)}
-                                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (newCategoryInput.trim()) { setBlogCategories([...blogCategories, newCategoryInput.trim()]); setNewCategoryInput(""); } } }}
-                                    placeholder="+ Custom category"
-                                    className="w-full bg-slate-800 border border-dashed border-slate-600 rounded-lg py-1.5 px-2 text-[10px] text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
-                                </div>
-                                {/* Tags */}
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Tags</label>
-                                  <div className="flex flex-wrap gap-1 mb-2">
-                                    {blogTags.map((tag) => (
-                                      <span key={tag} className="inline-flex items-center gap-1 text-[10px] font-bold bg-slate-700 text-slate-200 border border-slate-600 pl-2 pr-1 py-0.5 rounded-full">
-                                        #{tag}
-                                        <button type="button" onClick={() => setBlogTags(blogTags.filter((t) => t !== tag))} className="cursor-pointer"><XCircle size={9} /></button>
-                                      </span>
-                                    ))}
-                                  </div>
-                                  <input value={newTagInput} onChange={(e) => setNewTagInput(e.target.value)}
-                                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (newTagInput.trim()) { setBlogTags([...blogTags, newTagInput.trim()]); setNewTagInput(""); } } }}
-                                    placeholder="Type tag + Enter"
-                                    className="w-full bg-slate-800 border border-dashed border-slate-600 rounded-lg py-1.5 px-2 text-[10px] text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
+                              </div>
+                              <div className="p-5 pt-0 border-t border-slate-100 flex justify-between items-center">
+                                <span className="text-[10px] font-mono text-slate-400 truncate max-w-[120px]">/{blog.slug}</span>
+                                <div className="flex gap-2">
+                                  <button onClick={() => handleEditBlog(blog)}
+                                    className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-1.5 px-3 rounded-lg text-[11px] transition-colors cursor-pointer border border-slate-200/50">
+                                    <Edit3 size={11} /> Edit
+                                  </button>
+                                  {role === "superadmin" && (
+                                    <button onClick={() => handleDeleteBlog(blog._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-all cursor-pointer">
+                                      <Trash2 size={13} />
+                                    </button>
+                                  )}
                                 </div>
                               </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUB-TAB: Editor */}
+                  {blogsSubTab === "editor" && (
+                    <form onSubmit={handleBlogSubmit}>
+                      <div className="flex rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white"
+                        style={{ height: "calc(100vh - 230px)", minHeight: 600 }}>
+
+                        {/* LEFT PANEL */}
+                        <div className="w-72 shrink-0 bg-[#1a1f2e] flex flex-col overflow-hidden border-r border-slate-700 text-left">
+                          <div className="px-4 py-3 border-b border-slate-700 flex items-center justify-between shrink-0">
+                            <div className="flex items-center gap-2">
+                              <Sun size={16} className="text-primary" />
+                              <span className="text-white text-xs font-extrabold tracking-wider uppercase">Blog Editor</span>
+                            </div>
+                            <span className="text-[10px] text-slate-400 font-mono">{blogBlocks.length} blocks</span>
+                          </div>
+
+                          <div className="flex-1 overflow-y-auto">
+                            {/* Settings accordion */}
+                            <div className="border-b border-slate-700">
+                              <button type="button" onClick={() => setSettingsOpen(!settingsOpen)}
+                                className="w-full px-4 py-3 flex items-center justify-between text-slate-300 hover:text-white hover:bg-slate-700/40 transition-colors cursor-pointer">
+                                <span className="text-[10px] font-black uppercase tracking-widest">Article Settings</span>
+                                <ChevronDown size={13} className={`transition-transform ${settingsOpen ? "rotate-180" : ""}`} />
+                              </button>
+                              {settingsOpen && (
+                                <div className="px-4 pb-4 flex flex-col gap-3">
+                                  {/* Template */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Template</label>
+                                    <div className="grid grid-cols-3 gap-1.5">
+                                      {(["editorial", "magazine", "minimal"] as const).map((t) => (
+                                        <button key={t} type="button" onClick={() => setBlogForm({ ...blogForm, template: t })}
+                                          className={`py-2 rounded-lg text-[10px] font-bold capitalize transition-all cursor-pointer ${blogForm.template === t ? "bg-primary text-white" : "bg-slate-700 text-slate-300 hover:bg-slate-600"}`}>
+                                          {t}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  {/* Title */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Title *</label>
+                                    <input required value={blogForm.title} onChange={(e) => setBlogForm({ ...blogForm, title: e.target.value })}
+                                      placeholder="Article title"
+                                      className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
+                                  </div>
+                                  {/* Excerpt */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Excerpt *</label>
+                                    <textarea required rows={2} value={blogForm.excerpt} onChange={(e) => setBlogForm({ ...blogForm, excerpt: e.target.value })}
+                                      placeholder="Short description..."
+                                      className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500 resize-none" />
+                                  </div>
+                                  {/* Hero Image */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Hero Image *</label>
+                                    <div className="flex gap-2 mb-1.5">
+                                      <input required value={blogForm.image} onChange={(e) => setBlogForm({ ...blogForm, image: e.target.value })}
+                                        placeholder="/assets/images/..."
+                                        className="flex-grow bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-[11px] text-white focus:outline-none focus:border-primary placeholder:text-slate-500 min-w-0" />
+                                      <label className="bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white rounded-lg py-2 px-3 text-[10px] font-bold cursor-pointer transition-colors shrink-0 flex items-center justify-center">
+                                        {uploadLoading ? "..." : "Upload"}
+                                        <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                                          const file = e.target.files?.[0];
+                                          if (file) handleImageFileUpload(file, (url) => setBlogForm({ ...blogForm, image: url }));
+                                        }} />
+                                      </label>
+                                    </div>
+                                    {blogForm.image && (
+                                      <div className="mt-2 rounded-lg overflow-hidden aspect-video border border-slate-600 bg-slate-900">
+                                        <img src={blogForm.image.startsWith("/uploads") ? `${API_URL}${blogForm.image}` : blogForm.image} alt="hero" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
+                                      </div>
+                                    )}
+                                  </div>
+                                  {/* Author */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Author</label>
+                                    <input value={blogForm.author} onChange={(e) => setBlogForm({ ...blogForm, author: e.target.value })}
+                                      placeholder={`Default: ${userName}`}
+                                      className="w-full bg-slate-800 border border-slate-600 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-primary placeholder:text-slate-500" />
+                                  </div>
+                                  {/* Categories */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Categories</label>
+                                    <div className="flex flex-wrap gap-1 mb-2">
+                                      {blogCategories.map((cat) => (
+                                        <span key={cat} className="inline-flex items-center gap-1 text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 pl-2 pr-1 py-0.5 rounded-full">
+                                          {cat}
+                                          <button type="button" onClick={() => setBlogCategories(blogCategories.filter((c) => c !== cat))} className="cursor-pointer"><XCircle size={9} /></button>
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1 mb-2 max-h-24 overflow-y-auto border border-slate-700/60 p-1.5 rounded bg-slate-800/50">
+                                      {categories.filter((c) => !blogCategories.includes(c.name)).length === 0 ? (
+                                        <span className="text-[9px] text-slate-500">No other categories available.</span>
+                                      ) : (
+                                        categories.filter((c) => !blogCategories.includes(c.name)).map((cat) => (
+                                          <button key={cat._id} type="button" onClick={() => setBlogCategories([...blogCategories, cat.name])}
+                                            className="text-[9px] font-bold text-slate-400 border border-slate-600 px-2 py-1 rounded-full hover:border-primary hover:text-primary transition-all cursor-pointer bg-slate-800">{cat.name}</button>
+                                        ))
+                                      )}
+                                    </div>
+                                  </div>
+                                  {/* Tags */}
+                                  <div>
+                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Tags</label>
+                                    <div className="flex flex-wrap gap-1 mb-2">
+                                      {blogTags.map((tag) => (
+                                        <span key={tag} className="inline-flex items-center gap-1 text-[10px] font-bold bg-slate-700 text-slate-200 border border-slate-600 pl-2 pr-1 py-0.5 rounded-full">
+                                          #{tag}
+                                          <button type="button" onClick={() => setBlogTags(blogTags.filter((t) => t !== tag))} className="cursor-pointer"><XCircle size={9} /></button>
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1 mb-2 max-h-24 overflow-y-auto border border-slate-700/60 p-1.5 rounded bg-slate-800/50">
+                                      {tags.filter((t) => !blogTags.includes(t.name)).length === 0 ? (
+                                        <span className="text-[9px] text-slate-500">No other tags available.</span>
+                                      ) : (
+                                        tags.filter((t) => !blogTags.includes(t.name)).map((tag) => (
+                                          <button key={tag._id} type="button" onClick={() => setBlogTags([...blogTags, tag.name])}
+                                            className="text-[9px] font-bold text-slate-300 border border-slate-600 px-2 py-1 rounded-full hover:border-primary hover:text-primary transition-all cursor-pointer bg-slate-800">#{tag.name}</button>
+                                        ))
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Elements palette */}
+                            <div className="px-4 py-4">
+                              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Elements — Drag to Canvas</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                {([
+                                  { blockType: "heading" as const, label: "Heading", icon: Heading, color: "from-violet-500 to-purple-600", desc: "H2 / H3" },
+                                  { blockType: "paragraph" as const, label: "Paragraph", icon: AlignLeft, color: "from-blue-500 to-sky-600", desc: "Body text" },
+                                  { blockType: "image" as const, label: "Image", icon: ImageIcon, color: "from-emerald-500 to-teal-600", desc: "Single image" },
+                                  { blockType: "two_column" as const, label: "2 Columns", icon: Columns, color: "from-orange-500 to-amber-600", desc: "Side by side" },
+                                  { blockType: "list" as const, label: "List", icon: List, color: "from-rose-500 to-pink-600", desc: "Bullet / ordered" },
+                                  { blockType: "grid" as const, label: "Image Grid", icon: LayoutGrid, color: "from-cyan-500 to-blue-600", desc: "2 or 3 col" },
+                                ]).map((el) => (
+                                  <div key={el.blockType} draggable
+                                    onDragStart={() => setDragFrom({ source: "palette", blockType: el.blockType })}
+                                    onDragEnd={() => setDragFrom(null)}
+                                    onClick={() => insertBlockAt(el.blockType, blogBlocks.length)}
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-primary/60 hover:bg-slate-700/60 cursor-grab active:cursor-grabbing transition-all select-none">
+                                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${el.color} flex items-center justify-center shadow-md`}>
+                                      <el.icon size={14} className="text-white" />
+                                    </div>
+                                    <span className="text-[10px] font-bold text-slate-200 text-center leading-tight">{el.label}</span>
+                                    <span className="text-[9px] text-slate-500 text-center">{el.desc}</span>
+                                  </div>
+                                ))}
+                              </div>
+                              <p className="text-center text-[10px] text-slate-600 mt-3">Click or drag to add</p>
+                            </div>
+                          </div>
+
+                          {/* Publish button */}
+                          <div className="p-4 border-t border-slate-700 shrink-0 flex gap-2">
+                            <button type="submit" disabled={actionLoading}
+                              className="flex-1 bg-primary hover:bg-primary/90 text-white font-extrabold py-3 rounded-xl shadow-lg transition-all text-xs cursor-pointer">
+                              {actionLoading ? "Saving..." : editingBlogId ? "Update Article" : "Publish Article"}
+                            </button>
+                            {editingBlogId && (
+                              <button type="button" onClick={resetBlogForm}
+                                className="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-3 px-3 rounded-xl transition-all cursor-pointer text-xs">
+                                Cancel
+                              </button>
                             )}
                           </div>
-
-                          {/* Elements palette */}
-                          <div className="px-4 py-4">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Elements — Drag to Canvas</p>
-                            <div className="grid grid-cols-2 gap-2">
-                              {([
-                                { blockType: "heading" as const, label: "Heading", icon: Heading, color: "from-violet-500 to-purple-600", desc: "H2 / H3" },
-                                { blockType: "paragraph" as const, label: "Paragraph", icon: AlignLeft, color: "from-blue-500 to-sky-600", desc: "Body text" },
-                                { blockType: "image" as const, label: "Image", icon: ImageIcon, color: "from-emerald-500 to-teal-600", desc: "Single image" },
-                                { blockType: "two_column" as const, label: "2 Columns", icon: Columns, color: "from-orange-500 to-amber-600", desc: "Side by side" },
-                                { blockType: "list" as const, label: "List", icon: List, color: "from-rose-500 to-pink-600", desc: "Bullet / ordered" },
-                                { blockType: "grid" as const, label: "Image Grid", icon: LayoutGrid, color: "from-cyan-500 to-blue-600", desc: "2 or 3 col" },
-                              ]).map((el) => (
-                                <div key={el.blockType} draggable
-                                  onDragStart={() => setDragFrom({ source: "palette", blockType: el.blockType })}
-                                  onDragEnd={() => setDragFrom(null)}
-                                  onClick={() => insertBlockAt(el.blockType, blogBlocks.length)}
-                                  className="flex flex-col items-center gap-2 p-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-primary/60 hover:bg-slate-700/60 cursor-grab active:cursor-grabbing transition-all select-none">
-                                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${el.color} flex items-center justify-center shadow-md`}>
-                                    <el.icon size={14} className="text-white" />
-                                  </div>
-                                  <span className="text-[10px] font-bold text-slate-200 text-center leading-tight">{el.label}</span>
-                                  <span className="text-[9px] text-slate-500 text-center">{el.desc}</span>
-                                </div>
-                              ))}
-                            </div>
-                            <p className="text-center text-[10px] text-slate-600 mt-3">Click or drag to add</p>
-                          </div>
                         </div>
 
-                        {/* Publish button */}
-                        <div className="p-4 border-t border-slate-700 shrink-0 flex gap-2">
-                          <button type="submit" disabled={actionLoading}
-                            className="flex-1 bg-primary hover:bg-primary/90 text-white font-extrabold py-3 rounded-xl shadow-lg transition-all text-xs cursor-pointer">
-                            {actionLoading ? "Saving..." : editingBlogId ? "Update Article" : "Publish Article"}
-                          </button>
-                          {editingBlogId && (
-                            <button type="button" onClick={resetBlogForm}
-                              className="bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold py-3 px-3 rounded-xl transition-all cursor-pointer text-xs">
-                              Cancel
-                            </button>
-                          )}
-                        </div>
-                      </div>
+                        {/* CENTER CANVAS & EDITOR HEADERS */}
+                        <div className="flex-1 bg-slate-100 flex flex-col overflow-hidden">
 
-                      {/* CENTER CANVAS & EDITOR HEADERS */}
-                      <div className="flex-1 bg-slate-100 flex flex-col overflow-hidden">
-
-                        {/* Canvas toolbar */}
-                        <div className="bg-slate-50 border-b border-slate-200 px-6 py-2.5 flex flex-wrap items-center justify-between shrink-0 gap-3">
-                          <div className="flex bg-slate-200/70 p-0.5 rounded-lg border border-slate-300/40">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (editorMode === "markdown") {
-                                  const parsed = parseMarkdownToBlocks(markdownContent);
-                                  setBlogBlocks(parsed);
-                                }
-                                setEditorMode("blocks");
-                              }}
-                              className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${editorMode === "blocks" ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
-                            >
-                              Visual Canvas
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (editorMode === "blocks") {
-                                  const md = parseBlocksToMarkdown(blogBlocks);
-                                  setMarkdownContent(md);
-                                }
-                                setEditorMode("markdown");
-                              }}
-                              className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${editorMode === "markdown" ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
-                            >
-                              Markdown Editor
-                            </button>
-                          </div>
-
-                          <div className="flex items-center gap-2 text-xs">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Start Layout:</span>
-                            <select
-                              onChange={(e) => {
-                                if (e.target.value) {
-                                  applyLayoutTemplate(e.target.value as any);
-                                  e.target.value = "";
-                                }
-                              }}
-                              className="bg-white border border-slate-200 rounded px-2.5 py-1 text-xs font-bold text-slate-700 focus:outline-none focus:border-primary"
-                            >
-                              <option value="">-- Choose Template --</option>
-                              <option value="standard">Standard Article</option>
-                              <option value="listicle">Listicle Post</option>
-                              <option value="guide">Technical Guide</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        {/* Editor space */}
-                        <div className="flex-1 overflow-y-auto"
-                          onDragOver={(e) => { e.preventDefault(); if (dragFrom?.source === "palette") setDragOverIdx(blogBlocks.length); }}
-                          onDrop={(e) => {
-                            e.preventDefault();
-                            if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, blogBlocks.length);
-                            setDragFrom(null); setDragOverIdx(null);
-                          }}>
-
-                          {editorMode === "markdown" ? (
-                            <div className="max-w-3xl mx-auto my-6 px-4 flex flex-col h-[calc(100%-3rem)] min-h-[480px]">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Standard Markdown</span>
-                                <button
-                                  type="button"
-                                  onClick={() => {
+                          {/* Canvas toolbar */}
+                          <div className="bg-slate-50 border-b border-slate-200 px-6 py-2.5 flex flex-wrap items-center justify-between shrink-0 gap-3">
+                            <div className="flex bg-slate-200/70 p-0.5 rounded-lg border border-slate-300/40">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (editorMode === "markdown") {
                                     const parsed = parseMarkdownToBlocks(markdownContent);
                                     setBlogBlocks(parsed);
-                                    alert("Visual canvas blocks synchronized from Markdown!");
-                                  }}
-                                  className="text-[9px] font-bold bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
-                                >
-                                  Sync to Blocks
-                                </button>
-                              </div>
-                              <textarea
-                                value={markdownContent}
-                                onChange={(e) => setMarkdownContent(e.target.value)}
-                                placeholder="# Article Heading&#10;&#10;Write standard Markdown here. Example:&#10;## Subheading&#10;This is a paragraph.&#10;&#10;- Bullet point 1&#10;- Bullet point 2&#10;&#10;![Alt Text](/assets/images/...)"
-                                className="flex-grow w-full bg-slate-900 border border-slate-700 rounded-xl p-5 text-sm font-mono text-slate-200 focus:outline-none focus:border-primary resize-none leading-relaxed shadow-inner"
-                              />
+                                  }
+                                  setEditorMode("blocks");
+                                }}
+                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${editorMode === "blocks" ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
+                              >
+                                Visual Canvas
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (editorMode === "blocks") {
+                                    const md = parseBlocksToMarkdown(blogBlocks);
+                                    setMarkdownContent(md);
+                                  }
+                                  setEditorMode("markdown");
+                                }}
+                                className={`px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${editorMode === "markdown" ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
+                              >
+                                Markdown Editor
+                              </button>
                             </div>
-                          ) : (
-                            <div className="max-w-2xl mx-auto my-6 bg-white rounded-2xl shadow-xl overflow-hidden">
-                              {/* Hero preview */}
-                              <div className="relative aspect-[16/9] bg-slate-200 overflow-hidden">
-                                {blogForm.image
-                                  ? <img src={blogForm.image} alt="hero" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
-                                  : <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs font-bold">Add hero image URL in settings →</div>
-                                }
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-6">
-                                  <div className="flex gap-1 mb-2">
-                                    {blogCategories.slice(0, 2).map((c) => <span key={c} className="text-[9px] bg-primary text-white px-2 py-0.5 rounded font-bold">{c}</span>)}
-                                    {blogForm.template && <span className="text-[9px] bg-white/20 backdrop-blur-sm text-white px-2 py-0.5 rounded-full font-bold ml-auto border border-white/30">{blogForm.template}</span>}
-                                  </div>
-                                  <h1 className="text-white font-black text-lg leading-tight line-clamp-2">
-                                    {blogForm.title || <span className="text-white/40">Article Title</span>}
-                                  </h1>
-                                  {blogForm.excerpt && <p className="text-white/70 text-xs mt-1 line-clamp-2">{blogForm.excerpt}</p>}
+
+                            <div className="flex items-center gap-2 text-xs">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Start Layout:</span>
+                              <select
+                                onChange={(e) => {
+                                  if (e.target.value) {
+                                    applyLayoutTemplate(e.target.value as any);
+                                    e.target.value = "";
+                                  }
+                                }}
+                                className="bg-white border border-slate-200 rounded px-2.5 py-1 text-xs font-bold text-slate-700 focus:outline-none focus:border-primary"
+                              >
+                                <option value="">-- Choose Template --</option>
+                                <option value="standard">Standard Article</option>
+                                <option value="listicle">Listicle Post</option>
+                                <option value="guide">Technical Guide</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          {/* Editor space */}
+                          <div className="flex-1 overflow-y-auto"
+                            onDragOver={(e) => { e.preventDefault(); if (dragFrom?.source === "palette") setDragOverIdx(blogBlocks.length); }}
+                            onDrop={(e) => {
+                              e.preventDefault();
+                              if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, blogBlocks.length);
+                              setDragFrom(null); setDragOverIdx(null);
+                            }}>
+
+                            {editorMode === "markdown" ? (
+                              <div className="max-w-3xl mx-auto my-6 px-4 flex flex-col h-[calc(100%-3rem)] min-h-[480px]">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Standard Markdown</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const parsed = parseMarkdownToBlocks(markdownContent);
+                                      setBlogBlocks(parsed);
+                                      alert("Visual canvas blocks synchronized from Markdown!");
+                                    }}
+                                    className="text-[9px] font-bold bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
+                                  >
+                                    Sync to Blocks
+                                  </button>
                                 </div>
+                                <textarea
+                                  value={markdownContent}
+                                  onChange={(e) => setMarkdownContent(e.target.value)}
+                                  placeholder="# Article Heading&#10;&#10;Write standard Markdown here. Example:&#10;## Subheading&#10;This is a paragraph.&#10;&#10;- Bullet point 1&#10;- Bullet point 2&#10;&#10;![Alt Text](/assets/images/...)"
+                                  className="flex-grow w-full bg-slate-900 border border-slate-700 rounded-xl p-5 text-sm font-mono text-slate-200 focus:outline-none focus:border-primary resize-none leading-relaxed shadow-inner"
+                                />
                               </div>
-
-                              {/* Blocks area */}
-                              <div className="p-6 flex flex-col gap-1 min-h-48">
-                                {blogBlocks.length === 0 && (
-                                  <div className={`flex flex-col items-center justify-center min-h-48 border-2 border-dashed rounded-xl transition-all ${dragFrom?.source === "palette" ? "border-primary bg-primary/5 scale-[1.01]" : "border-slate-200"}`}>
-                                    <LayoutGrid size={28} className="text-slate-300 mb-2" />
-                                    <p className="text-slate-400 text-sm font-semibold">Drag elements from the left panel</p>
-                                    <p className="text-slate-300 text-xs mt-1">or click any element to add it</p>
-                                  </div>
-                                )}
-
-                                {blogBlocks.map((block, idx) => (
-                                  <div key={idx}>
-                                    {/* Inline Insertion Divider above block */}
-                                    <div className="relative group/insert h-4 my-0.5 flex items-center justify-center"
-                                      onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragOverIdx(idx); }}
-                                      onDrop={(e) => {
-                                        e.preventDefault(); e.stopPropagation();
-                                        if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, idx);
-                                        else if (dragFrom?.source === "canvas" && dragFrom.index !== idx) {
-                                          setBlogBlocks((prev) => {
-                                            const arr = [...prev];
-                                            const [moved] = arr.splice(dragFrom.index, 1);
-                                            arr.splice(idx > dragFrom.index ? idx - 1 : idx, 0, moved);
-                                            return arr;
-                                          });
-                                        }
-                                        setDragFrom(null); setDragOverIdx(null);
-                                      }}
-                                    >
-                                      <div className={`absolute left-0 right-0 h-[2px] transition-colors duration-200 ${dragOverIdx === idx ? "bg-primary" : "bg-transparent group-hover/insert:bg-slate-200"}`} />
-                                      <div className="z-10 opacity-0 group-hover/insert:opacity-100 transition-opacity duration-200 flex gap-1.5 bg-white border border-slate-200 rounded-full px-2.5 py-1 shadow-sm text-[9px] font-bold text-slate-500 hover:text-slate-800">
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("heading", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Heading</button>
-                                        <span className="text-slate-300">|</span>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("paragraph", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Paragraph</button>
-                                        <span className="text-slate-300">|</span>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("image", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Image</button>
-                                        <span className="text-slate-300">|</span>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("list", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ List</button>
-                                      </div>
+                            ) : (
+                              <div className="max-w-2xl mx-auto my-6 bg-white rounded-2xl shadow-xl overflow-hidden">
+                                {/* Hero preview */}
+                                <div className="relative aspect-[16/9] bg-slate-200 overflow-hidden">
+                                  {blogForm.image
+                                    ? <img src={blogForm.image.startsWith("/uploads") ? `${API_URL}${blogForm.image}` : blogForm.image} alt="hero" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
+                                    : <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs font-bold">Add hero image URL in settings →</div>
+                                  }
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-6">
+                                    <div className="flex gap-1 mb-2">
+                                      {blogCategories.slice(0, 2).map((c) => <span key={c} className="text-[9px] bg-primary text-white px-2 py-0.5 rounded font-bold">{c}</span>)}
+                                      {blogForm.template && <span className="text-[9px] bg-white/20 backdrop-blur-sm text-white px-2 py-0.5 rounded-full font-bold ml-auto border border-white/30">{blogForm.template}</span>}
                                     </div>
+                                    <h1 className="text-white font-black text-lg leading-tight line-clamp-2">
+                                      {blogForm.title || <span className="text-white/40">Article Title</span>}
+                                    </h1>
+                                    {blogForm.excerpt && <p className="text-white/70 text-xs mt-1 line-clamp-2">{blogForm.excerpt}</p>}
+                                  </div>
+                                </div>
 
-                                    {/* Block card */}
-                                    <div draggable
-                                      onDragStart={() => { setDragFrom({ source: "canvas", index: idx }); setSelectedBlockIdx(idx); }}
-                                      onDragEnd={() => { setDragFrom(null); setDragOverIdx(null); }}
-                                      onClick={() => setSelectedBlockIdx(selectedBlockIdx === idx ? null : idx)}
-                                      className={`relative rounded-xl border-2 cursor-grab active:cursor-grabbing transition-all group ${selectedBlockIdx === idx ? "border-primary shadow-md shadow-primary/15" : "border-transparent hover:border-slate-200"}`}>
+                                {/* Blocks area */}
+                                <div className="p-6 flex flex-col gap-1 min-h-48">
+                                  {blogBlocks.length === 0 && (
+                                    <div className={`flex flex-col items-center justify-center min-h-48 border-2 border-dashed rounded-xl transition-all ${dragFrom?.source === "palette" ? "border-primary bg-primary/5 scale-[1.01]" : "border-slate-200"}`}>
+                                      <LayoutGrid size={28} className="text-slate-300 mb-2" />
+                                      <p className="text-slate-400 text-sm font-semibold">Drag elements from the left panel</p>
+                                      <p className="text-slate-300 text-xs mt-1">or click any element to add it</p>
+                                    </div>
+                                  )}
 
-                                      {/* Action bar */}
-                                      <div className={`absolute -top-3 right-2 flex items-center gap-0.5 transition-opacity z-10 ${selectedBlockIdx === idx ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-                                        <span className="bg-primary text-white text-[9px] font-black px-2 py-0.5 rounded-full mr-1 uppercase tracking-wider">{block.type.replace("_", " ")}</span>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); moveBlock(idx, -1); }} disabled={idx === 0} className="bg-white border border-slate-200 p-1 rounded-md hover:bg-slate-50 disabled:opacity-30 shadow-sm cursor-pointer"><ChevronUp size={10} /></button>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); moveBlock(idx, 1); }} disabled={idx === blogBlocks.length - 1} className="bg-white border border-slate-200 p-1 rounded-md hover:bg-slate-50 disabled:opacity-30 shadow-sm cursor-pointer"><ChevronDown size={10} /></button>
-                                        <button type="button" onClick={(e) => { e.stopPropagation(); removeBlock(idx); setSelectedBlockIdx(null); }} className="bg-white border border-red-200 p-1 rounded-md hover:bg-red-50 text-red-500 shadow-sm cursor-pointer"><Trash2 size={10} /></button>
+                                  {blogBlocks.map((block, idx) => (
+                                    <div key={idx}>
+                                      {/* Inline Insertion Divider above block */}
+                                      <div className="relative group/insert h-4 my-0.5 flex items-center justify-center"
+                                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragOverIdx(idx); }}
+                                        onDrop={(e) => {
+                                          e.preventDefault(); e.stopPropagation();
+                                          if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, idx);
+                                          else if (dragFrom?.source === "canvas" && dragFrom.index !== idx) {
+                                            setBlogBlocks((prev) => {
+                                              const arr = [...prev];
+                                              const [moved] = arr.splice(dragFrom.index, 1);
+                                              arr.splice(idx, 0, moved);
+                                              return arr;
+                                            });
+                                          }
+                                          setDragFrom(null); setDragOverIdx(null);
+                                        }}
+                                      >
+                                        <div className={`absolute left-0 right-0 h-[2px] transition-colors duration-200 ${dragOverIdx === idx ? "bg-primary" : "bg-transparent group-hover/insert:bg-slate-200"}`} />
+                                        <div className="z-10 opacity-0 group-hover/insert:opacity-100 transition-opacity duration-200 flex gap-1.5 bg-white border border-slate-200 rounded-full px-2.5 py-1 shadow-sm text-[9px] font-bold text-slate-500 hover:text-slate-800">
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("heading", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Heading</button>
+                                          <span className="text-slate-300">|</span>
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("paragraph", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Paragraph</button>
+                                          <span className="text-slate-300">|</span>
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("image", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ Image</button>
+                                          <span className="text-slate-300">|</span>
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("list", idx); }} className="hover:text-primary transition-colors cursor-pointer">+ List</button>
+                                        </div>
                                       </div>
 
-                                      {/* Block preview / editor wrapper */}
-                                      <div className={`p-3 ${selectedBlockIdx === idx ? "" : "pointer-events-none select-none"}`}>
-                                        {block.type === "heading" && (
-                                          selectedBlockIdx === idx ? (
-                                            <div className="flex gap-2 items-center">
-                                              <select
-                                                value={(block as HeadingBlock).level}
-                                                onChange={(e) => updateBlock(idx, { level: parseInt(e.target.value) as 2 | 3 })}
-                                                className="bg-white border border-slate-200 rounded px-1.5 py-1 text-xs font-bold text-slate-700 focus:outline-none"
-                                              >
-                                                <option value={2}>H2</option>
-                                                <option value={3}>H3</option>
-                                              </select>
+                                      {/* Block Wrapper */}
+                                      <div draggable
+                                        onDragStart={() => setDragFrom({ source: "canvas", index: idx })}
+                                        onDragEnd={() => setDragFrom(null)}
+                                        onClick={() => setSelectedBlockIdx(idx)}
+                                        className={`group relative p-4 rounded-xl border-2 transition-all duration-200 hover:bg-slate-50/50 ${selectedBlockIdx === idx ? "border-primary bg-slate-50/40 shadow-sm" : "border-transparent"}`}
+                                      >
+                                        {/* Block Action Controls */}
+                                        <div className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 bg-white border border-slate-200 shadow-sm p-1 rounded-lg z-10">
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); moveBlock(idx, -1); }} className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"><ChevronUp size={12} /></button>
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); moveBlock(idx, 1); }} className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"><ChevronDown size={12} /></button>
+                                          <button type="button" onClick={(e) => { e.stopPropagation(); removeBlock(idx); if (selectedBlockIdx === idx) setSelectedBlockIdx(null); }} className="p-1 rounded text-slate-400 hover:text-red-650 hover:bg-red-50 cursor-pointer"><Trash2 size={12} /></button>
+                                        </div>
+
+                                        {/* Block Renderer */}
+                                        <div className="relative text-left">
+                                          {block.type === "heading" && (
+                                            selectedBlockIdx === idx ? (
                                               <input
                                                 type="text"
                                                 value={(block as HeadingBlock).text}
                                                 onChange={(e) => updateBlock(idx, { text: e.target.value })}
                                                 placeholder="Heading text..."
-                                                className="flex-1 bg-slate-50 border border-slate-200 rounded px-2.5 py-1 text-slate-900 font-extrabold focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary"
-                                                style={{ fontSize: (block as HeadingBlock).level === 2 ? "1.125rem" : "1rem" }}
+                                                className="w-full bg-slate-550 border border-slate-200 rounded-xl py-2.5 px-3.5 text-sm font-bold text-slate-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary"
                                               />
+                                            ) : (
+                                              React.createElement(
+                                                `h${(block as HeadingBlock).level || 2}`,
+                                                { className: `font-black text-slate-900 leading-tight ${(block as HeadingBlock).level === 3 ? "text-base mt-4" : "text-lg mt-6"}` },
+                                                (block as HeadingBlock).text || <span className="text-slate-350">Heading text...</span>
+                                              )
+                                            )
+                                          )}
+                                          {block.type === "paragraph" && (
+                                            selectedBlockIdx === idx ? (
+                                              <textarea
+                                                rows={4}
+                                                value={(block as ParagraphBlock).text}
+                                                onChange={(e) => updateBlock(idx, { text: e.target.value })}
+                                                placeholder="Write your paragraph..."
+                                                className="w-full bg-slate-550 border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary resize-y leading-relaxed"
+                                              />
+                                            ) : (
+                                              <p className="text-sm text-slate-650 leading-relaxed line-clamp-3">{(block as ParagraphBlock).text || <span className="text-slate-300">Paragraph text...</span>}</p>
+                                            )
+                                          )}
+                                          {block.type === "image" && (
+                                            <div className="relative w-full aspect-video bg-slate-100 rounded-lg overflow-hidden">
+                                              {(block as ImageBlock).src
+                                                ? <img src={(block as ImageBlock).src.startsWith("/uploads") ? `${API_URL}${(block as ImageBlock).src}` : (block as ImageBlock).src} alt={(block as ImageBlock).alt} className="w-full h-full object-cover" />
+                                                : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={24} className="text-slate-300" /></div>}
                                             </div>
-                                          ) : (
-                                            (block as HeadingBlock).level === 2
-                                              ? <h2 className="text-lg font-extrabold text-slate-900 border-l-4 border-primary pl-3">{(block as HeadingBlock).text || <span className="text-slate-300">Heading text...</span>}</h2>
-                                              : <h3 className="text-base font-bold text-slate-700">{(block as HeadingBlock).text || <span className="text-slate-300">Heading text...</span>}</h3>
-                                          )
-                                        )}
-                                        {block.type === "paragraph" && (
-                                          selectedBlockIdx === idx ? (
-                                            <textarea
-                                              rows={4}
-                                              value={(block as ParagraphBlock).text}
-                                              onChange={(e) => updateBlock(idx, { text: e.target.value })}
-                                              placeholder="Write your paragraph..."
-                                              className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary resize-y leading-relaxed"
-                                            />
-                                          ) : (
-                                            <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">{(block as ParagraphBlock).text || <span className="text-slate-300">Paragraph text...</span>}</p>
-                                          )
-                                        )}
-                                        {block.type === "image" && (
-                                          <div className="relative w-full aspect-video bg-slate-100 rounded-lg overflow-hidden">
-                                            {(block as ImageBlock).src
-                                              ? <img src={(block as ImageBlock).src} alt={(block as ImageBlock).alt} className="w-full h-full object-cover" />
-                                              : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={24} className="text-slate-300" /></div>}
-                                          </div>
-                                        )}
-                                        {block.type === "two_column" && (
-                                          <div className="grid grid-cols-2 gap-3 bg-slate-50 rounded-lg p-3">
-                                            <div className="flex flex-col gap-1">{(block as TwoColumnBlock).left.map((b, i) => <div key={i} className="text-xs text-slate-500 line-clamp-2">{b.type === "paragraph" ? (b as ParagraphBlock).text : (b as HeadingBlock).text}</div>)}</div>
-                                            <div className="border-l border-slate-200 pl-3 flex flex-col gap-1">{(block as TwoColumnBlock).right.map((b, i) => <div key={i} className="text-xs text-slate-500 line-clamp-2">{b.type === "paragraph" ? (b as ParagraphBlock).text : (b as HeadingBlock).text}</div>)}</div>
-                                          </div>
-                                        )}
-                                        {block.type === "list" && (
-                                          <ul className="flex flex-col gap-1">{(block as ListBlock).items.slice(0, 3).map((item, i) => <li key={i} className="flex items-center gap-2 text-sm text-slate-600"><span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />{item}</li>)}</ul>
-                                        )}
-                                        {block.type === "grid" && (
-                                          <div className={`grid gap-2 ${(block as GridBlock).columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
-                                            {(block as GridBlock).items.map((item, i) => (
-                                              <div key={i} className="aspect-[4/3] rounded-lg bg-slate-100 overflow-hidden">
-                                                {item.image ? <img src={item.image} alt={item.caption} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-slate-300" /></div>}
-                                              </div>
-                                            ))}
-                                          </div>
-                                        )}
+                                          )}
+                                          {block.type === "two_column" && (
+                                            <div className="grid grid-cols-2 gap-3 bg-slate-50 rounded-lg p-3">
+                                              <div className="flex flex-col gap-1">{(block as TwoColumnBlock).left.map((b, i) => <div key={i} className="text-xs text-slate-550 line-clamp-2">{b.type === "paragraph" ? (b as ParagraphBlock).text : (b as HeadingBlock).text}</div>)}</div>
+                                              <div className="border-l border-slate-200 pl-3 flex flex-col gap-1">{(block as TwoColumnBlock).right.map((b, i) => <div key={i} className="text-xs text-slate-550 line-clamp-2">{b.type === "paragraph" ? (b as ParagraphBlock).text : (b as HeadingBlock).text}</div>)}</div>
+                                            </div>
+                                          )}
+                                          {block.type === "list" && (
+                                            <ul className="flex flex-col gap-1">{(block as ListBlock).items.slice(0, 3).map((item, i) => <li key={i} className="flex items-center gap-2 text-sm text-slate-650"><span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />{item}</li>)}</ul>
+                                          )}
+                                          {block.type === "grid" && (
+                                            <div className={`grid gap-2 ${(block as GridBlock).columns === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+                                              {(block as GridBlock).items.map((item, i) => (
+                                                <div key={i} className="aspect-[4/3] rounded-lg bg-slate-100 overflow-hidden">
+                                                  {item.image ? <img src={item.image.startsWith("/uploads") ? `${API_URL}${item.image}` : item.image} alt={item.caption} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><ImageIcon size={16} className="text-slate-300" /></div>}
+                                                </div>
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ))}
-
-                                {/* Final Drop / Insertion zone */}
-                                {blogBlocks.length > 0 && (
-                                  <div className="relative group/insert h-6 my-1 flex items-center justify-center"
-                                    onDragOver={(e) => { e.preventDefault(); setDragOverIdx(blogBlocks.length); }}
-                                    onDrop={(e) => {
-                                      e.preventDefault();
-                                      if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, blogBlocks.length);
-                                      else if (dragFrom?.source === "canvas") {
-                                        setBlogBlocks((prev) => { const arr = [...prev]; const [moved] = arr.splice(dragFrom.index, 1); arr.push(moved); return arr; });
-                                      }
-                                      setDragFrom(null); setDragOverIdx(null);
-                                    }}
-                                  >
-                                    <div className={`absolute left-0 right-0 h-[2px] transition-colors duration-200 ${dragOverIdx === blogBlocks.length ? "bg-primary" : "bg-transparent group-hover/insert:bg-slate-200"}`} />
-                                    <div className="z-10 opacity-0 group-hover/insert:opacity-100 transition-opacity duration-200 flex gap-1.5 bg-white border border-slate-200 rounded-full px-2.5 py-1 shadow-sm text-[9px] font-bold text-slate-500 hover:text-slate-800">
-                                      <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("heading", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Heading</button>
-                                      <span className="text-slate-300">|</span>
-                                      <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("paragraph", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Paragraph</button>
-                                      <span className="text-slate-300">|</span>
-                                      <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("image", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Image</button>
-                                      <span className="text-slate-300">|</span>
-                                      <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("list", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ List</button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* RIGHT PANEL: Block Inspector */}
-                      {selectedBlockIdx !== null && blogBlocks[selectedBlockIdx] && (
-                        <div className="w-72 shrink-0 bg-white border-l border-slate-100 overflow-y-auto flex flex-col">
-                          <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
-                            <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
-                              {blogBlocks[selectedBlockIdx].type.replace("_", " ")} Settings
-                            </span>
-                            <button type="button" onClick={() => setSelectedBlockIdx(null)} className="text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"><XCircle size={16} /></button>
-                          </div>
-                          <div className="p-4 flex flex-col gap-4 flex-1">
-
-                            {blogBlocks[selectedBlockIdx].type === "heading" && (<>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Level</label>
-                                <div className="flex gap-2">
-                                  {([2, 3] as const).map((lvl) => (
-                                    <button key={lvl} type="button" onClick={() => updateBlock(selectedBlockIdx, { level: lvl })}
-                                      className={`flex-1 py-2 rounded-lg text-sm font-bold border-2 transition-all cursor-pointer ${(blogBlocks[selectedBlockIdx] as HeadingBlock).level === lvl ? "border-primary bg-primary/5 text-primary" : "border-slate-200 text-slate-500 hover:border-slate-300"}`}>
-                                      H{lvl}
-                                    </button>
                                   ))}
-                                </div>
-                              </div>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Text</label>
-                                <input type="text" value={(blogBlocks[selectedBlockIdx] as HeadingBlock).text}
-                                  onChange={(e) => updateBlock(selectedBlockIdx, { text: e.target.value })}
-                                  placeholder="Heading text"
-                                  className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary" />
-                              </div>
-                            </>)}
 
-                            {blogBlocks[selectedBlockIdx].type === "paragraph" && (
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Content</label>
-                                <textarea rows={8} value={(blogBlocks[selectedBlockIdx] as ParagraphBlock).text}
-                                  onChange={(e) => updateBlock(selectedBlockIdx, { text: e.target.value })}
-                                  placeholder="Write your paragraph..."
-                                  className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary resize-none leading-relaxed" />
+                                  {/* Final Drop / Insertion zone */}
+                                  {blogBlocks.length > 0 && (
+                                    <div className="relative group/insert h-6 my-1 flex items-center justify-center"
+                                      onDragOver={(e) => { e.preventDefault(); setDragOverIdx(blogBlocks.length); }}
+                                      onDrop={(e) => {
+                                        e.preventDefault();
+                                        if (dragFrom?.source === "palette") insertBlockAt(dragFrom.blockType, blogBlocks.length);
+                                        else if (dragFrom?.source === "canvas") {
+                                          setBlogBlocks((prev) => { const arr = [...prev]; const [moved] = arr.splice(dragFrom.index, 1); arr.push(moved); return arr; });
+                                        }
+                                        setDragFrom(null); setDragOverIdx(null);
+                                      }}
+                                    >
+                                      <div className={`absolute left-0 right-0 h-[2px] transition-colors duration-200 ${dragOverIdx === blogBlocks.length ? "bg-primary" : "bg-transparent group-hover/insert:bg-slate-200"}`} />
+                                      <div className="z-10 opacity-0 group-hover/insert:opacity-100 transition-opacity duration-200 flex gap-1.5 bg-white border border-slate-200 rounded-full px-2.5 py-1 shadow-sm text-[9px] font-bold text-slate-500 hover:text-slate-800">
+                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("heading", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Heading</button>
+                                        <span className="text-slate-300">|</span>
+                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("paragraph", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Paragraph</button>
+                                        <span className="text-slate-300">|</span>
+                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("image", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ Image</button>
+                                        <span className="text-slate-300">|</span>
+                                        <button type="button" onClick={(e) => { e.stopPropagation(); insertBlockAt("list", blogBlocks.length); }} className="hover:text-primary transition-colors cursor-pointer">+ List</button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             )}
+                          </div>
+                        </div>
 
-                            {blogBlocks[selectedBlockIdx].type === "image" && (<>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Image URL</label>
-                                <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).src}
-                                  onChange={(e) => updateBlock(selectedBlockIdx, { src: e.target.value })}
-                                  placeholder="/assets/images/..."
-                                  className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary" />
-                                {(blogBlocks[selectedBlockIdx] as ImageBlock).src && (
-                                  <div className="mt-2 rounded-lg overflow-hidden aspect-video border border-slate-100 bg-slate-50">
-                                    <img src={(blogBlocks[selectedBlockIdx] as ImageBlock).src} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
-                                  </div>
-                                )}
-                              </div>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Alt Text</label>
-                                <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).alt}
-                                  onChange={(e) => updateBlock(selectedBlockIdx, { alt: e.target.value })}
-                                  placeholder="Describe the image"
-                                  className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary" />
-                              </div>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Caption</label>
-                                <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).caption}
-                                  onChange={(e) => updateBlock(selectedBlockIdx, { caption: e.target.value })}
-                                  placeholder="Optional caption"
-                                  className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary" />
-                              </div>
-                            </>)}
+                        {/* RIGHT PANEL: Block Inspector */}
+                        {selectedBlockIdx !== null && blogBlocks[selectedBlockIdx] && (
+                          <div className="w-72 shrink-0 bg-white border-l border-slate-100 overflow-y-auto flex flex-col">
+                            <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+                              <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
+                                {blogBlocks[selectedBlockIdx].type.replace("_", " ")} Settings
+                              </span>
+                              <button type="button" onClick={() => setSelectedBlockIdx(null)} className="text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"><XCircle size={16} /></button>
+                            </div>
+                            <div className="p-4 flex flex-col gap-4 flex-1">
 
-                            {blogBlocks[selectedBlockIdx].type === "two_column" && (<>
-                              <div>
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Left Column</label>
-                                {(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left.map((sub, si) => (
-                                  <div key={si} className="mb-2">
-                                    {sub.type === "heading" && <input type="text" value={(sub as HeadingBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left]; (u[si] as HeadingBlock).text = e.target.value; updateBlock(selectedBlockIdx, { left: u }); }} placeholder="Left heading" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold focus:outline-none focus:border-primary mb-1" />}
-                                    {sub.type === "paragraph" && <textarea rows={3} value={(sub as ParagraphBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left]; (u[si] as ParagraphBlock).text = e.target.value; updateBlock(selectedBlockIdx, { left: u }); }} placeholder="Left text" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs text-slate-700 focus:outline-none focus:border-primary resize-none" />}
+                              {blogBlocks[selectedBlockIdx].type === "heading" && (<>
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Level</label>
+                                  <div className="flex gap-2">
+                                    {([2, 3] as const).map((lvl) => (
+                                      <button key={lvl} type="button" onClick={() => updateBlock(selectedBlockIdx, { level: lvl })}
+                                        className={`flex-1 py-2 rounded-lg text-sm font-bold border-2 transition-all cursor-pointer ${(blogBlocks[selectedBlockIdx] as HeadingBlock).level === lvl ? "border-primary bg-primary/5 text-primary" : "border-slate-200 text-slate-500 hover:border-slate-300"}`}>
+                                        H{lvl}
+                                      </button>
+                                    ))}
                                   </div>
-                                ))}
-                                <div className="flex gap-1">
-                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { left: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left, { type: "heading", level: 3, text: "" } as HeadingBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Heading</button>
-                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { left: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left, { type: "paragraph", text: "" } as ParagraphBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Text</button>
                                 </div>
-                              </div>
-                              <div className="border-t border-slate-100 pt-3">
-                                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Right Column</label>
-                                {(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right.map((sub, si) => (
-                                  <div key={si} className="mb-2">
-                                    {sub.type === "heading" && <input type="text" value={(sub as HeadingBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right]; (u[si] as HeadingBlock).text = e.target.value; updateBlock(selectedBlockIdx, { right: u }); }} placeholder="Right heading" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold focus:outline-none focus:border-primary mb-1" />}
-                                    {sub.type === "paragraph" && <textarea rows={3} value={(sub as ParagraphBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right]; (u[si] as ParagraphBlock).text = e.target.value; updateBlock(selectedBlockIdx, { right: u }); }} placeholder="Right text" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs text-slate-700 focus:outline-none focus:border-primary resize-none" />}
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Text</label>
+                                  <input type="text" value={(blogBlocks[selectedBlockIdx] as HeadingBlock).text}
+                                    onChange={(e) => updateBlock(selectedBlockIdx, { text: e.target.value })}
+                                    placeholder="Heading text"
+                                    className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-bold text-slate-800 focus:outline-none focus:border-primary" />
+                                </div>
+                              </>)}
+
+                              {blogBlocks[selectedBlockIdx].type === "paragraph" && (
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Content</label>
+                                  <textarea rows={8} value={(blogBlocks[selectedBlockIdx] as ParagraphBlock).text}
+                                    onChange={(e) => updateBlock(selectedBlockIdx, { text: e.target.value })}
+                                    placeholder="Write your paragraph..."
+                                    className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary resize-none leading-relaxed" />
+                                </div>
+                              )}
+
+                              {blogBlocks[selectedBlockIdx].type === "image" && (<>
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Image URL</label>
+                                  <div className="flex gap-2 mb-1.5">
+                                    <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).src}
+                                      onChange={(e) => updateBlock(selectedBlockIdx, { src: e.target.value })}
+                                      placeholder="/assets/images/..."
+                                      className="flex-grow border border-slate-200 rounded-xl py-2.5 px-3 text-xs text-slate-705 focus:outline-none focus:border-primary min-w-0" />
+                                    <label className="bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 rounded-xl py-2.5 px-3.5 text-[10px] font-bold cursor-pointer transition-colors shrink-0 flex items-center justify-center">
+                                      {uploadLoading ? "..." : "Upload"}
+                                      <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) handleImageFileUpload(file, (url) => updateBlock(selectedBlockIdx!, { src: url }));
+                                      }} />
+                                    </label>
                                   </div>
-                                ))}
-                                <div className="flex gap-1">
-                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { right: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right, { type: "heading", level: 3, text: "" } as HeadingBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Heading</button>
-                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { right: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right, { type: "paragraph", text: "" } as ParagraphBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Text</button>
+                                  {(blogBlocks[selectedBlockIdx] as ImageBlock).src && (
+                                    <div className="mt-2 rounded-lg overflow-hidden aspect-video border border-slate-100 bg-slate-50">
+                                      <img src={(blogBlocks[selectedBlockIdx] as ImageBlock).src.startsWith("/uploads") ? `${API_URL}${(blogBlocks[selectedBlockIdx] as ImageBlock).src}` : (blogBlocks[selectedBlockIdx] as ImageBlock).src} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
+                                    </div>
+                                  )}
                                 </div>
-                              </div>
-                            </>)}
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Alt Text</label>
+                                  <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).alt}
+                                    onChange={(e) => updateBlock(selectedBlockIdx, { alt: e.target.value })}
+                                    placeholder="Describe the image"
+                                    className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-705 focus:outline-none focus:border-primary" />
+                                </div>
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5">Caption</label>
+                                  <input type="text" value={(blogBlocks[selectedBlockIdx] as ImageBlock).caption}
+                                    onChange={(e) => updateBlock(selectedBlockIdx, { caption: e.target.value })}
+                                    placeholder="Optional caption"
+                                    className="w-full border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-705 focus:outline-none focus:border-primary" />
+                                </div>
+                              </>)}
+
+                              {blogBlocks[selectedBlockIdx].type === "two_column" && (<>
+                                <div>
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Left Column</label>
+                                  {(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left.map((sub, si) => (
+                                    <div key={si} className="mb-2">
+                                      {sub.type === "heading" && <input type="text" value={(sub as HeadingBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left]; (u[si] as HeadingBlock).text = e.target.value; updateBlock(selectedBlockIdx, { left: u }); }} placeholder="Left heading" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold focus:outline-none focus:border-primary mb-1" />}
+                                      {sub.type === "paragraph" && <textarea rows={3} value={(sub as ParagraphBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left]; (u[si] as ParagraphBlock).text = e.target.value; updateBlock(selectedBlockIdx, { left: u }); }} placeholder="Left text" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs text-slate-705 focus:outline-none focus:border-primary resize-none" />}
+                                    </div>
+                                  ))}
+                                  <div className="flex gap-1">
+                                    <button type="button" onClick={() => updateBlock(selectedBlockIdx, { left: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left, { type: "heading", level: 3, text: "" } as HeadingBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Heading</button>
+                                    <button type="button" onClick={() => updateBlock(selectedBlockIdx, { left: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).left, { type: "paragraph", text: "" } as ParagraphBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Text</button>
+                                  </div>
+                                </div>
+                                <div className="border-t border-slate-100 pt-3">
+                                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-2">Right Column</label>
+                                  {(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right.map((sub, si) => (
+                                    <div key={si} className="mb-2">
+                                      {sub.type === "heading" && <input type="text" value={(sub as HeadingBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right]; (u[si] as HeadingBlock).text = e.target.value; updateBlock(selectedBlockIdx, { right: u }); }} placeholder="Right heading" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-sm font-bold focus:outline-none focus:border-primary mb-1" />}
+                                      {sub.type === "paragraph" && <textarea rows={3} value={(sub as ParagraphBlock).text} onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right]; (u[si] as ParagraphBlock).text = e.target.value; updateBlock(selectedBlockIdx, { right: u }); }} placeholder="Right text" className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs text-slate-705 focus:outline-none focus:border-primary resize-none" />}
+                                    </div>
+                                  ))}
+                                  <div className="flex gap-1">
+                                    <button type="button" onClick={() => updateBlock(selectedBlockIdx, { right: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right, { type: "heading", level: 3, text: "" } as HeadingBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Heading</button>
+                                    <button type="button" onClick={() => updateBlock(selectedBlockIdx, { right: [...(blogBlocks[selectedBlockIdx] as TwoColumnBlock).right, { type: "paragraph", text: "" } as ParagraphBlock] })} className="text-[10px] border border-dashed border-slate-200 rounded-lg px-2 py-1 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Text</button>
+                                  </div>
+                                </div>
+                              </>)}
 
                             {blogBlocks[selectedBlockIdx].type === "list" && (<>
                               <div>
@@ -1472,7 +1911,7 @@ export default function AdminDashboard() {
                                       <input type="text" value={item}
                                         onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as ListBlock).items]; u[li] = e.target.value; updateBlock(selectedBlockIdx, { items: u }); }}
                                         className="flex-1 border border-slate-200 rounded-lg py-2 px-3 text-sm text-slate-700 focus:outline-none focus:border-primary" />
-                                      <button type="button" onClick={() => { const u = (blogBlocks[selectedBlockIdx] as ListBlock).items.filter((_, i) => i !== li); updateBlock(selectedBlockIdx, { items: u }); }} className="text-red-400 hover:text-red-600 p-1.5 rounded hover:bg-red-50 cursor-pointer"><Trash2 size={12} /></button>
+                                      <button type="button" onClick={() => { const u = (blogBlocks[selectedBlockIdx] as ListBlock).items.filter((_, i) => i !== li); updateBlock(selectedBlockIdx, { items: u }); }} className="text-red-400 hover:text-red-650 p-1.5 rounded hover:bg-red-50 cursor-pointer"><Trash2 size={12} /></button>
                                     </div>
                                   ))}
                                   <button type="button" onClick={() => updateBlock(selectedBlockIdx, { items: [...(blogBlocks[selectedBlockIdx] as ListBlock).items, ""] })} className="text-xs text-slate-500 border border-dashed border-slate-200 rounded-lg py-2 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Add item</button>
@@ -1486,7 +1925,7 @@ export default function AdminDashboard() {
                                 <div className="flex gap-2">
                                   {([2, 3] as const).map((c) => (
                                     <button key={c} type="button" onClick={() => updateBlock(selectedBlockIdx, { columns: c })}
-                                      className={`flex-1 py-2 rounded-lg text-sm font-bold border-2 transition-all cursor-pointer ${(blogBlocks[selectedBlockIdx] as GridBlock).columns === c ? "border-primary bg-primary/5 text-primary" : "border-slate-200 text-slate-500"}`}>{c} Col</button>
+                                      className={`flex-1 py-2 rounded-lg text-sm font-bold border-2 transition-all cursor-pointer ${(blogBlocks[selectedBlockIdx] as GridBlock).columns === c ? "border-primary bg-primary/5 text-primary" : "border-slate-200 text-slate-550"}`}>{c} Col</button>
                                   ))}
                                 </div>
                               </div>
@@ -1499,15 +1938,28 @@ export default function AdminDashboard() {
                                         <input type="text" value={item.image}
                                           onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as GridBlock).items]; u[gi] = { ...u[gi], image: e.target.value }; updateBlock(selectedBlockIdx, { items: u }); }}
                                           placeholder="Image URL" className="flex-1 border border-slate-200 rounded-lg py-1.5 px-2 text-xs text-slate-700 focus:outline-none focus:border-primary" />
+                                        <label className="bg-slate-100 hover:bg-slate-200 text-slate-700 p-1.5 rounded hover:bg-slate-200 cursor-pointer flex items-center justify-center shrink-0 border border-slate-200">
+                                          <Plus size={12} />
+                                          <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                              handleImageFileUpload(file, (url) => {
+                                                const u = [...(blogBlocks[selectedBlockIdx!] as GridBlock).items];
+                                                u[gi] = { ...u[gi], image: url };
+                                                updateBlock(selectedBlockIdx!, { items: u });
+                                              });
+                                            }
+                                          }} />
+                                        </label>
                                         <button type="button" onClick={() => { const u = (blogBlocks[selectedBlockIdx] as GridBlock).items.filter((_, i) => i !== gi); updateBlock(selectedBlockIdx, { items: u }); }} className="text-red-400 p-1.5 rounded hover:bg-red-50 cursor-pointer"><Trash2 size={11} /></button>
                                       </div>
-                                      {item.image && <img src={item.image} alt={item.caption} className="w-full aspect-video object-cover rounded" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />}
+                                      {item.image && <img src={item.image.startsWith("/uploads") ? `${API_URL}${item.image}` : item.image} alt={item.caption} className="w-full aspect-video object-cover rounded" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />}
                                       <input type="text" value={item.caption}
                                         onChange={(e) => { const u = [...(blogBlocks[selectedBlockIdx] as GridBlock).items]; u[gi] = { ...u[gi], caption: e.target.value }; updateBlock(selectedBlockIdx, { items: u }); }}
-                                        placeholder="Caption" className="border border-slate-200 rounded-lg py-1.5 px-2 text-xs text-slate-700 focus:outline-none focus:border-primary" />
+                                        placeholder="Caption" className="border border-slate-200 rounded-lg py-1.5 px-2 text-xs text-slate-705 focus:outline-none focus:border-primary" />
                                     </div>
                                   ))}
-                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { items: [...(blogBlocks[selectedBlockIdx] as GridBlock).items, { image: "", caption: "" }] })} className="text-xs text-slate-500 border border-dashed border-slate-200 rounded-lg py-2 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Add image</button>
+                                  <button type="button" onClick={() => updateBlock(selectedBlockIdx, { items: [...(blogBlocks[selectedBlockIdx] as GridBlock).items, { image: "", caption: "" }] })} className="text-xs text-slate-550 border border-dashed border-slate-200 rounded-lg py-2 hover:border-primary hover:text-primary transition-colors cursor-pointer">+ Add image</button>
                                 </div>
                               </div>
                             </>)}
@@ -1517,74 +1969,499 @@ export default function AdminDashboard() {
                       )}
                     </div>
                   </form>
+                )}
 
-                  {/* Published Articles list */}
-                  <div className="flex flex-col gap-5 text-left">
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-900">Published Articles</h2>
-                      <p className="text-xs text-slate-500">Manage blog content displayed on the public website</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                      {blogs.length === 0 ? (
-                        <div className="col-span-3 text-center py-12 bg-white border border-slate-200 rounded-2xl text-slate-400 font-semibold">
-                          No blog posts found. Create one above!
+                {/* SUB-TAB: Categories */}
+                {blogsSubTab === "categories" && (
+                  <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left w-full">
+                    {/* Create Category */}
+                    <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                      <h3 className="text-base font-bold text-slate-900 mb-4">Create Blog Category</h3>
+                      <form onSubmit={handleCreateCategory} className="flex flex-col gap-4 text-xs">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Category Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={newCategoryName}
+                            onChange={(e) => setNewCategoryName(e.target.value)}
+                            placeholder="e.g. Solar Engineering"
+                            className="bg-white border border-slate-200 rounded-xl py-3 px-4 text-slate-800 focus:outline-none focus:border-primary"
+                          />
                         </div>
-                      ) : (
-                        blogs.map((blog) => (
-                          <div key={blog._id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-                            <div>
-                              <div className="relative aspect-[16/9] w-full bg-slate-100 overflow-hidden border-b border-slate-200">
-                                <div className="absolute inset-0 bg-slate-100 flex items-center justify-center text-slate-300 font-bold text-xs">[ Image ]</div>
-                                <img src={blog.image} alt={blog.title} className="absolute inset-0 w-full h-full object-cover" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
-                                <div className="absolute top-3 left-3 flex gap-1 flex-wrap">
-                                  {(blog.categories || [blog.category]).slice(0, 2).map((cat) => (
-                                    <span key={cat} className="bg-primary text-white text-[9px] uppercase font-bold py-0.5 px-2 rounded-md">{cat}</span>
-                                  ))}
-                                </div>
-                                {blog.template && (
-                                  <span className="absolute top-3 right-3 bg-black/70 text-white text-[9px] uppercase font-bold py-0.5 px-2 rounded-full">{blog.template}</span>
-                                )}
-                              </div>
-                              <div className="p-5">
-                                <span className="text-[10px] text-slate-500 font-bold block mb-1">{blog.date} • {blog.author}</span>
-                                <h4 className="font-extrabold text-slate-900 text-sm leading-snug mb-2 line-clamp-2">{blog.title}</h4>
-                                <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{blog.excerpt}</p>
-                                {(blog.tags || []).length > 0 && (
-                                  <div className="flex gap-1 flex-wrap mt-2">
-                                    {(blog.tags || []).slice(0, 3).map((tag) => (
-                                      <span key={tag} className="text-[9px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-semibold">#{tag}</span>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            <div className="p-5 pt-0 border-t border-slate-100 flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-slate-400 truncate max-w-[120px]">/{blog.slug}</span>
-                              <div className="flex gap-2">
-                                <button onClick={() => handleEditBlog(blog)}
-                                  className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-1.5 px-3 rounded-lg text-[11px] transition-colors cursor-pointer border border-slate-200/50">
-                                  <Edit3 size={11} /> Edit
-                                </button>
-                                <button onClick={() => handleDeleteBlog(blog._id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-500 transition-all cursor-pointer">
-                                  <Trash2 size={13} />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      )}
+                        <button
+                          type="submit"
+                          disabled={actionLoading || !newCategoryName.trim()}
+                          className="bg-primary hover:bg-primary/90 text-white font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition-all text-center mt-2 cursor-pointer disabled:opacity-50"
+                        >
+                          Create Category
+                        </button>
+                      </form>
+                    </div>
+
+                    {/* Categories List */}
+                    <div className="lg:col-span-8 flex flex-col gap-4 w-full">
+                      <div>
+                        <h2 className="text-lg font-bold text-slate-900">All Categories</h2>
+                        <p className="text-xs text-slate-500">Categories available for tag-linking and blog classification</p>
+                      </div>
+                      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs text-left">
+                            <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                              <tr>
+                                <th className="py-4 px-5">Name</th>
+                                <th className="py-4 px-4">Slug</th>
+                                <th className="py-4 px-5 text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {categories.length === 0 ? (
+                                <tr>
+                                  <td colSpan={3} className="py-8 text-center text-slate-400 font-semibold">
+                                    No categories found.
+                                  </td>
+                                </tr>
+                              ) : (
+                                categories.map((cat) => (
+                                  <tr key={cat._id} className="hover:bg-slate-50/50 transition-colors">
+                                    <td className="py-4 px-5 font-bold text-slate-900">{cat.name}</td>
+                                    <td className="py-4 px-4 font-mono text-slate-500">{cat.slug}</td>
+                                    <td className="py-4 px-5 text-right">
+                                      {role === "superadmin" ? (
+                                        <button
+                                          onClick={() => handleDeleteCategory(cat._id)}
+                                          className="text-red-600 p-1.5 rounded hover:bg-red-50 transition-all cursor-pointer"
+                                        >
+                                          <Trash2 size={14} />
+                                        </button>
+                                      ) : (
+                                        <span className="text-[10px] text-slate-400 italic">No access to delete</span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* SUB-TAB: Tags */}
+                {blogsSubTab === "tags" && (
+                  <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left w-full">
+                    {/* Create Tag */}
+                    <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                      <h3 className="text-base font-bold text-slate-900 mb-4">Create Blog Tag</h3>
+                      <form onSubmit={handleCreateTag} className="flex flex-col gap-4 text-xs">
+                        <div className="flex flex-col gap-1.5">
+                          <label className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Tag Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={newTagName}
+                            onChange={(e) => setNewTagName(e.target.value)}
+                            placeholder="e.g. offgrid-inverters"
+                            className="bg-white border border-slate-200 rounded-xl py-3 px-4 text-slate-800 focus:outline-none focus:border-primary"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          disabled={actionLoading || !newTagName.trim()}
+                          className="bg-primary hover:bg-primary/90 text-white font-extrabold py-3.5 px-6 rounded-xl shadow-lg transition-all text-center mt-2 cursor-pointer disabled:opacity-50"
+                        >
+                          Create Tag
+                        </button>
+                      </form>
+                    </div>
+
+                    {/* Tags List */}
+                    <div className="lg:col-span-8 flex flex-col gap-4 w-full">
+                      <div>
+                        <h2 className="text-lg font-bold text-slate-900">All Tags</h2>
+                        <p className="text-xs text-slate-500">Keywords and tag links used for SEO indexing</p>
+                      </div>
+                      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs text-left">
+                            <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                              <tr>
+                                <th className="py-4 px-5">Name</th>
+                                <th className="py-4 px-4">Slug</th>
+                                <th className="py-4 px-5 text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {tags.length === 0 ? (
+                                <tr>
+                                  <td colSpan={3} className="py-8 text-center text-slate-400 font-semibold">
+                                    No tags found.
+                                  </td>
+                                </tr>
+                              ) : (
+                                tags.map((tag) => (
+                                  <tr key={tag._id} className="hover:bg-slate-50/50 transition-colors">
+                                    <td className="py-4 px-5 font-bold text-slate-900">#{tag.name}</td>
+                                    <td className="py-4 px-4 font-mono text-slate-500">{tag.slug}</td>
+                                    <td className="py-4 px-5 text-right">
+                                      {role === "superadmin" ? (
+                                        <button
+                                          onClick={() => handleDeleteTag(tag._id)}
+                                          className="text-red-650 hover:text-red-750 p-1.5 rounded hover:bg-red-50 transition-all cursor-pointer"
+                                        >
+                                          <Trash2 size={14} />
+                                        </button>
+                                      ) : (
+                                        <span className="text-[10px] text-slate-400 italic">No access to delete</span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                ))
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                </div>
+              )}
+
+              {/* ══════════════════ WARRANTY TAB ══════════════════ */}
+              {activeTab === "warranty" && (role === "superadmin" || role === "co_admin") && (
+                <div className="flex-1 flex flex-col gap-6">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900 text-left">Warranty Claims</h2>
+                      <p className="text-xs text-slate-500 text-left">Customer-submitted warranty requests from the website</p>
+                    </div>
+                    <select value={warrantyStatusFilter} onChange={(e) => setWarrantyStatusFilter(e.target.value)}
+                      className="bg-white border border-slate-200 rounded-lg py-1.5 px-3 text-xs font-bold text-slate-700 focus:outline-none focus:border-primary">
+                      <option value="all">All Statuses</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Under Review">Under Review</option>
+                      <option value="Resolved">Resolved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </div>
+
+                  <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-xs text-left">
+                        <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                          <tr>
+                            <th className="py-4 px-5">Customer</th>
+                            <th className="py-4 px-4">Product / Serial</th>
+                            <th className="py-4 px-4">Purchase Date</th>
+                            <th className="py-4 px-4">Status</th>
+                            <th className="py-4 px-5 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {warranties.filter(w => warrantyStatusFilter === "all" || w.status === warrantyStatusFilter).length === 0 ? (
+                            <tr><td colSpan={5} className="py-10 text-center text-slate-400 font-medium">No warranty claims found.</td></tr>
+                          ) : (
+                            warranties
+                              .filter(w => warrantyStatusFilter === "all" || w.status === warrantyStatusFilter)
+                              .map((w) => (
+                                <tr key={w._id} className="hover:bg-slate-50/50 transition-colors">
+                                  <td className="py-4 px-5 text-left">
+                                    <span className="font-bold text-slate-900 block">{w.name}</span>
+                                    <span className="text-[10px] text-slate-400">{w.email}</span>
+                                    <span className="text-[10px] text-slate-400 block">{w.phone}</span>
+                                  </td>
+                                  <td className="py-4 px-4 text-left">
+                                    <span className="font-semibold text-slate-700 block">{w.productSerial}</span>
+                                    <span className="text-[10px] text-slate-400 line-clamp-2 max-w-[180px]">{w.issueDescription}</span>
+                                  </td>
+                                  <td className="py-4 px-4 text-slate-600">{w.purchaseDate}</td>
+                                  <td className="py-4 px-4">
+                                    <select
+                                      value={w.status}
+                                      onChange={(e) => updateWarrantyStatus(w._id, e.target.value)}
+                                      disabled={actionLoading}
+                                      className={`text-[10px] font-bold rounded-full py-1 px-2 border cursor-pointer focus:outline-none ${w.status === "Pending" ? "bg-amber-50 text-amber-700 border-amber-200" :
+                                          w.status === "Under Review" ? "bg-blue-50 text-blue-700 border-blue-200" :
+                                            w.status === "Resolved" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                                              "bg-rose-50 text-rose-700 border-rose-200"
+                                        }`}
+                                    >
+                                      <option value="Pending">Pending</option>
+                                      <option value="Under Review">Under Review</option>
+                                      <option value="Resolved">Resolved</option>
+                                      <option value="Rejected">Rejected</option>
+                                    </select>
+                                  </td>
+                                  <td className="py-4 px-5 text-right">
+                                    {role === "superadmin" && (
+                                      <button onClick={() => deleteWarranty(w._id)} disabled={actionLoading}
+                                        className="text-red-600 p-1.5 rounded hover:bg-red-50 transition-all cursor-pointer disabled:opacity-50">
+                                        <Trash2 size={14} />
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))
+                          )}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               )}
-              {/* ─── end blogs tab ─── */}
 
-              {/* ═══════════════ USERS TAB ═══════════════ */}
-              {activeTab === "users" && role === "admin" && (
-                <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* ══════════════════ CAREERS TAB ══════════════════ */}
+              {activeTab === "careers" && (role === "superadmin" || role === "co_admin") && (
+                <div className="flex-1 flex flex-col gap-6">
+                  {/* Sub-tab switcher */}
+                  <div className="flex items-center gap-1 bg-slate-100 rounded-xl p-1 w-fit">
+                    <button onClick={() => setCareersSubTab("jobs")}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${careersSubTab === "jobs" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                        }`}>
+                      Job Postings ({jobs.length})
+                    </button>
+                    <button onClick={() => setCareersSubTab("applications")}
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${careersSubTab === "applications" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                        }`}>
+                      Applications {selectedJobForApps ? `— ${selectedJobForApps.title}` : ""}
+                    </button>
+                  </div>
+
+                  {careersSubTab === "jobs" && (
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                      {/* Job Form */}
+                      <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-left">
+                        <h3 className="text-base font-bold text-slate-900 mb-4">
+                          {editingJobId ? "Edit Job Posting" : "Create Job Posting"}
+                        </h3>
+                        <form onSubmit={handleJobSubmit} className="flex flex-col gap-3 text-xs">
+                          {[
+                            { label: "Job Title *", key: "title", placeholder: "e.g. Solar Design Engineer" },
+                            { label: "Department *", key: "department", placeholder: "e.g. Engineering & Design" },
+                            { label: "Location *", key: "location", placeholder: "e.g. Lucknow, UP" },
+                          ].map(({ label, key, placeholder }) => (
+                            <div key={key} className="flex flex-col gap-1.5">
+                              <label className="text-slate-505 font-bold uppercase tracking-wider text-[10px]">{label}</label>
+                              <input type="text" required value={jobForm[key as keyof typeof jobForm]}
+                                onChange={(e) => setJobForm({ ...jobForm, [key]: e.target.value })}
+                                placeholder={placeholder}
+                                className="bg-white border border-slate-200 rounded-xl py-2.5 px-3 text-slate-800 focus:outline-none focus:border-primary text-xs" />
+                            </div>
+                          ))}
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-slate-505 font-bold uppercase tracking-wider text-[10px]">Employment Type</label>
+                            <select value={jobForm.type} onChange={(e) => setJobForm({ ...jobForm, type: e.target.value })}
+                              className="bg-white border border-slate-200 rounded-xl py-2.5 px-3 text-slate-800 focus:outline-none focus:border-primary text-xs">
+                              <option>Full-Time</option>
+                              <option>Part-Time</option>
+                              <option>Contract</option>
+                              <option>Internship</option>
+                            </select>
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-slate-550 text-slate-500 font-bold uppercase tracking-wider text-[10px]">Description *</label>
+                            <textarea required rows={3} value={jobForm.description}
+                              onChange={(e) => setJobForm({ ...jobForm, description: e.target.value })}
+                              placeholder="Describe the role and responsibilities..."
+                              className="bg-white border border-slate-200 rounded-xl py-2.5 px-3 text-slate-800 focus:outline-none focus:border-primary text-xs resize-none" />
+                          </div>
+                          <div className="flex flex-col gap-1.5">
+                            <label className="text-slate-505 font-bold uppercase tracking-wider text-[10px]">Requirements</label>
+                            <div className="flex flex-col gap-1.5">
+                              {jobRequirements.map((req, i) => (
+                                <div key={i} className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-2.5">
+                                  <span className="flex-1 text-slate-755 text-slate-700">{req}</span>
+                                  <button type="button" onClick={() => setJobRequirements(jobRequirements.filter((_, idx) => idx !== i))}
+                                    className="text-slate-400 hover:text-red-500 cursor-pointer"><XCircle size={13} /></button>
+                                </div>
+                              ))}
+                              <div className="flex gap-2">
+                                <input type="text" placeholder="Add requirement..." value={newRequirement}
+                                  onChange={(e) => setNewRequirement(e.target.value)}
+                                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (newRequirement.trim()) { setJobRequirements([...jobRequirements, newRequirement.trim()]); setNewRequirement(""); } } }}
+                                  className="flex-1 bg-white border border-slate-200 rounded-lg py-2 px-3 text-xs focus:outline-none focus:border-primary text-slate-800" />
+                                <button type="button" onClick={() => { if (newRequirement.trim()) { setJobRequirements([...jobRequirements, newRequirement.trim()]); setNewRequirement(""); } }}
+                                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-lg transition-colors cursor-pointer">
+                                  <Plus size={13} />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex gap-2 mt-1">
+                            <button type="submit" disabled={jobFormLoading}
+                              className="flex-1 bg-primary hover:bg-primary/90 text-white font-extrabold py-2.5 px-4 rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-60 text-xs">
+                              {jobFormLoading ? "Saving..." : editingJobId ? "Update Job" : "Post Job"}
+                            </button>
+                            {editingJobId && (
+                              <button type="button" onClick={() => { setEditingJobId(null); setJobForm({ title: "", department: "", location: "", type: "Full-Time", description: "" }); setJobRequirements([]); }}
+                                className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs cursor-pointer">
+                                Cancel
+                              </button>
+                            )}
+                          </div>
+                        </form>
+                      </div>
+
+                      {/* Job List */}
+                      <div className="lg:col-span-8 flex flex-col gap-4 w-full">
+                        <div>
+                          <h2 className="text-xl font-bold text-slate-900 text-left">All Job Postings</h2>
+                          <p className="text-xs text-slate-500 text-left">{jobs.filter(j => j.isActive).length} active, {jobs.filter(j => !j.isActive).length} inactive</p>
+                        </div>
+                        {jobs.length === 0 ? (
+                          <div className="bg-white border border-slate-200 rounded-2xl py-12 text-center text-slate-400 font-medium shadow-sm">
+                            No job postings yet. Create one using the form.
+                          </div>
+                        ) : (
+                          <div className="flex flex-col gap-3 w-full">
+                            {jobs.map((job) => (
+                              <div key={job._id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row justify-between gap-4 hover:shadow-md transition-shadow">
+                                <div className="flex-1 text-left">
+                                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide border ${job.isActive ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-slate-100 text-slate-505 text-slate-500 border-slate-200"
+                                      }`}>{job.isActive ? "Live" : "Inactive"}</span>
+                                    <span className="text-[10px] text-slate-500 font-medium">{job.department}</span>
+                                    <span className="text-[10px] text-slate-450 text-slate-400">· {job.location} · {job.type}</span>
+                                  </div>
+                                  <h4 className="font-bold text-slate-900 text-sm">{job.title}</h4>
+                                  <p className="text-xs text-slate-500 mt-1 line-clamp-2">{job.description}</p>
+                                </div>
+                                <div className="flex sm:flex-col gap-2 items-start sm:items-end shrink-0">
+                                  <button onClick={() => handleToggleJob(job._id)} disabled={actionLoading}
+                                    className="flex items-center gap-1.5 text-xs font-bold py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">
+                                    {job.isActive ? <ToggleRight size={13} className="text-emerald-600" /> : <ToggleLeft size={13} />}
+                                    {job.isActive ? "Deactivate" : "Activate"}
+                                  </button>
+                                  <button onClick={() => fetchApplicationsForJob(job)}
+                                    className="flex items-center gap-1.5 text-xs font-bold py-1.5 px-3 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors cursor-pointer">
+                                    <Users size={12} /> Applications
+                                  </button>
+                                  <button onClick={() => { setEditingJobId(job._id); setJobForm({ title: job.title, department: job.department, location: job.location, type: job.type, description: job.description }); setJobRequirements(job.requirements); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                                    className="flex items-center gap-1.5 text-xs font-bold py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">
+                                    <Edit3 size={12} /> Edit
+                                  </button>
+                                  {role === "superadmin" && (
+                                    <button onClick={() => handleDeleteJob(job._id)} disabled={actionLoading}
+                                      className="flex items-center gap-1.5 text-xs font-bold py-1.5 px-3 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-colors cursor-pointer">
+                                      <Trash2 size={12} /> Delete
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {careersSubTab === "applications" && (
+                    <div className="flex flex-col gap-5">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div className="text-left">
+                          <h2 className="text-xl font-bold text-slate-900">
+                            {selectedJobForApps ? `Applications: ${selectedJobForApps.title}` : "All Applications"}
+                          </h2>
+                          <p className="text-xs text-slate-500">{applications.length} total submissions</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <select value={appStatusFilter} onChange={(e) => setAppStatusFilter(e.target.value)}
+                            className="bg-white border border-slate-200 rounded-lg py-1.5 px-3 text-xs font-bold text-slate-700 focus:outline-none focus:border-primary">
+                            <option value="all">All Statuses</option>
+                            <option value="New">New</option>
+                            <option value="Reviewed">Reviewed</option>
+                            <option value="Shortlisted">Shortlisted</option>
+                            <option value="Rejected">Rejected</option>
+                          </select>
+                          <button onClick={() => { setCareersSubTab("jobs"); setSelectedJobForApps(null); }}
+                            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-1.5 px-3 rounded-lg text-xs cursor-pointer">
+                            ← Back to Jobs
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs text-left">
+                            <thead className="bg-slate-50 text-slate-505 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                              <tr>
+                                <th className="py-4 px-5">Applicant</th>
+                                <th className="py-4 px-4">Contact</th>
+                                <th className="py-4 px-4">Resume</th>
+                                <th className="py-4 px-4">Status</th>
+                                <th className="py-4 px-5 text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                              {applications.filter(a => appStatusFilter === "all" || a.status === appStatusFilter).length === 0 ? (
+                                <tr><td colSpan={5} className="py-10 text-center text-slate-400 font-medium">No applications found.</td></tr>
+                              ) : (
+                                applications
+                                  .filter(a => appStatusFilter === "all" || a.status === appStatusFilter)
+                                  .map((app) => (
+                                    <tr key={app._id} className="hover:bg-slate-50/50 transition-colors">
+                                      <td className="py-4 px-5 text-left">
+                                        <span className="font-bold text-slate-900 block">{app.name}</span>
+                                        <span className="text-[10px] text-slate-400">{new Date(app.createdAt).toLocaleDateString()}</span>
+                                      </td>
+                                      <td className="py-4 px-4 text-left">
+                                        <span className="text-slate-705 text-slate-700 block">{app.email}</span>
+                                        <span className="text-slate-500">{app.phone}</span>
+                                      </td>
+                                      <td className="py-4 px-4">
+                                        {app.resumeLink ? (
+                                          <a href={app.resumeLink.startsWith("/uploads") ? `${API_URL}${app.resumeLink}` : app.resumeLink} target="_blank" rel="noreferrer"
+                                            className="flex items-center gap-1 text-primary font-bold hover:underline">
+                                            <ExternalLink size={11} /> View Resume
+                                          </a>
+                                        ) : <span className="text-slate-300">—</span>}
+                                      </td>
+                                      <td className="py-4 px-4">
+                                        <select value={app.status}
+                                          onChange={(e) => updateApplicationStatus(app._id, e.target.value)}
+                                          disabled={actionLoading}
+                                          className={`text-[10px] font-bold rounded-full py-1 px-2 border cursor-pointer focus:outline-none ${app.status === "New" ? "bg-sky-50 text-sky-700 border-sky-200" :
+                                              app.status === "Reviewed" ? "bg-amber-50 text-amber-700 border-amber-200" :
+                                                app.status === "Shortlisted" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
+                                                  "bg-rose-50 text-rose-700 border-rose-200"
+                                            }`}>
+                                          <option value="New">New</option>
+                                          <option value="Reviewed">Reviewed</option>
+                                          <option value="Shortlisted">Shortlisted</option>
+                                          <option value="Rejected">Rejected</option>
+                                        </select>
+                                      </td>
+                                      <td className="py-4 px-5 text-right">
+                                        {role === "superadmin" && (
+                                          <button onClick={() => deleteApplication(app._id)} disabled={actionLoading}
+                                            className="text-red-600 p-1.5 rounded hover:bg-red-50 transition-all cursor-pointer disabled:opacity-50">
+                                            <Trash2 size={14} />
+                                          </button>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  ))
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ═══════════════ STAFF TAB ═══════════════ */}
+              {activeTab === "users" && (role === "superadmin" || role === "co_admin") && (
+                <div className="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left w-full">
 
                   {/* Create Staff Form */}
-                  <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm text-left">
+                  <div className="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
                     <h3 className="text-lg font-bold text-slate-900 mb-6">Create Staff Account</h3>
                     <form onSubmit={handleCreateUser} className="flex flex-col gap-4 text-xs">
                       {[
@@ -1597,16 +2474,19 @@ export default function AdminDashboard() {
                           <input type={type} required value={newUser[key as keyof typeof newUser]}
                             onChange={(e) => setNewUser({ ...newUser, [key]: e.target.value })}
                             placeholder={placeholder}
-                            className="bg-white border border-slate-200 rounded-xl py-3 px-4 text-slate-800 focus:outline-none focus:border-primary" />
+                            className="bg-white border border-slate-200 rounded-xl py-3 px-4 text-slate-805 focus:outline-none focus:border-primary" />
                         </div>
                       ))}
                       <div className="flex flex-col gap-1.5">
                         <label className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Console Role</label>
-                        <select value={newUser.role} onChange={(e) => setNewUser({ ...newUser, role: e.target.value as "admin" | "bde" | "content_editor" })}
-                          className="bg-white border border-slate-200 rounded-xl py-3 px-3 text-slate-800 focus:outline-none focus:border-primary">
+                        <select value={newUser.role} onChange={(e) => setNewUser({ ...newUser, role: e.target.value as "superadmin" | "co_admin" | "bde" | "content_editor" })}
+                          className="bg-white border border-slate-200 rounded-xl py-3 px-3 text-slate-805 focus:outline-none focus:border-primary">
                           <option value="bde">BDE (Leads only)</option>
                           <option value="content_editor">Content Editor (Blogs only)</option>
-                          <option value="admin">Administrator (Full Access)</option>
+                          <option value="co_admin">Co-Admin (No Delete)</option>
+                          {role === "superadmin" && (
+                            <option value="superadmin">Super Admin (Full Access)</option>
+                          )}
                         </select>
                       </div>
                       <button type="submit" disabled={actionLoading}
@@ -1617,15 +2497,15 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Staff List */}
-                  <div className="lg:col-span-8 w-full flex flex-col gap-5 text-left">
+                  <div className="lg:col-span-8 w-full flex flex-col gap-5">
                     <div>
                       <h2 className="text-xl font-bold text-slate-900">Staff User Accounts</h2>
-                      <p className="text-xs text-slate-500">Verify user credentials and roles</p>
+                      <p className="text-xs text-slate-500">Verify user credentials and roles. Only Super Admin can delete accounts.</p>
                     </div>
-                    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                      <div className="overflow-x-auto">
+                    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm w-full">
+                      <div className="overflow-x-auto w-full">
                         <table className="w-full text-xs text-left">
-                          <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+                          <thead className="bg-slate-50 text-slate-505 text-slate-550 font-bold uppercase tracking-wider border-b border-slate-200">
                             <tr>
                               <th className="py-4 px-5">Staff Member</th>
                               <th className="py-4 px-4">Email</th>
@@ -1640,17 +2520,25 @@ export default function AdminDashboard() {
                               users.map((u) => (
                                 <tr key={u._id} className="hover:bg-slate-50/50 transition-colors">
                                   <td className="py-4 px-5 font-bold text-slate-900 text-left">{u.name}</td>
-                                  <td className="py-4 px-4 text-slate-700 text-left">{u.email}</td>
+                                  <td className="py-4 px-4 text-slate-705 text-left">{u.email}</td>
                                   <td className="py-4 px-4 text-left">
-                                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wide uppercase ${u.role === "admin" ? "bg-red-50 text-red-700 border border-red-200/50" : u.role === "bde" ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50" : "bg-blue-50 text-blue-700 border border-blue-200/50"}`}>
-                                      {u.role === "content_editor" ? "editor" : u.role}
+                                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wide uppercase ${u.role === "superadmin" ? "bg-amber-50 text-amber-705 border border-amber-200" :
+                                        u.role === "co_admin" ? "bg-red-50 text-red-700 border border-red-200/50" :
+                                          u.role === "bde" ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50" :
+                                            "bg-blue-50 text-blue-700 border border-blue-200/50"
+                                      }`}>
+                                      {u.role === "content_editor" ? "editor" : u.role === "co_admin" ? "co-admin" : u.role}
                                     </span>
                                   </td>
                                   <td className="py-4 px-5 text-right">
-                                    <button onClick={() => handleDeleteUser(u._id)} disabled={u.email === "admin@sunlynk.com"}
-                                      className="text-red-600 p-1.5 rounded hover:bg-red-50 transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer">
-                                      <Trash2 size={14} />
-                                    </button>
+                                    {role === "superadmin" && (
+                                      <button onClick={() => handleDeleteUser(u._id)}
+                                        disabled={u.email === "admin@sunlynk.com" || u.email === userName}
+                                        className="text-red-650 hover:text-red-705 p-1.5 rounded hover:bg-red-50 transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                                      >
+                                        <Trash2 size={14} />
+                                      </button>
+                                    )}
                                   </td>
                                 </tr>
                               ))
@@ -1660,6 +2548,7 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
+
                 </div>
               )}
 

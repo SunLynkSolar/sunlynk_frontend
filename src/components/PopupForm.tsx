@@ -229,7 +229,7 @@ export default function PopupForm() {
                 {/* Subsidiy Countdown Timer widget */}
                 <div className="bg-white/5 backdrop-blur-md rounded-xl p-3.5 border border-white/10 flex flex-col gap-2 shadow-inner">
                   <span className="text-[9px] font-bold text-white/50 tracking-wider uppercase block">
-                    Offer Expires In:
+                    Subsidy Offer Expires In:
                   </span>
 
                   <div className="grid grid-cols-4 gap-1.5 text-center">
