@@ -43,7 +43,7 @@ export default function ClientLayoutWrapper({
         >
           {/* WhatsApp Button */}
           <a
-            href="https://wa.me/918573003001"
+            href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20free%20Solar%20Consultation."
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"

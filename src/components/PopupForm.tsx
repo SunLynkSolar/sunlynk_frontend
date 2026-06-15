@@ -60,13 +60,13 @@ export default function PopupForm() {
   }, [isVisible]);
 
   const openPopup = useCallback(() => {
-    setIsVisible(true);
-    setTimeout(() => setIsAnimating(true), 10); // Trigger CSS enter animation
+    setIsVisible(false);
+    setTimeout(() => setIsAnimating(true), 10000); // Trigger CSS enter animation
   }, []);
 
   const closePopup = useCallback(() => {
     setIsAnimating(false);
-    setTimeout(() => setIsVisible(false), 300); // Wait for CSS leave animation
+    setTimeout(() => setIsVisible(false), 300000); // Wait for CSS leave animation
   }, []);
 
   useEffect(() => {

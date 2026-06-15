@@ -357,7 +357,7 @@ export default function About() {
 
 
       {/* Leadership & Team Section */}
-      <section className="py-20 bg-white border-t border-gray-150 overflow-hidden">
+      {/* <section className="py-20 bg-white border-t border-gray-150 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 mb-12">
             <div className="lg:w-1/3 flex flex-col gap-4">
@@ -371,7 +371,6 @@ export default function About() {
                 Our specialized team combines decades of clean energy experience, engineering excellence, and customer focus to deliver world-class sustainable power systems.
               </p>
 
-              {/* Carousel buttons */}
               <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => scroll("left")}
@@ -390,7 +389,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Slider Container */}
             <div className="lg:w-2/3 relative">
               <div
                 ref={carouselRef}
@@ -402,7 +400,6 @@ export default function About() {
                     key={idx}
                     className="min-w-[270px] sm:min-w-[300px] max-w-[300px] bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 snap-start flex-shrink-0 group"
                   >
-                    {/* Image Frame */}
                     <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
                       <Image
                         src={member.image}
@@ -411,7 +408,6 @@ export default function About() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
 
-                      {/* Social icons overlay on hover */}
                       <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
                         <a href="#" className="w-10 h-10 rounded-full bg-white text-primary hover:bg-primary hover:text-white transition-all flex items-center justify-center shadow" aria-label="LinkedIn">
                           <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -429,7 +425,6 @@ export default function About() {
                       </div>
                     </div>
 
-                    {/* Text info */}
                     <div className="p-6 text-center">
                       <h3 className="text-lg font-bold text-dark group-hover:text-primary transition-colors">
                         {member.name}
@@ -444,7 +439,7 @@ export default function About() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

@@ -75,12 +75,14 @@ export default function ZeroInvestmentCalculator() {
                 <p className="text-[11px] sm:text-xs text-emerald-800 font-bold leading-normal">
                   Our solar experts are just a call away.
                 </p>
-                <Link
-                  href="/contact"
+                <a
+                  href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20EMI%20Interest%20rates%20and%20Subsidy%20Process."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="bg-emerald-800 hover:bg-emerald-950 text-white font-black text-xs py-2.5 px-5 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-950/15 hover:shadow-lg hover:shadow-emerald-950/25 active:scale-98 transition-all self-start mt-2"
                 >
                   Talk to our expert <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-                </Link>
+                </a>
               </div>
 
               {/* Cropped Expert Image */}

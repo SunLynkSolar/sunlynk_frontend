@@ -26,7 +26,7 @@ const DATA = {
   "on-grid": {
     label: "On-grid layout",
     badge: "Max savings",
-    eyebrow: "Layout option 01",
+    eyebrow: "",
     title: "Society on-grid solar systems",
     sub: "Directly connected to your society's common utility meter. Daytime generation powers elevators, pumps and area lighting — surplus flows back to the grid as bill credits.",
     foot: "Net-metered core",
@@ -56,7 +56,7 @@ const DATA = {
   hybrid: {
     label: "Hybrid layout",
     badge: "Backup power",
-    eyebrow: "Layout option 02",
+    eyebrow: "",
     title: "Society hybrid backup systems",
     sub: "Combines high-generation solar panels with containerised LFP battery storage. Critical shared assets stay fully operational even during prolonged grid blackouts.",
     foot: "Battery-resilient frame",
@@ -229,7 +229,7 @@ export default function SocietySolutionsSelector() {
           </div>
 
           {/* Right – image placeholder */}
-          <div className="w-52 shrink-0 rounded-xl border border-white/10 bg-zinc-800 flex flex-col overflow-hidden">
+          {/* <div className="w-52 shrink-0 rounded-xl border border-white/10 bg-zinc-800 flex flex-col overflow-hidden">
             <div className="flex-1 flex flex-col items-center justify-center p-5 gap-2 border-b border-white/10">
               <Building2 size={36} className="text-zinc-600" />
               <span className="text-[11px] text-zinc-600 text-center leading-tight">
@@ -245,7 +245,7 @@ export default function SocietySolutionsSelector() {
                 {d.pill}
               </span>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </div>

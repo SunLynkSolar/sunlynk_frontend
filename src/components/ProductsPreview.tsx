@@ -13,7 +13,7 @@ const plans = [
     popular: false,
     features: [
       { text: "TopCon panels", included: true },
-      { text: "Polycab inverter", included: true },
+      { text: "Havelles inverter", included: true },
       { text: "Professional installation", included: true },
       { text: "Corrective maintenance", included: true },
       { text: "Zero repair cost — 5 years", included: false },
@@ -29,7 +29,7 @@ const plans = [
     popular: true,
     features: [
       { text: "TopCon panels", included: true },
-      { text: "Polycab inverter", included: true },
+      { text: "Havelles inverter", included: true },
       { text: "Professional installation", included: true },
       { text: "Corrective maintenance", included: true },
       { text: "Zero repair cost — 5 years", included: true },

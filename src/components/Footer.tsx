@@ -168,28 +168,28 @@ export default function Footer() {
               At SunLynk Solar, our mission is simple – Provide the most bankable technology & products for the success of your solar business whether it&apos;s power generation, power conversion or accurate measurements.
             </p>
             <div className="flex items-center gap-3">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Facebook">
+              <a href="https://www.facebook.com/sunlynksolar?mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Facebook">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Twitter">
+              {/* <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Twitter">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                 </svg>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Instagram">
+              </a> */}
+              <a href="https://www.instagram.com/SunlynkIndia" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Instagram">
                 <svg className="w-4 h-4 stroke-current fill-none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Youtube">
+              {/* <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Youtube">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
-              </a>
+              </a> */}
               <a href="https://www.linkedin.com/company/sunlynk-solar-energy-pvt-ltd/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-slate-900 border border-slate-800 hover:border-[#0077B5] hover:bg-[#0077B5] hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="LinkedIn">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />

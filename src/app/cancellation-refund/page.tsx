@@ -95,7 +95,7 @@ export default function CancellationRefundPolicy() {
                   info@sunlynksolar.com
                 </a>{" "}
                 or message us on our helpline WhatsApp number{" "}
-                <a href="https://wa.me/918573003001" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
+                <a href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20free%20Solar%20Consultation." target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
                   +91 8573003001
                 </a>. For clarity and records validation, we are unable to process verbal cancellation requests.
               </p>

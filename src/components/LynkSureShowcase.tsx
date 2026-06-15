@@ -609,7 +609,7 @@ export default function LynkSureShowcase() {
                       </span>
                     </div>
                     <a
-                      href="https://wa.me/918573003001?text=Hi%2C%20I%20am%20interested%20in%20the%20solar%20loan%20scheme.%20Please%20provide%20more%20details."
+                      href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20free%20Solar%20Consultation."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-3 px-6 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-500/10 hover:shadow-lg transition-all self-start sm:self-center cursor-pointer outline-none"
