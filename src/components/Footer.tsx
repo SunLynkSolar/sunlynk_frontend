@@ -278,11 +278,11 @@ export default function Footer() {
                   <span>•</span> Contact Us
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/brands" className="hover:text-primary transition-colors flex items-center gap-1">
                   <span>•</span> Our Brands
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

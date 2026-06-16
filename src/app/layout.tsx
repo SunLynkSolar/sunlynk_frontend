@@ -14,6 +14,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.sunlynksolar.com"),
+  alternates: {
+    canonical: "./",
+  },
   title: "SunLynk Solar Lucknow - Premium Rooftop Solar Solutions",
   description: "SunLynk Solar is the leading solar panel installation company in Lucknow. We design and install high-efficiency rooftop solar systems for homes, housing societies, and commercial businesses in Lucknow, Uttar Pradesh.",
   keywords: [
