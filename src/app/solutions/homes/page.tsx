@@ -242,7 +242,7 @@ export default function HomesPage() {
                   </ul>
                 </div>
                 <div className="mt-8 pt-4 border-t border-gray-150">
-                  <Link href="#solar-calculator" className="inline-flex items-center gap-1.5 text-xs font-black uppercase text-primary hover:underline">
+                  <Link href="/#solar-calculator" className="inline-flex items-center gap-1.5 text-xs font-black uppercase text-primary hover:underline">
                     <span>Explore Savings Calculator</span>
                     <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                   </Link>
@@ -468,7 +468,7 @@ export default function HomesPage() {
               </div>
               <p className="text-xs sm:text-sm text-slate-500 font-semibold text-center lg:text-left flex flex-wrap items-center justify-center lg:justify-start gap-1 mt-1">
                 <span>Still not sure?</span>
-                <a href="#solar-calculator" className="text-emerald-700 hover:underline font-bold inline-flex items-center gap-1 transition-colors">
+                <a href="/#solar-calculator" className="text-emerald-700 hover:underline font-bold inline-flex items-center gap-1 transition-colors">
                   Calculate your solar requirement with our Solar Calculator
                   <ArrowRight size={14} className="animate-pulse" />
                 </a>
