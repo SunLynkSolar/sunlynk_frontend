@@ -32,6 +32,8 @@ function parseDate(dateStr?: string): Date {
   return isNaN(d.getTime()) ? new Date() : d;
 }
 
+export const dynamic = "force-static";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. Define static routes (ending with trailing slash to match config)
   const staticRoutes: MetadataRoute.Sitemap = [
