@@ -285,7 +285,7 @@ export default function LynkSureShowcase() {
                     </div>
                     <span className="text-[10px] text-slate-500 font-black uppercase tracking-wider block">Structural Steel</span>
                     <span className="w-6 h-0.5 bg-emerald-500 rounded-full mt-1.5 mb-2 block"></span>
-                    <span className="text-sm sm:text-base font-black text-slate-900 block">HDGI Column</span>
+                    <span className="text-sm sm:text-base font-black text-slate-900 block">HDGI Column  (5 Inches)</span>
                   </div>
 
                   {/* Structure Life */}

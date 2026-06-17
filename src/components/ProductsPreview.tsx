@@ -2,393 +2,205 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, Check, X } from "lucide-react";
-import Image from "next/image";
+import {
+  ArrowRight,
+  Activity,
+  ShieldCheck,
+  Zap,
+  Sparkles,
+  Coins,
+  Check,
+} from "lucide-react";
 
-const plans = [
+const mainPillars = [
   {
-    name: "Lynk Lite",
-    tag: "Start with solar",
-    tagline: "Best value entry plan",
-    popular: false,
-    features: [
-      { text: "TopCon panels", included: true },
-      { text: "Havelles inverter", included: true },
-      { text: "Professional installation", included: true },
-      { text: "Corrective maintenance", included: true },
-      { text: "Zero repair cost — 5 years", included: false },
-      { text: "Zero replacement cost — 5 years", included: false },
-      { text: "Guaranteed generation", included: false },
-      { text: "₹8/unit deficit return", included: false },
-    ],
+    title: "Money-Back Promise at ₹8/Unit",
+    desc: "Direct deficit return guarantee. If your monthly solar generation falls short of our target, we compensate you at ₹8 per unit.",
+    icon: Coins,
+    colorClass: "text-secondary",
+    bgClass: "bg-secondary/8 border-secondary/15",
   },
   {
-    name: "Lynk Sure",
-    tag: "Solar with guarantee",
-    tagline: "Lynk Lite + ₹20,000 — complete peace of mind",
-    popular: true,
-    features: [
-      { text: "TopCon panels", included: true },
-      { text: "Havelles inverter", included: true },
-      { text: "Professional installation", included: true },
-      { text: "Corrective maintenance", included: true },
-      { text: "Zero repair cost — 5 years", included: true },
-      { text: "Zero replacement cost — 5 years", included: true },
-      { text: "Guaranteed generation", included: true },
-      { text: "₹8/unit deficit return", included: true },
-    ],
+    title: "Regular Proactive Maintenance",
+    desc: "Scheduled checkups, performance diagnostics, and panel cleaning support visits to keep your system performing at peak efficiency.",
+    icon: Activity,
+    colorClass: "text-primary",
+    bgClass: "bg-primary/8 border-primary/15",
   },
+  {
+    title: "₹0 Repair & Replacement Cost",
+    desc: "Complete 5-year coverage. Absolutely zero out-of-pocket expenses for component replacements, labor, or service issues.",
+    icon: ShieldCheck,
+    colorClass: "text-primary",
+    bgClass: "bg-primary/8 border-primary/15",
+  },
+  {
+    title: "App to Track Real-Time Power",
+    desc: "Smart cloud-connected dashboard tracking daily generation, carbon reduction, and grid exports live on your phone.",
+    icon: Zap,
+    colorClass: "text-secondary",
+    bgClass: "bg-secondary/8 border-secondary/15",
+  },
+];
+
+const hardwareSpecs = [
+  { label: "Premium Panels", value: "TopCon N-Type Bifacial" },
+  { label: "Smart Inverter", value: "Havells Grid-Tied" },
+  { label: "Structural Steel", value: "Wind-Resistant HDGI Structure" },
+  { label: "Site Quality", value: "Certified Site survey & 3D layout" },
 ];
 
 export default function ProductsPreview() {
   return (
-    <section className="relative py-16 bg-white overflow-hidden">
-      {/* Background Video */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-20">
-        <iframe
-          src="https://www.youtube.com/embed/TzfnlPxCZv0?autoplay=1&mute=1&loop=1&playlist=TzfnlPxCZv0&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-          className="absolute w-[300%] h-[300%] min-w-full min-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          title="Solar Video Background"
-        />
-        {/* Subtle overlay to soften the video and keep text highly readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/80 to-white/95" />
-      </div>
+    <section className="relative py-20 lg:py-28 overflow-hidden border-y border-slate-100" id="our-plans">
+      {/* Subtle grid backdrop for corporate clean-tech style */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/3 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-[450px] h-[450px] bg-secondary/3 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 mb-5">
-            <span className="h-[2px] w-6 bg-primary" />
-            <span className="text-base uppercase tracking-[0.15em] font-bold text-primary">Our Plans</span>
-            <span className="h-[2px] w-6 bg-primary" />
+      <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
+
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+          <div className="inline-flex items-center gap-2 mb-4 bg-primary/8 border border-primary/15 rounded-full py-1.5 px-4 text-xs font-bold text-primary tracking-wide shadow-sm">
+            <Sparkles size={12} className="text-primary animate-pulse" />
+            <span>Signature Performance Guarantee</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-dark leading-tight mb-3">
-            Choose your Solar Plan          </h2>
-          <p className="text-sm text-gray-500 leading-relaxed">
-            Two plans. One goal — complete peace of mind for your solar investment.
-          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-dark leading-tight tracking-tight">
+            Introducing <span className="text-primary">Lynk Sure™</span>
+          </h2>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-500 mt-2">
+            India's only Guaranteed Solar Savings Plan
+          </h3>
+          <div className="w-12 h-1 bg-primary rounded-full mx-auto mt-5" />
         </div>
 
-        {/* Plan Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {plans.map((plan, idx) => (
-            <div
-              key={idx}
-              className={`relative bg-white rounded-xl transition-all duration-300 hover:shadow-xl ${plan.popular
-                ? "border-2 border-primary shadow-lg"
-                : "border border-gray-200 shadow-sm hover:border-gray-300"
-                }`}
-            >
-              {/* Popular badge floating above card */}
-              {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[11px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md flex items-center gap-1.5 z-10 w-full text-center justify-center">
-                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  Most Popular
+        {/* Content Layout Split */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+          {/* Left Side: Guarantees (The 4 Pillars) */}
+          <div className="lg:col-span-7 flex flex-col gap-8 text-left">
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              Your investment, fully protected by a complete 5-year insurance envelope. Lynk Sure provides absolute confidence that your solar panels generate what was promised, with zero repair or maintenance bills.
+            </p>
+
+            {/* 4 Pillars Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {mainPillars.map((pillar, index) => {
+                const IconComp = pillar.icon;
+                return (
+                  <div key={index} className="flex gap-4 p-5 bg-white border border-slate-100 rounded-xl shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 group">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${pillar.bgClass} ${pillar.colorClass} group-hover:scale-105 transition-transform duration-300`}>
+                      <IconComp size={18} />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm sm:text-base text-dark group-hover:text-primary transition-colors">
+                        {pillar.title}
+                      </h4>
+                      <p className="text-xs text-gray-500 leading-relaxed mt-1.5">
+                        {pillar.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Side: Sleek Glassmorphic Guarantee Certificate Card */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-xl max-w-[400px] w-full flex flex-col gap-6 relative">
+              {/* Top border decoration */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-secondary to-primary rounded-t-2xl" />
+
+              {/* Header */}
+              <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block">Policy Document</span>
+                  <span className="text-sm font-black text-dark tracking-tight">LYNK SURE™ SYSTEM SECURE</span>
                 </div>
-              )}
+                <span className="text-[9px] font-mono text-gray-400">ID: LS-5Y-VERIFIED</span>
+              </div>
 
-              <div className="p-8">
-                {/* Tag */}
-                <span className={`inline-block text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-5 ${plan.popular ? "bg-primary/8 text-primary" : "bg-gray-100 text-gray-500"
-                  }`}>
-                  {plan.tag}
-                </span>
+              {/* Vector Guarantee Seal */}
+              <div className="py-2">
+                <svg viewBox="0 0 200 200" className="w-44 h-44 mx-auto">
+                  {/* Outer ring */}
+                  <circle cx="100" cy="100" r="85" fill="none" stroke="#fca311" strokeWidth="2" strokeDasharray="4,4" />
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="#2ecc71" strokeWidth="1.5" />
 
-                {/* Name & tagline */}
-                <h3 className="text-2xl font-extrabold text-dark mb-1.5">{plan.name}</h3>
-                <p className="text-[13px] text-gray-400 mb-7 leading-relaxed">{plan.tagline}</p>
+                  {/* Inner background */}
+                  <circle cx="100" cy="100" r="70" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" />
 
-                {/* Divider */}
-                <div className="h-px bg-gray-100 mb-7" />
+                  {/* Text labels inside stamp */}
+                  <text x="100" y="65" textAnchor="middle" fontSize="10" fontWeight="950" fill="#1c1c1c" letterSpacing="1">5 YEAR</text>
+                  <text x="100" y="80" textAnchor="middle" fontSize="12" fontWeight="950" fill="#2ecc71" letterSpacing="0.5">WARRANTY</text>
 
-                {/* Features */}
-                <ul className="space-y-3.5 mb-9">
-                  {plan.features.map((feat, fIdx) => (
-                    <li key={fIdx} className="flex items-center gap-3">
-                      {feat.included ? (
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                          <Check size={12} className="text-primary" strokeWidth={3} />
-                        </div>
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-gray-1000 border border-gray-150 bg-gray-1000 text-gray-300 flex items-center justify-center shrink-0">
-                          <X size={10} className="text-gray-300" strokeWidth={3} />
-                        </div>
-                      )}
-                      <span className={`text-[13px] ${feat.included ? "text-gray-700 font-medium" : "text-gray-400"
-                        }`}>
-                        {feat.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                  {/* Inner Shield */}
+                  <g transform="translate(85, 93) scale(1.25)">
+                    <path d="M 12 22 C 12 22 20 18 20 12 L 20 5 L 12 2 L 4 5 L 4 12 C 4 18 12 22 12 22 Z" fill="#2ecc71" />
+                    <path d="M 9 12 L 11 14 L 15 10" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </g>
 
-                {/* CTA */}
-                <Link
-                  href="/contact"
-                  className={`group flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-300 ${plan.popular
-                    ? "bg-primary hover:bg-primary-hover text-white shadow-sm hover:shadow-md"
-                    : "bg-gray-900 hover:bg-black text-white"
-                    }`}
-                >
-                  <span>Get Quote</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                </Link>
+                  <text x="100" y="152" textAnchor="middle" fontSize="9" fontWeight="900" fill="#1c1c1c" letterSpacing="0.8">LYNK SURE</text>
+                  <text x="100" y="165" textAnchor="middle" fontSize="7" fontWeight="bold" fill="#fca311" letterSpacing="0.5">SECURED SYSTEM</text>
+                </svg>
+              </div>
+
+              {/* Quick Policy Specs */}
+              <div className="flex flex-col gap-3.5 border-t border-slate-100 pt-4">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-500 font-medium">Generation Insurance</span>
+                  <span className="font-extrabold text-primary flex items-center gap-1">
+                    <Check size={12} strokeWidth={3} /> Verified Coverage
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-500 font-medium">Hardware Repair Cost</span>
+                  <span className="font-extrabold text-primary">₹0 / Zero Cost</span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-500 font-medium">Deficit Return Rate</span>
+                  <span className="font-extrabold text-secondary">₹8.00 per Unit</span>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+
         </div>
 
-        {/* Bottom note */}
-        <p className="text-center text-xs text-gray-400 mt-10 leading-relaxed">
-          Both plans include professional site survey, custom 3D design, and full installation.{" "}
-          <Link href="/contact" className="text-primary font-semibold hover:underline">
-            Talk to an expert →
-          </Link>
-        </p>
-      </div>
+        {/* Horizontal Spec Sheet Section */}
+        <div className="mt-16 border-t border-slate-200/60 pt-10">
+          <div className="text-left mb-6">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Hardware & Survey Standards</span>
+            <h4 className="text-base font-extrabold text-dark mt-1">Included Tier-1 Components & Deliverables</h4>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {hardwareSpecs.map((spec, index) => (
+              <div key={index} className="bg-white border border-slate-100 p-4.5 rounded-xl shadow-sm text-left">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">{spec.label}</span>
+                <span className="text-xs sm:text-sm font-black text-dark block mt-1 leading-snug">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      {/* Decorative Solar Panel in Bottom Right */}
-      <div className="absolute -bottom-12 -right-12 w-[450px] h-[200px] pointer-events-none z-0 select-none opacity-30 hidden lg:block">
-        <Image
-          src="/assets/images/bg (1).jpg"
-          alt="Solar Panel Decoration"
-          fill
-          className="object-contain"
-        />
+        {/* CTA Button Block */}
+        <div className="mt-16 flex flex-col items-center text-center gap-4">
+          <Link
+            href="/contact"
+            className="btn-primary shadow-lg shadow-primary/15 hover:shadow-primary/25 hover:-translate-y-0.5 transition-all duration-300 font-bold px-10 py-4"
+          >
+            <span>Get Started with Lynk Sure</span>
+            <ArrowRight size={16} />
+          </Link>
+          <div className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+            <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
+            <span>Consultation & 3D Site simulation is 100% Free</span>
+          </div>
+        </div>
+
       </div>
     </section>
   );
 }
-
-// "use client";
-
-// import React from "react";
-// import Image from "next/image";
-// import Link from "next/link";
-// import { ArrowRight, Check, X, Sun, Zap, ShieldCheck, Layers } from "lucide-react";
-
-// const plans = [
-//   {
-//     name: "Lynk Lite",
-//     tag: "Start with solar",
-//     tagline: "Best value entry plan",
-//     popular: false,
-//     features: [
-//       { text: "TopCon panels", included: true },
-//       { text: "Polycab inverter", included: true },
-//       { text: "Professional installation", included: true },
-//       { text: "Corrective maintenance", included: true },
-//       { text: "Zero repair cost — 5 years", included: false },
-//       { text: "Zero replacement cost — 5 years", included: false },
-//       { text: "Guaranteed generation", included: false },
-//       { text: "₹8/unit deficit return", included: false },
-//     ],
-//   },
-//   {
-//     name: "Lynk Sure",
-//     tag: "Solar with guarantee",
-//     tagline: "Lynk Lite + ₹20,000 — complete peace of mind",
-//     popular: true,
-//     features: [
-//       { text: "TopCon panels", included: true },
-//       { text: "Polycab inverter", included: true },
-//       { text: "Professional installation", included: true },
-//       { text: "Corrective maintenance", included: true },
-//       { text: "Zero repair cost — 5 years", included: true },
-//       { text: "Zero replacement cost — 5 years", included: true },
-//       { text: "Guaranteed generation", included: true },
-//       { text: "₹8/unit deficit return", included: true },
-//     ],
-//   },
-// ];
-
-// export default function ProductsPreview() {
-//   return (
-//     <section className="relative py-24 bg-slate-50/50 overflow-hidden border-y border-slate-100" id="our-plans">
-//       {/* Background image pattern */}
-//       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-20">
-//         <Image
-//           src="/assets/images/bg (2).jpg"
-//           alt="Solar background pattern"
-//           fill
-//           className="object-cover opacity-35"
-//           priority
-//         />
-//         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/95 via-white/80 to-slate-50/95" />
-//       </div>
-
-//       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-
-//         {/* Split Grid */}
-//         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-
-//           {/* Left Column: Context & Hardware Showcase (Col 5) */}
-//           <div className="lg:col-span-5 flex flex-col gap-8 text-left lg:sticky lg:top-24">
-//             <div className="flex flex-col gap-4">
-//               <div className="inline-flex self-start items-center gap-2 bg-primary/10 rounded-full py-1.5 px-4 text-xs font-bold text-primary tracking-wide border border-primary/20">
-//                 <Sun size={13} className="text-primary animate-pulse" />
-//                 <span>Choose Your Plan</span>
-//               </div>
-
-//               <h2 className="text-3xl sm:text-4xl font-extrabold text-dark leading-tight">
-//                 Two plans. One goal — complete peace of mind.
-//               </h2>
-
-//               <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
-//                 Whether you select our high-value entry plan or our complete guarantee package, you get premium engineering and tier-1 solar components.
-//               </p>
-//             </div>
-
-//             {/* Hardware Showcase Box */}
-//             <div className="bg-white/80 backdrop-blur border border-slate-200/80 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
-//               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-//                 <Layers size={14} className="text-primary" />
-//                 Standard Hardware Included
-//               </h4>
-
-//               <div className="flex flex-col gap-4">
-//                 {/* Tech Item 1 */}
-//                 <div className="flex gap-3">
-//                   <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-//                     <Sun size={18} />
-//                   </div>
-//                   <div>
-//                     <h5 className="text-xs font-bold text-gray-800">TopCon N-Type Solar Panels</h5>
-//                     <p className="text-[11px] text-gray-500 mt-0.5">High-efficiency bifacial technology that harvests sunlight from both sides, yielding up to 22.5% conversion rates.</p>
-//                   </div>
-//                 </div>
-
-//                 {/* Tech Item 2 */}
-//                 <div className="flex gap-3">
-//                   <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-//                     <Zap size={18} />
-//                   </div>
-//                   <div>
-//                     <h5 className="text-xs font-bold text-gray-800">Polycab Grid-Tied Inverter</h5>
-//                     <p className="text-[11px] text-gray-500 mt-0.5">Smart solar inverters featuring dual MPPT trackers and seamless cloud-connected mobile app monitoring.</p>
-//                   </div>
-//                 </div>
-
-//                 {/* Tech Item 3 */}
-//                 <div className="flex gap-3">
-//                   <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-//                     <ShieldCheck size={18} />
-//                   </div>
-//                   <div>
-//                     <h5 className="text-xs font-bold text-gray-800">Premium Wind-Resistant Structures</h5>
-//                     <p className="text-[11px] text-gray-500 mt-0.5">Hot-dip galvanized steel mounting structures engineered to withstand up to 150 km/h wind speeds.</p>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//           </div>
-
-//           {/* Right Column: Pricing Cards (Col 7) */}
-//           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch">
-//             {plans.map((plan, idx) => (
-//               <div
-//                 key={idx}
-//                 className={`group relative rounded-2xl transition-all duration-300 hover:shadow-2xl flex flex-col justify-between ${plan.popular
-//                   ? "bg-white/95 backdrop-blur-md text-gray-800 border-2 border-primary shadow-md hover:-translate-y-1"
-//                   : "bg-white/90 backdrop-blur-md text-gray-800 border border-slate-200/80 shadow-sm hover:border-slate-300 hover:-translate-y-1"
-//                   }`}
-//               >
-//                 {/* Popular Badge floating above card */}
-//                 {plan.popular ? (
-//                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md flex items-center gap-1.5 z-25 whitespace-nowrap">
-//                     <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-//                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-//                     </svg>
-//                     Most Popular
-//                   </div>
-//                 ) : (
-//                   <div className="absolute top-4 right-4 bg-slate-100 text-slate-500 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-slate-200">
-//                     Standard
-//                   </div>
-//                 )}
-
-//                 <div className="p-6 sm:p-8 flex-grow flex flex-col gap-6">
-//                   <div>
-//                     {/* Tag */}
-//                     <span className={`inline-block text-[9px] font-extrabold uppercase tracking-widest mb-3 ${plan.popular ? "text-primary" : "text-gray-400"}`}>
-//                       {plan.tag}
-//                     </span>
-
-//                     {/* Name & tagline */}
-//                     <h3 className="text-2xl font-black mb-1 leading-tight text-gray-900">{plan.name}</h3>
-//                     <p className="text-[12px] leading-relaxed text-gray-400">{plan.tagline}</p>
-//                   </div>
-
-//                   {/* Divider */}
-//                   <div className="h-px bg-slate-100" />
-
-//                   {/* Features */}
-//                   <ul className="space-y-3.5 flex-grow">
-//                     {plan.features.map((feat, fIdx) => (
-//                       <li key={fIdx} className="flex items-center gap-3">
-//                         {feat.included ? (
-//                           <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 bg-primary/10 text-primary">
-//                             <Check size={11} strokeWidth={3} />
-//                           </div>
-//                         ) : (
-//                           <div className="w-5 h-5 rounded-full border border-gray-150 bg-gray-1000 text-gray-300 flex items-center justify-center shrink-0">
-//                             <X size={9} strokeWidth={3} />
-//                           </div>
-//                         )}
-//                         <span className={`text-[12.5px] ${feat.included ? "text-gray-700 font-medium" : "text-gray-400"}`}>
-//                           {feat.text}
-//                         </span>
-//                       </li>
-//                     ))}
-//                   </ul>
-//                 </div>
-
-//                 {/* CTA Button at bottom */}
-//                 <div className="p-6 sm:p-8 pt-0">
-//                   <Link
-//                     href="/contact"
-//                     className={`group flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 ${plan.popular
-//                       ? "bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/25 hover:shadow-primary/35"
-//                       : "bg-slate-900 hover:bg-black text-white"
-//                       }`}
-//                   >
-//                     <span>Get Quote</span>
-//                     <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-//                   </Link>
-//                 </div>
-
-//               </div>
-//             ))}
-//           </div>
-
-//         </div>
-
-//         {/* Bottom note */}
-//         <p className="text-center text-xs text-gray-400 mt-16 leading-relaxed border-t border-slate-100 pt-6">
-//           Both plans include professional site survey, custom 3D design, and full installation.{" "}
-//           <Link href="/contact" className="text-primary font-semibold hover:underline">
-//             Talk to an expert →
-//           </Link>
-//         </p>
-
-//       </div>
-
-//       {/* Decorative Solar Panel in Bottom Right */}
-//       <div className="absolute -bottom-12 -right-12 w-200 h-96 pointer-events-none z-0 select-none opacity-10 hidden lg:block">
-//         <Image
-//           src="/assets/images/bg (1).jpg"
-//           alt="Solar Panel Decoration"
-//           fill
-//           className="object-contain"
-//         />
-//       </div>
-//     </section>
-//   );
-// }
-
-
