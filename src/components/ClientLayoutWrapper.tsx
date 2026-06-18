@@ -77,7 +77,7 @@ export default function ClientLayoutWrapper({
           >
             <Mail size={20} />
             <span className="absolute right-14 top-1/2 -translate-y-1/2 bg-slate-900/90 text-white text-xs font-semibold px-2.5 py-1.5 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-              Email Us
+              Email Us : info@sunlynksolar.com
             </span>
           </a>
         </div>
