@@ -4,17 +4,32 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "SunLynk Solar Lucknow - Premium Rooftop Solar Solutions",
-  description: "SunLynk Solar is the leading solar panel installation company in Lucknow. We design and install high-efficiency rooftop solar systems for homes, housing societies, and commercial businesses in Lucknow, Uttar Pradesh.",
+  title: "SunLynk Solar - Premium Rooftop Solar Solutions & Subsidies",
+  description: "SunLynk Solar is a premier solar panel installation company. We design and install high-efficiency rooftop solar systems for homes, housing societies, and commercial businesses in Lucknow, Uttar Pradesh, and across India.",
   keywords: [
-    "solar panel Lucknow",
-    "rooftop solar Lucknow",
+    "solar panel installation",
+    "rooftop solar panel installation",
+    "solar panel subsidy",
+    "government solar subsidy",
+    "solar subsidy scheme",
+    "PM Surya Ghar Yojana",
+    "PM Surya Ghar Muft Bijli Yojana",
+    "rooftop solar subsidy registration",
+    "national solar portal subsidy",
+    "solar panel cost in India",
+    "best solar panel company",
+    "solar panel installation near me",
+    "residential solar panel installation",
+    "commercial rooftop solar",
+    "industrial solar installation",
+    "on grid solar system subsidy",
+    "solar EPC contractor India",
+    "net metering solar system",
+    "solar company in Uttar Pradesh",
+    "solar panel installation Lucknow",
     "solar company Lucknow",
-    "best solar installation Lucknow",
     "solar subsidy Lucknow",
-    "PM Surya Ghar Yojana Lucknow",
-    "solar system Lucknow",
-    "Lucknow solar EPC"
+    "rooftop solar Uttar Pradesh"
   ],
 };
 import Hero from "@/components/Hero";

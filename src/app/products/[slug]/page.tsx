@@ -15,13 +15,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = productsData.find((p) => p.slug === slug);
   if (!product) {
     return {
-      title: "Product Not Found | SunLynk Solar Lucknow",
+      title: "Product Not Found | SunLynk Solar",
     };
   }
   return {
-    title: `${product.title} in Lucknow | SunLynk Solar`,
-    description: `Buy and install ${product.title} in Lucknow. Get high-efficiency solar panel installations from SunLynk Solar, Lucknow's leading solar provider. Model Type: ${product.type}, Max Efficiency: ${product.efficiency || "N/A"}.`,
-    keywords: [`${product.title} Lucknow`, `solar panel ${product.type} Lucknow`, `solar installation Lucknow`]
+    title: `${product.title} | SunLynk Solar`,
+    description: `Buy and install ${product.title}. Get high-efficiency solar panels and inverter components from SunLynk Solar. Model Type: ${product.type}, Max Efficiency: ${product.efficiency || "N/A"}.`,
+    keywords: [
+      product.title,
+      `solar panel ${product.type}`,
+      "high efficiency solar panels",
+      "solar inverter",
+      "buy solar panels India",
+      "solar components",
+      `${product.title} Lucknow`
+    ]
   };
 }
 

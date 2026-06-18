@@ -16,13 +16,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const solution = solutionsData.find((s) => s.slug === slug);
   if (!solution) {
     return {
-      title: "Solution Not Found | SunLynk Solar Lucknow",
+      title: "Solution Not Found | SunLynk Solar",
     };
   }
   return {
-    title: `${solution.title} in Lucknow | SunLynk Solar`,
-    description: `Discover ${solution.title} in Lucknow by SunLynk Solar. We provide high-quality solar panel installations and customized energy solutions across Lucknow. ${solution.description}`,
-    keywords: [`${solution.title} Lucknow`, `solar solutions Lucknow`, `solar company Lucknow`, `install solar Lucknow`]
+    title: `${solution.title} | SunLynk Solar`,
+    description: `Discover ${solution.title} by SunLynk Solar. We provide high-efficiency solar panel installations and customized energy solutions in Uttar Pradesh and across India. ${solution.description}`,
+    keywords: [
+      solution.title,
+      `${solution.title} installation`,
+      "solar solutions",
+      "solar company India",
+      "rooftop solar panels",
+      "solar subsidy scheme",
+      "clean energy solutions",
+      `${solution.title} Lucknow`
+    ]
   };
 }
 

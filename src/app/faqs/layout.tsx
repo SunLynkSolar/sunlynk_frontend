@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions (FAQs) | SunLynk Solar Lucknow",
-  description: "Find answers to common questions about residential solar, housing society setups, commercial systems, subsidies, net metering, and maintenance in Lucknow.",
-  keywords: ["solar FAQs Lucknow", "solar panel subsidy Lucknow", "residential solar price Lucknow", "housing society solar net metering Lucknow"]
+  title: "Solar FAQs — Frequently Asked Questions | SunLynk Solar",
+  description: "Find answers to common questions about residential solar, housing society setups, commercial systems, subsidies, net metering, and maintenance.",
+  keywords: [
+    "solar FAQs",
+    "solar panel subsidy FAQs",
+    "residential solar price",
+    "housing society solar net metering",
+    "how solar panels work",
+    "solar ROI calculation",
+    "PM Surya Ghar subsidy FAQ",
+    "solar net metering rules"
+  ]
 };
 
 export default function FaqsLayout({

@@ -4,9 +4,17 @@ import Link from "next/link";
 import { FileText, Download, Code, Cpu } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Solar Support Downloads Lucknow | SunLynk Solar",
-  description: "Download manuals, configuration tools, and technical documentation for solar products supported by SunLynk Solar in Lucknow, Uttar Pradesh.",
-  keywords: ["solar manuals Lucknow", "solar panel datasheet Lucknow", "solar support Lucknow"]
+  title: "WMS Support Downloads — Weather Station Manuals & Software | SunLynk Solar",
+  description: "Download manuals, configurator tools, register maps, and technical documentation for weather monitoring systems (WMS) and pyranometer software.",
+  keywords: [
+    "solar weather station manual",
+    "WMS software download",
+    "pyranometer datasheet",
+    "Modbus register map WMS",
+    "IEC 61724 1 guidelines",
+    "SunLynk WMS support",
+    "weather station manual download"
+  ]
 };
 
 export default function WmsDownloads() {

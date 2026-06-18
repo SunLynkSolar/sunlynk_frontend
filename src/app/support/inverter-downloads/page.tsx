@@ -4,9 +4,17 @@ import Link from "next/link";
 import { FileText, Download, Code, Cpu } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Inverter Downloads & Support Lucknow | SunLynk Solar",
-  description: "Access and download the latest software, user manuals, and technical datasheets for solar inverters supported by SunLynk Solar in Lucknow, UP.",
-  keywords: ["solar inverter manual Lucknow", "solar support Lucknow", "solar panel downloads Lucknow"]
+  title: "Inverter & Panel Support Downloads | SunLynk Solar",
+  description: "Access and download the latest software, user manuals, and technical datasheets for solar inverters and panel components.",
+  keywords: [
+    "solar inverter manual",
+    "solar inverter software",
+    "solar datasheet download",
+    "inverter modbus map",
+    "ESS configurator software",
+    "SunLynk support downloads",
+    "solar panel manuals"
+  ]
 };
 
 export default function InverterDownloads() {

@@ -13,8 +13,17 @@ import SolutionsCountdownTimer from "@/components/SolutionsCountdownTimer";
 
 export const metadata: Metadata = {
   title: "Residential Solar & Home Rooftop Energy Solutions | SunLynk Solar",
-  description: "Save up to 90% on home electricity bills with SunLynk Solar. We design and install high-efficiency residential solar systems and hybrid battery storage in Lucknow with subsidy assistance.",
-  keywords: ["residential solar Lucknow", "home solar panels", "rooftop solar subsidy", "on-grid solar homes", "hybrid solar systems"],
+  description: "Save up to 90% on home electricity bills with SunLynk Solar. We design and install high-efficiency residential solar systems and hybrid battery storage with subsidy assistance.",
+  keywords: [
+    "residential solar panel installation",
+    "home solar panels",
+    "rooftop solar subsidy",
+    "on-grid solar homes",
+    "hybrid solar systems",
+    "residential solar cost",
+    "PM Surya Ghar subsidy registration",
+    "home solar installer India"
+  ],
 };
 
 export default function HomesPage() {

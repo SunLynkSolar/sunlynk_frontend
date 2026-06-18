@@ -11,7 +11,15 @@ import GoogleReviews from "@/components/GoogleReviews";
 export const metadata: Metadata = {
   title: "Commercial & Industrial (C&I) Solar Solutions | SunLynk Solar",
   description: "Reduce company operational costs and hit clean energy goals with SunLynk. We design and install high-performance commercial rooftop solar systems with quick ROI and Accelerated Depreciation benefits.",
-  keywords: ["commercial solar Lucknow", "industrial rooftop solar", "C&I solar EPC company", "solar SCADA systems", "accelerated depreciation solar"],
+  keywords: [
+    "commercial solar panel installation",
+    "industrial rooftop solar",
+    "C&I solar EPC company",
+    "solar SCADA systems",
+    "accelerated depreciation solar",
+    "commercial solar cost India",
+    "factory solar power plant"
+  ],
 };
 
 export default function CommercialPage() {

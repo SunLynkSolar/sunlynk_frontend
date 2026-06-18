@@ -1,9 +1,18 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About SunLynk Solar Lucknow | Leading Solar Provider",
-  description: "Learn about SunLynk Solar, Lucknow's leading solar provider. Discover our mission, values, and leadership team delivering rooftop solar installations across Lucknow, UP.",
-  keywords: ["about SunLynk Solar", "solar company Lucknow", "solar installation team Lucknow", "best solar provider Lucknow"]
+  title: "About SunLynk Solar | Leading Rooftop Solar Provider",
+  description: "Learn about SunLynk Solar, a leading rooftop solar provider. Discover our mission, values, and expert team delivering high-efficiency solar installations in Lucknow, Uttar Pradesh, and across India.",
+  keywords: [
+    "about SunLynk Solar",
+    "solar company in India",
+    "rooftop solar provider",
+    "solar panel installation team",
+    "best solar provider Lucknow",
+    "solar subsidy Uttar Pradesh",
+    "SunLynk Solar team",
+    "renewable energy company"
+  ]
 };
 
 export default function AboutLayout({

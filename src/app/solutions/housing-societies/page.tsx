@@ -9,9 +9,17 @@ import FaqAccordion from "@/components/FaqAccordion";
 import SocietySolutionsSelector from "@/components/SocietySolutionsSelector";
 
 export const metadata: Metadata = {
-  title: "Rooftop Solar Solutions for Housing Societies | SunLynk Solar",
-  description: "Reduce common-area electricity maintenance costs for elevators, pumps, clubhouses, and lights. SunLynk installs high-efficiency rooftop solar systems for housing societies with RWA assistance.",
-  keywords: ["housing society solar", "RWA solar panels", "apartment rooftop solar", "net metering housing society", "common area solar power"],
+  title: "Rooftop Solar Solutions for Housing Societies & RWAs | SunLynk Solar",
+  description: "Reduce common-area electricity maintenance costs for elevators, pumps, clubhouses, and lights. SunLynk installs high-efficiency rooftop solar systems for housing societies and apartments.",
+  keywords: [
+    "housing society solar",
+    "RWA solar panels",
+    "apartment rooftop solar",
+    "net metering housing society",
+    "common area solar power",
+    "housing society solar subsidy",
+    "apartment solar panel installation"
+  ],
 };
 
 export default function HousingSocietiesPage() {
