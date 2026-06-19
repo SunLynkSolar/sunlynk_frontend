@@ -113,6 +113,7 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '1041595695118356');
             fbq('track', 'PageView');
+            console.log("Facebook Pixel Initialized");
           `}
         </Script>
         <noscript>
