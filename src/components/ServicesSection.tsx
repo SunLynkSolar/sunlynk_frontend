@@ -432,7 +432,7 @@ export default function ServicesSection() {
 
             {/* ── Card 1: Homes ── */}
             <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
-              <div className="relative h-60 overflow-hidden">
+              <div className="relative h-65 overflow-hidden">
                 <img
                   src="/new_assets/homes.jpeg"
                   alt="Solar panels on a modern home rooftop"
@@ -506,11 +506,11 @@ export default function ServicesSection() {
 
             {/* ── Card 2: Housing Societies ── */}
             <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
-              <div className="relative h-60 overflow-hidden">
-                <Image
+              <div className="relative h-65 overflow-hidden">
+                <img
                   src="/new_assets/housingSocities.webp"
                   alt="Housing society with rooftop solar installation"
-                  fill
+
                   className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -581,7 +581,7 @@ export default function ServicesSection() {
 
             {/* ── Card 3: Commercial ── */}
             <div className="group relative bg-white border border-gray-100 shadow-sm rounded-xl overflow-hidden flex flex-col">
-              <div className="relative h-60 overflow-hidden">
+              <div className="relative h-65 overflow-hidden">
                 <img
                   src="/new_assets/commercial.webp"
                   alt="Commercial building with solar panel installation"
