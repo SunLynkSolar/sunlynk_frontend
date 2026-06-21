@@ -107,10 +107,10 @@ export default function ActualInstallations() {
         </div>
 
         {/* Featured Layout: Main Viewer + Thumbnails (Better design to show complete images) */}
-        <div className="max-w-5xl mx-auto bg-white border border-gray-200/80 rounded-3xl p-4 md:p-6 shadow-sm flex flex-col gap-6">
+        <div className="max-w-5xl mx-auto bg-white border border-gray-200/80 rounded-xl p-4 md:p-6 shadow-sm flex flex-col gap-6">
 
           {/* Main Large Viewer Container */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-900 border border-gray-150 group">
+          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-xl overflow-hidden bg-slate-900 border border-gray-150 group">
             {/* Display COMPLETE, UN-CROPPED image using object-contain */}
             <Image
               src={installations[activeIdx].src}
@@ -174,9 +174,9 @@ export default function ActualInstallations() {
                 <button
                   key={item.id}
                   onClick={() => setActiveIdx(idx)}
-                  className={`relative aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all duration-300 outline-none ${idx === activeIdx
-                      ? "border-primary ring-2 ring-primary/20 shadow-md scale-[1.03]"
-                      : "border-gray-200 hover:border-gray-400 bg-slate-50"
+                  className={`relative h-[50px]  h-[50px] lg:h-[100px] overflow-hidden border-2 transition-all duration-300 outline-none ${idx === activeIdx
+                    ? "border-primary ring-2 ring-primary/20 shadow-md scale-[1.03]"
+                    : "border-gray-200 hover:border-gray-400 bg-slate-50"
                     }`}
                 >
                   <Image
@@ -248,7 +248,7 @@ export default function ActualInstallations() {
 
           {/* Image Container */}
           <div className="max-w-5xl w-full max-h-[85vh] px-4 flex flex-col justify-center items-center gap-4">
-            <div className="relative w-full aspect-[4/3] md:aspect-[3/2] max-h-[75vh] rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative w-full aspect-[4/3] md:aspect-[3/2] max-h-[75vh] rounded-xl overflow-hidden shadow-2xl">
               {/* Show COMPLETE, UN-CROPPED image inside lightbox */}
               <Image
                 src={installations[selectedIdx].src}
@@ -261,7 +261,7 @@ export default function ActualInstallations() {
 
             {/* Commented Out Lightbox Details Overlay as requested */}
             {/* 
-            <div className="w-full max-w-2xl bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-5 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="w-full max-w-2xl bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-5 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <span className="text-[10px] uppercase font-black tracking-widest text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-full">
                   10kW System
