@@ -13,8 +13,17 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-type Block = (typeof blogsData)[number]["blocks"][number];
-type BlogPost = (typeof blogsData)[number];
+type Block =
+  | { type: "heading"; level: number; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "two_column"; left: Block[]; right: Block[] }
+  | { type: "list"; style: "bullet" | "ordered"; items: string[] }
+  | { type: "grid"; columns: number; items: { image: string; caption?: string }[] };
+
+type BlogPost = Omit<(typeof blogsData)[number], "blocks"> & {
+  blocks: Block[];
+};
 
 interface PageProps {
   params: Promise<{ slug: string }>;
