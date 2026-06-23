@@ -165,8 +165,7 @@ export default function Footer() {
               About <span className="text-primary font-extrabold">SunLynk Solar</span>
             </h4>
             <p className="text-gray-400 text-sm leading-relaxed mb-6 text-justify">
-              At SunLynk Solar, our mission is simple – Provide the most bankable technology & products for the success of your solar business whether it&apos;s power generation, power conversion or accurate measurements.
-            </p>
+              At SunLynk Solar, our mission is simple – We help homeowners, housing societies, and businesses in Uttar Pradesh switch to reliable rooftop solar with subsidy, financing, installation, and lifetime support. </p>
             <div className="flex items-center gap-3">
               <a href="https://www.facebook.com/sunlynksolar?mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-slate-900 border border-slate-800 hover:border-primary hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300 text-gray-400" aria-label="Facebook">
                 <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">

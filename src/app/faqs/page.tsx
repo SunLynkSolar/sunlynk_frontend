@@ -87,7 +87,7 @@ export default function FAQs() {
           </span>
           <h1 className="text-4xl md:text-5xl font-black">Frequently Asked Questions</h1>
           <p className="mt-3 text-sm text-gray-400">
-            Find answers to common questions about solar panel installation, safety, net metering, government subsidies, and technical SCADA integrations.
+            Find answers to common questions about solar panel installation, safety, net metering and government subsidies.
           </p>
           <div className="mt-4 flex items-center gap-2 text-xs md:text-sm text-gray-500">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>

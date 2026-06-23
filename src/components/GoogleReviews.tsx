@@ -44,8 +44,8 @@ interface Review {
 
 const reviews: Review[] = [
   {
-    initials: "RS",
-    name: "Rajesh Sharma",
+    initials: "FF",
+    name: "Franky Fernandas",
     time: "1 month ago • Verified Partner",
     text: "Excellent experience with SunLynk Solar. The weather monitoring SCADA system they set up for our commercial PV rooftop has been flawless. Customer support is very prompt and technical expert advice was valuable.",
     avatarBg: "bg-primary/10",
@@ -53,8 +53,8 @@ const reviews: Review[] = [
     image: "/assets/images/review/review1.jpeg",
   },
   {
-    initials: "AP",
-    name: "Mohit",
+    initials: "SM",
+    name: "Sunita Mishra",
     time: "2 weeks ago • Verified Buyer",
     text: "Best solar product distributor in Delhi! They offered highly competitive pricing for bifacial N-type double glass modules. Fast delivery, perfect condition, and seamless Modbus connectivity guidelines.",
     avatarBg: "bg-secondary/10",
@@ -62,8 +62,8 @@ const reviews: Review[] = [
     image: "/assets/images/review/review2.jpeg",
   },
   {
-    initials: "SK",
-    name: "Sanjay Krishnan",
+    initials: "DC",
+    name: "Direct closure",
     time: "3 weeks ago • Homeowner",
     text: "Superb installation and paperwork support for solar subsidy. Highly professional team, they handled all the government approvals without me having to follow up even once. Excellent solar energy generation!",
     avatarBg: "bg-dark",
@@ -71,8 +71,8 @@ const reviews: Review[] = [
     image: "/new_assets/reviewimage.webp",
   },
   {
-    initials: "NV",
-    name: "Neha Verma",
+    initials: "VS",
+    name: "Vinay Shankar Pandey",
     time: "1 month ago • Homeowner",
     text: "Very pleased with the residential hybrid inverter and energy storage setup. It has been running for 6 months now without any issues, saving us 80% on bills! Highly recommend SunLynk Solar.",
     avatarBg: "bg-blue-100",
@@ -167,7 +167,7 @@ export default function GoogleReviews({ isDark = false }: { isDark?: boolean }) 
         {/* Header Area */}
         <div className={`flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12 border-b pb-10 ${isDark ? "border-white/[0.06]" : "border-gray-100"
           }`}>
-          <div className="max-w-2xl text-left">
+          <div className="max-w-5xl text-center m-auto">
             <div className="inline-flex items-center gap-2 mb-3">
               <span className={`h-[2px] w-6 ${isDark ? "bg-emerald-500" : "bg-primary"}`}></span>
               <span className={`text-base uppercase tracking-wider font-bold ${isDark ? "text-emerald-400" : "text-primary"}`}>Reviews</span>
@@ -184,7 +184,7 @@ export default function GoogleReviews({ isDark = false }: { isDark?: boolean }) 
           </div>
 
           {/* Google Aggregate Box */}
-          <div className={`rounded-2xl p-6 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow duration-300 shrink-0 ${isDark ? "bg-[#071813]/60 border border-emerald-900/20" : "bg-slate-50 border border-slate-100"
+          {/* <div className={`rounded-2xl p-6 flex items-center gap-5 shadow-sm hover:shadow-md transition-shadow duration-300 shrink-0 ${isDark ? "bg-[#071813]/60 border border-emerald-900/20" : "bg-slate-50 border border-slate-100"
             }`}>
             <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-100 flex items-center justify-center shrink-0">
               <GoogleGLogoSvg />
@@ -199,7 +199,7 @@ export default function GoogleReviews({ isDark = false }: { isDark?: boolean }) 
                 142 Reviews on Google
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Slider Container */}

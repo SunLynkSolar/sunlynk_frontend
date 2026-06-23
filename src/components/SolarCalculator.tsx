@@ -90,7 +90,7 @@ export default function SolarCalculator() {
                   Smart Investment
                 </span>
                 <span className="text-[10px] font-bold opacity-90 bg-white/20 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
-                  UP to 90% Savings
+                  Up to 90% Savings
                 </span>
               </div>
             </div>

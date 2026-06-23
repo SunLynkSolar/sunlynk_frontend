@@ -440,7 +440,7 @@ export default function ServicesSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
-                  Save up to 90%
+                  Save Up to 90%
                 </div>
               </div>
 
