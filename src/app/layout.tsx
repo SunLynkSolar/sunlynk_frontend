@@ -115,9 +115,8 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '1041595695118356');
             fbq('track', 'PageView');
+            console.log("Facebook Pixel Initialized");
           `}
-          console.log("Facebook Pixel Initialized");
-
         </Script>
         <noscript>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -129,6 +128,32 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
+
+        {/* Local Business JSON-LD Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "SunLynk Solar",
+              "url": "https://sunlynksolar.com/",
+              "telephone": "+918573003001",
+              "email": "info@sunlynksolar.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Vibhuti Khand Lucknow",
+                "addressRegion": "Uttar Pradesh",
+                "addressCountry": "IN"
+              },
+              "areaServed": [
+                "Lucknow",
+                "Uttar Pradesh"
+              ],
+              "description": "SunLynk Solar is a rooftop solar installation company in Lucknow offering residential, commercial, and housing society solar solutions with subsidy and EMI support."
+            })
+          }}
+        />
 
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>

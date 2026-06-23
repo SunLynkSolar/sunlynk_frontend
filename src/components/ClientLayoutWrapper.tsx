@@ -82,25 +82,39 @@ export default function ClientLayoutWrapper({
           </a>
         </div>
 
-        {/* Main Floating Action Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-800 text-white shadow-xl hover:bg-emerald-950 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none"
-          aria-label="Contact Options Menu"
-        >
+        {/* Main Floating Action Button Container */}
+        <div className="relative">
+          {/* "Connect Now" label that hides when isOpen is true */}
+          <span
+            className={`absolute right-16 top-1/2 -translate-y-1/2 bg-emerald-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg pointer-events-none whitespace-nowrap transition-all duration-300 border border-emerald-700/50 flex items-center gap-1.5 ${
+              isOpen
+                ? "opacity-0 scale-75 translate-x-4 pointer-events-none"
+                : "opacity-100 scale-100 translate-x-0"
+            }`}
+          >
+            Connect Now
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
+            <div className="absolute top-1/2 -translate-y-1/2 left-full border-4 border-transparent border-l-emerald-800" />
+          </span>
 
-          {/* Icon transition */}
-          {isOpen ? (
-            <X size={24} className="rotate-0 transition-transform duration-300" />
-          ) : (
-            <div className="flex items-center justify-center relative">
-              <MessageCircle size={24} className="scale-100 transition-transform duration-300" />
-              <span className="absolute text-[9px] font-black text-emerald-800 bg-white w-3.5 h-3.5 rounded-full flex items-center justify-center -top-1 -right-1 border border-emerald-800/10 shadow-sm">
-                i
-              </span>
-            </div>
-          )}
-        </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-800 text-white shadow-xl hover:bg-emerald-950 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none"
+            aria-label="Contact Options Menu"
+          >
+            {/* Icon transition */}
+            {isOpen ? (
+              <X size={24} className="rotate-0 transition-transform duration-300" />
+            ) : (
+              <div className="flex items-center justify-center relative">
+                <MessageCircle size={24} className="scale-100 transition-transform duration-300" />
+                <span className="absolute text-[9px] font-black text-emerald-800 bg-white w-3.5 h-3.5 rounded-full flex items-center justify-center -top-1 -right-1 border border-emerald-800/10 shadow-sm">
+                  i
+                </span>
+              </div>
+            )}
+          </button>
+        </div>
       </div>
     </>
   );
