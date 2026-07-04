@@ -145,7 +145,7 @@ export default function Home() {
 
 
       {/* <SunLynkAdvantage /> */}
-      <section className="py-4 md:py-10 lg:py-16">
+      <section className="py-4 md:py-6 lg:py-8">
         <div className="mx-auto px-1 md:px-8">
           <img
             src="/new_assets/advan_mob2.png"
