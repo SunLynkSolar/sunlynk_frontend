@@ -144,21 +144,7 @@ export default function Home() {
       <ProductsPreview />
 
 
-      {/* <SunLynkAdvantage /> */}
-      <section className="py-4 md:py-6 lg:py-8">
-        <div className="mx-auto px-1 md:px-8">
-          <img
-            src="/new_assets/advan_mob2.png"
-            alt="SunLynk Advantage Mobile"
-            className="block md:hidden w-full h-auto"
-          />
-          <img
-            src="/new_assets/advan_desk.webp"
-            alt="SunLynk Advantage Desktop"
-            className="hidden md:block w-full h-auto"
-          />
-        </div>
-      </section>
+
 
       {/* Our Process Section */}
       <section className="relative py-16 overflow-hidden" id="solar-process">
@@ -331,7 +317,21 @@ export default function Home() {
       </section>
 
 
-
+      {/* <SunLynkAdvantage /> */}
+      <section className="py-4 md:py-6 lg:py-8">
+        <div className="mx-auto px-1 md:px-8">
+          <img
+            src="/new_assets/advan_mob2.png"
+            alt="SunLynk Advantage Mobile"
+            className="block md:hidden w-full h-auto"
+          />
+          <img
+            src="/new_assets/advan_desk.webp"
+            alt="SunLynk Advantage Desktop"
+            className="hidden md:block w-full h-auto"
+          />
+        </div>
+      </section>
 
 
 
