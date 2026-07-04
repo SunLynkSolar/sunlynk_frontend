@@ -318,7 +318,7 @@ export default function Home() {
 
 
       {/* <SunLynkAdvantage /> */}
-      <section className="py-4 md:py-6 lg:py-8">
+      {/* <section className="max-w-7xl m-auto py-4 md:py-6 lg:py-8">
         <div className="mx-auto px-1 md:px-8">
           <img
             src="/new_assets/advan_mob2.png"
@@ -331,7 +331,9 @@ export default function Home() {
             className="hidden md:block w-full h-auto"
           />
         </div>
-      </section>
+      </section> */}
+
+      <SunLynkAdvantage />
 
 
 
