@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" width="100%" height="100%">
+  <!-- Coins sticking out -->
+  <circle cx="36" cy="32" r="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" />
+  <circle cx="48" cy="28" r="11" fill="#f59e0b" stroke="#d97706" stroke-width="1.5" />
+  <path d="M44 25 H52 M44 29 H50 M47 25 C51 25 51 31 47 31 M46 31 L51 36" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+
+  <!-- Wallet Body -->
+  <rect x="18" y="36" width="64" height="40" rx="6" fill="#065f46" stroke="#044a37" stroke-width="2" />
+  <path d="M18 44 H76 C79 44 82 47 82 50 V 70 C 82 73 79 76 76 76 H18 Z" fill="#044a37" />
+  
+  <!-- Stitching lines -->
+  <path d="M22 48 H72" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6" />
+  <path d="M22 68 H72" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.6" />
+
+  <!-- Clasp / Flap closure -->
+  <path d="M70 50 H82 V 64 H70 Z" fill="#065f46" rx="2" />
+  <circle cx="76" cy="57" r="3" fill="#f59e0b" />
+</svg>

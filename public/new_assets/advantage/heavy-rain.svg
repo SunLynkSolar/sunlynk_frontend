@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" width="100%" height="100%">
+  <!-- Gabled Roof and House -->
+  <rect x="28" y="70" width="44" height="20" rx="2" fill="#065f46" opacity="0.1" />
+  <path d="M22 70 H78" stroke="#2ecc71" stroke-width="4" stroke-linecap="round" />
+  <path d="M15 70 L50 45 L85 70" stroke="#065f46" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Clouds -->
+  <path d="M30 35 C30 25 42 22 48 28 C54 20 68 22 72 30 C80 30 85 36 82 44 C80 50 72 50 70 50 H28 C22 50 18 45 20 38 C22 32 28 34 30 35 Z" fill="#cbd5e1" opacity="0.9" />
+  <path d="M45 40 C45 32 54 30 58 35 C63 29 74 30 77 36 C83 36 87 40 85 46 C83 51 77 51 75 51 H43 C38 51 35 47 37 42 C38 38 43 39 45 40 Z" fill="#94a3b8" />
+  <!-- Rain Drops -->
+  <line x1="32" y1="56" x2="28" y2="68" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+  <line x1="45" y1="58" x2="41" y2="70" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+  <line x1="58" y1="56" x2="54" y2="68" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+  <line x1="70" y1="56" x2="66" y2="68" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+  <line x1="38" y1="66" x2="35" y2="74" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="50" y1="68" x2="47" y2="76" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="62" y1="66" x2="59" y2="74" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" />
+</svg>

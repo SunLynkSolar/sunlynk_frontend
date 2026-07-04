@@ -79,11 +79,11 @@ export default function SolarCalculator() {
             {/* Illustration */}
             <div className="relative aspect-[21/16] sm:aspect-[16/9] w-full rounded-2xl overflow-hidden border border-gray-150 shadow-inner group order-1 lg:order-3">
               <img
-                src="/new_assets/solarCalculator.webp"
+                src="/new_assets/solar_cal.jpeg"
                 alt="Solar savings illustration"
                 className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/40 via-transparent to-transparent pointer-events-none" />
+              {/* <div className="absolute inset-0 bg-gradient-to-t from-dark/40 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-3.5 left-4 right-4 flex justify-between items-center text-white z-10">
                 <span className="text-[11px] font-extrabold tracking-wide uppercase flex items-center gap-1">
                   <Sparkles size={12} className="text-yellow-400" />
@@ -92,7 +92,7 @@ export default function SolarCalculator() {
                 <span className="text-[10px] font-bold opacity-90 bg-white/20 backdrop-blur-sm px-2.5 py-0.5 rounded-full">
                   Up to 90% Savings
                 </span>
-              </div>
+              </div> */}
             </div>
 
             {/* Pin Code Input */}
