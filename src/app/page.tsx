@@ -145,10 +145,10 @@ export default function Home() {
 
 
       {/* <SunLynkAdvantage /> */}
-      <section className="py-8 md:py-10 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <section className="py-4 md:py-10 lg:py-16">
+        <div className="mx-auto px-1 md:px-8">
           <img
-            src="/new_assets/advan_mob.webp"
+            src="/new_assets/advan_mob2.png"
             alt="SunLynk Advantage Mobile"
             className="block md:hidden w-full h-auto"
           />
