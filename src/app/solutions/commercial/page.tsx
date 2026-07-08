@@ -651,7 +651,7 @@ export default function CommercialPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
-          <div className="lg:col-span-5 text-left flex flex-col gap-4 static lg:sticky top-24">
+          <div className="lg:col-span-5 text-left flex flex-col gap-4  lg:sticky top-24">
             <div className="inline-flex items-center gap-2">
               <span className="h-[2px] w-6 bg-primary"></span>
               <span className="text-xs uppercase tracking-widest font-extrabold text-primary">FAQ</span>

@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Sparkles, Wrench, Headphones, Users, ArrowRight, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Sparkles, Wrench, Headphones, Users, ArrowRight, Check, X, ChevronLeft, ChevronRight, Zap, ZapOff, Shield, Droplets, CalendarCheck, CalendarX, Receipt, BadgeCheck, CircleDollarSign, Gem, TrendingDown } from "lucide-react";
 
 // 6 Core Advantages exactly matching the layout spec
 // const coreAdvantages = [
@@ -87,12 +87,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkSure™ Guarantee",
       desc: "Guaranteed annual power production; shortfall reimbursed in cash.",
-      icon: "/new_assets/advantage/lynksure.svg",
+      icon: Zap,
     },
     typical: {
       text: "No Guarantee",
       desc: "Only verbal claims. No reimbursement if generation falls short.",
-      icon: "/new_assets/advantage/typical-no-generation.svg",
+      icon: ZapOff,
     }
   },
   {
@@ -101,12 +101,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkShield™ Warranty",
       desc: "Custom-engineered waterproof mounting with a written safety warranty.",
-      icon: "/new_assets/advantage/lynkshield.svg",
+      icon: Shield,
     },
     typical: {
       text: "No Water Leak Warranty",
       desc: "Standard drilling with basic sealing; high risk of seepage over time.",
-      icon: "/new_assets/advantage/typical-no-waterproof.svg",
+      icon: Droplets,
     }
   },
   {
@@ -115,12 +115,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkCare™ 5-Year AMC",
       desc: "Zero-cost preventive checks, regular cleaning, and system checks.",
-      icon: "/new_assets/advantage/lynkcare.svg",
+      icon: CalendarCheck,
     },
     typical: {
       text: "Limited or Paid AMC",
       desc: "High visit fees or complete lack of service after installation.",
-      icon: "/new_assets/advantage/typical-no-amc.svg",
+      icon: CalendarX,
     }
   },
   {
@@ -129,12 +129,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkRepair™ Coverage",
       desc: "No charges for spare parts, accessories, or expert technical labor.",
-      icon: "/new_assets/advantage/lynkrepair.svg",
+      icon: Wrench,
     },
     typical: {
       text: "Pay For Every Repair",
       desc: "Customers pay out-of-pocket for technical visits and replacement parts.",
-      icon: "/new_assets/advantage/typical-pay-repair.svg",
+      icon: Receipt,
     }
   },
   {
@@ -143,12 +143,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkFinance™ EMIs",
       desc: "Instant approvals, collateral-free loans, and low-interest EMI tenures.",
-      icon: "/new_assets/advantage/lynkfinance.svg",
+      icon: BadgeCheck,
     },
     typical: {
       text: "No Finance Support",
       desc: "Requires full upfront cash; customer has to arrange bank loans themselves.",
-      icon: "/new_assets/advantage/typical-no-financing.svg",
+      icon: CircleDollarSign,
     }
   },
   {
@@ -157,12 +157,12 @@ const comparisonRows = [
     sunlynk: {
       text: "LynkDesign™ Optimization",
       desc: "30+ years of high-performance output designed with premium components.",
-      icon: "/new_assets/advantage/lynkdesign.svg",
+      icon: Gem,
     },
     typical: {
       text: "Standard Lifespan",
       desc: "Average components that degrade rapidly, losing major efficiency in 5-10 years.",
-      icon: "/new_assets/advantage/typical-standard-performance.svg",
+      icon: TrendingDown,
     }
   }
 ];
@@ -255,34 +255,32 @@ export default function SunLynkAdvantage() {
 
           {/* Left Column (1/5 = 20%): Heading and Subtitle */}
           <div className="lg:col-span-1 flex flex-col justify-center space-y-5 text-left">
-            <div className="space-y-3">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-[1.1]">
-                The<br />SunLynk<br />
-                <span className="text-primary">
-                  Advantage
-                </span>
-              </h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-[1.1]">
+              The SunLynk <br />
+              <span className="text-primary">
+                Advantage
+              </span>
+            </h2>
 
-              <div className="space-y-1.5">
-                <p className="text-sm text-slate-800 font-extrabold leading-tight">
-                  More than installation.
-                </p>
-                <p className="text-xs text-slate-500 font-bold leading-normal">
-                  Complete protection. Maximum savings.
-                </p>
-              </div>
+            <div className="space-y-1.5">
+              <p className="text-sm text-slate-800 font-extrabold leading-tight">
+                More than installation.
+              </p>
+              <p className="text-xs text-slate-500 font-bold leading-normal">
+                Complete protection. Maximum savings.
+              </p>
             </div>
           </div>
 
           {/* Right Column (4/5 = 80%): Solar Rendering */}
           <div className="lg:col-span-4">
-            <div className="relative w-full h-[180px] sm:h-[240px] md:h-[300px] flex items-end justify-center rounded-3xl overflow-hidden bg-gradient-to-b from-transparent to-transparent">
+            <div className="relative w-full h-[180px] sm:h-[240px] md:h-[300px] flex items-end justify-centeroverflow-hidden bg-gradient-to-b from-transparent to-transparent">
               {/* Theme primary Glow behind the panel */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(46,204,113,0.12)_0%,transparent_60%)] pointer-events-none" />
+              {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(46,204,113,0.12)_0%,transparent_60%)] pointer-events-none" /> */}
 
-              <div className="relative w-[100%] h-[95%]">
+              <div className="relative w-[100%] h-[100%]">
                 <Image
-                  src="/new_assets/s.png"
+                  src="/new_assets/s2.png"
                   alt="Sleek solar panel rendering"
                   fill
                   className="object-contain"
@@ -294,15 +292,15 @@ export default function SunLynkAdvantage() {
         </div>
 
         {/* ================= SECTION 2: WHY IT MATTERS TO YOU (AUTOPLAY CAROUSEL 4-IN-A-ROW) ================= */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 ">
           <div className="flex justify-center items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-slate-200"></span>
-            <span className="text-xs font-extrabold tracking-widest text-primary uppercase">
+            <span className="h-[2px] w-6 bg-primary"></span>
+            <span className="text-base uppercase tracking-wider font-bold text-primary">
               Customer Centric Solar
             </span>
-            <span className="h-[1px] w-8 bg-slate-200"></span>
+            <span className="h-[2px] w-6 bg-primary"></span>
           </div>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h3 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             Why It Matters To You
           </h3>
           <p className="text-sm sm:text-base text-slate-500 max-w-xl mx-auto mt-2 font-medium">
@@ -312,7 +310,7 @@ export default function SunLynkAdvantage() {
 
         {/* Autoplay Carousel Wrapper with tighter spacing and professional 4-in-a-row config */}
         <div
-          className="relative max-w-7xl mx-auto overflow-hidden px-4 md:px-10 mb-20 group/carousel-wrapper"
+          className="relative mx-auto overflow-hidden mb-20 group/carousel-wrapper"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -398,13 +396,13 @@ export default function SunLynkAdvantage() {
         {/* ================= SECTION 3: COMPARISON MATRIX ================= */}
         <div className="text-center mb-12">
           <div className="flex justify-center items-center gap-3 mb-3">
-            <span className="h-[1px] w-8 bg-slate-200"></span>
-            <span className="text-xs font-extrabold tracking-widest text-primary uppercase">
+            <span className="h-[2px] w-6 bg-primary"></span>
+            <span className="text-base uppercase tracking-wider font-bold text-primary">
               Brand Matrix
             </span>
-            <span className="h-[1px] w-8 bg-slate-200"></span>
+            <span className="h-[2px] w-6 bg-primary"></span>
           </div>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h3 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
             How We Stand Out
           </h3>
           <p className="text-sm sm:text-base text-slate-500 max-w-xl mx-auto mt-2 font-medium">
@@ -416,12 +414,12 @@ export default function SunLynkAdvantage() {
         <div className="relative mb-24">
 
           {/* Desktop View: Clean Grid Table */}
-          <div className="hidden lg:block overflow-hidden bg-white border border-slate-200/80 rounded-3xl shadow-md relative">
+          <div className="hidden lg:block overflow-hidden bg-white border border-slate-200/80 rounded-2xl shadow-md relative">
 
             {/* Header row */}
             <div className="grid grid-cols-12 bg-slate-50 border-b border-slate-200/80 text-slate-800 font-extrabold text-xs uppercase tracking-wider items-center">
               <div className="col-span-4 p-6">Comparison Parameter</div>
-              <div className="col-span-4 p-6 bg-primary text-white text-center rounded-t-3xl relative">
+              <div className="col-span-4 p-6  bg-[#065F46] text-white text-center rounded-t-3xl relative">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none" />
                 SunLynk Solar Advantage
               </div>
@@ -430,150 +428,138 @@ export default function SunLynkAdvantage() {
 
             {/* Table Rows */}
             <div className="divide-y divide-slate-100">
-              {comparisonRows.map((row, idx) => (
-                <div key={idx} className="grid grid-cols-12 items-stretch group hover:bg-slate-50/30 transition-colors">
+              {comparisonRows.map((row, idx) => {
+                const SunlynkIcon = row.sunlynk.icon;
+                const TypicalIcon = row.typical.icon;
+                return (
+                  <div key={idx} className="grid grid-cols-12 items-stretch group hover:bg-slate-50/30 transition-colors">
 
-                  {/* Parameter Info */}
-                  <div className="col-span-4 p-6 flex flex-col justify-center">
-                    <h5 className="font-extrabold text-slate-900 text-sm mb-1 tracking-tight">
-                      {row.feature}
-                    </h5>
-                    <p className="text-xs text-slate-400 font-semibold leading-relaxed">
-                      {row.featureDesc}
-                    </p>
-                  </div>
+                    {/* Parameter Info */}
+                    <div className="col-span-4 p-6 flex flex-col justify-center">
+                      <h5 className="font-extrabold text-slate-900 text-sm mb-1 tracking-tight">
+                        {row.feature}
+                      </h5>
+                      <p className="text-xs text-slate-400 font-semibold leading-relaxed">
+                        {row.featureDesc}
+                      </p>
+                    </div>
 
-                  {/* SunLynk Advantage */}
-                  <div className="col-span-4 p-6 bg-primary/5 border-x border-primary/10 flex flex-col justify-center relative group-hover:bg-primary/10 transition-all duration-300">
-                    <div className="absolute left-0 inset-y-0 w-[3px] bg-primary" />
+                    {/* SunLynk Advantage */}
+                    <div className="col-span-4 p-6 bg-primary/5 border-x border-primary/10 flex flex-col justify-center relative group-hover:bg-primary/10 transition-all duration-300">
+                      <div className="absolute left-0 inset-y-0 w-[3px] bg-[#065F46]" />
 
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 relative bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center p-2 shrink-0">
-                        <Image
-                          src={row.sunlynk.icon}
-                          alt={row.sunlynk.text}
-                          fill
-                          className="object-contain p-1.5"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
-                            <Check className="w-3 h-3" strokeWidth={3.5} />
-                          </span>
-                          <span className="text-sm font-extrabold text-slate-900 tracking-tight">
-                            {row.sunlynk.text}
-                          </span>
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center shrink-0">
+                          <SunlynkIcon size={18} strokeWidth={2} className="text-primary" />
                         </div>
-                        <p className="text-xs text-slate-600 font-semibold leading-relaxed">
-                          {row.sunlynk.desc}
-                        </p>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-full bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                              <Check className="w-3 h-3" strokeWidth={3.5} />
+                            </span>
+                            <span className="text-sm font-extrabold text-slate-900 tracking-tight">
+                              {row.sunlynk.text}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-600 font-semibold leading-relaxed">
+                            {row.sunlynk.desc}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Typical Installer */}
-                  <div className="col-span-4 p-6 flex flex-col justify-center bg-slate-50/5">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 relative bg-slate-100 border border-slate-200/50 rounded-xl flex items-center justify-center p-2 shrink-0 grayscale opacity-70">
-                        <Image
-                          src={row.typical.icon}
-                          alt={row.typical.text}
-                          fill
-                          className="object-contain p-1.5"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center shrink-0">
-                            <X className="w-3 h-3" strokeWidth={3.5} />
-                          </span>
-                          <span className="text-sm font-bold text-slate-700 tracking-tight">
-                            {row.typical.text}
-                          </span>
+                    {/* Typical Installer */}
+                    <div className="col-span-4 p-6 flex flex-col justify-center bg-slate-50/5">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 bg-slate-100 border border-slate-200/50 rounded-xl flex items-center justify-center shrink-0">
+                          <TypicalIcon size={18} strokeWidth={2} className="text-slate-400" />
                         </div>
-                        <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                          {row.typical.desc}
-                        </p>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center shrink-0">
+                              <X className="w-3 h-3" strokeWidth={3.5} />
+                            </span>
+                            <span className="text-sm font-bold text-slate-700 tracking-tight">
+                              {row.typical.text}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                            {row.typical.desc}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Mobile/Tablet View: Interactive Card List */}
           <div className="block lg:hidden space-y-6">
-            {comparisonRows.map((row, idx) => (
-              <div
-                key={idx}
-                className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm space-y-4"
-              >
-                <div>
-                  <span className="text-[10px] font-extrabold text-primary bg-primary/10 px-3 py-1 rounded-md uppercase tracking-wider">
-                    Parameter {idx + 1}
-                  </span>
-                  <h5 className="font-extrabold text-slate-900 text-base mt-2 tracking-tight">
-                    {row.feature}
-                  </h5>
-                  <p className="text-xs text-slate-400 font-semibold mt-0.5">
-                    {row.featureDesc}
-                  </p>
-                </div>
+            {comparisonRows.map((row, idx) => {
+              const SunlynkIcon = row.sunlynk.icon;
+              const TypicalIcon = row.typical.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm space-y-4"
+                >
+                  <div>
+                    <span className="text-[10px] font-extrabold text-primary bg-primary/10 px-3 py-1 rounded-md uppercase tracking-wider">
+                      Parameter {idx + 1}
+                    </span>
+                    <h5 className="font-extrabold text-slate-900 text-base mt-2 tracking-tight">
+                      {row.feature}
+                    </h5>
+                    <p className="text-xs text-slate-400 font-semibold mt-0.5">
+                      {row.featureDesc}
+                    </p>
+                  </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* SunLynk */}
-                  <div className="bg-primary/5 border border-primary/10 rounded-2xl p-4 relative overflow-hidden">
-                    <div className="absolute left-0 inset-y-0 w-[3px] bg-primary" />
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 relative bg-primary/10 rounded-lg flex items-center justify-center p-1.5 shrink-0">
-                        <Image
-                          src={row.sunlynk.icon}
-                          alt={row.sunlynk.text}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-1.5">
-                          <Check className="w-4 h-4 text-primary shrink-0" strokeWidth={3} />
-                          <span className="text-xs font-extrabold text-slate-900">{row.sunlynk.text}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* SunLynk */}
+                    <div className="bg-primary/5 border border-primary/10 rounded-2xl p-4 relative overflow-hidden">
+                      <div className="absolute left-0 inset-y-0 w-[3px] bg-primary" />
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                          <SunlynkIcon size={15} strokeWidth={2} className="text-primary" />
                         </div>
-                        <p className="text-[11px] text-slate-650 font-semibold leading-normal">
-                          {row.sunlynk.desc}
-                        </p>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1.5">
+                            <Check className="w-4 h-4 text-primary shrink-0" strokeWidth={3} />
+                            <span className="text-xs font-extrabold text-slate-900">{row.sunlynk.text}</span>
+                          </div>
+                          <p className="text-[11px] text-slate-650 font-semibold leading-normal">
+                            {row.sunlynk.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Typical Installer */}
+                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center shrink-0">
+                          <TypicalIcon size={15} strokeWidth={2} className="text-slate-400" />
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1.5">
+                            <X className="w-4 h-4 text-rose-500 shrink-0" strokeWidth={3} />
+                            <span className="text-xs font-bold text-slate-700">{row.typical.text}</span>
+                          </div>
+                          <p className="text-[11px] text-slate-500 font-medium leading-normal">
+                            {row.typical.desc}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Typical Installer */}
-                  <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 relative bg-slate-100 rounded-lg flex items-center justify-center p-1.5 shrink-0 grayscale opacity-60">
-                        <Image
-                          src={row.typical.icon}
-                          alt={row.typical.text}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-1.5">
-                          <X className="w-4 h-4 text-rose-500 shrink-0" strokeWidth={3} />
-                          <span className="text-xs font-bold text-slate-700">{row.typical.text}</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500 font-medium leading-normal">
-                          {row.typical.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -601,7 +587,7 @@ export default function SunLynkAdvantage() {
         </div>
 
         {/* Concluding full width banner styled using premium dark slate matching calculators */}
-        <div className="relative bg-[#1c1c1c] rounded-3xl p-8 md:p-12 text-white shadow-xl overflow-hidden border border-slate-800">
+        <div className="relative bg-[#065F46] rounded-2xl p-8 md:p-12 text-white shadow-xl overflow-hidden border border-slate-800">
 
           {/* Decorative glows and mesh grid */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
@@ -610,14 +596,14 @@ export default function SunLynkAdvantage() {
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-4 max-w-2xl text-center lg:text-left">
-              <span className="text-[9px] font-extrabold tracking-widest text-primary uppercase bg-primary/10 border border-primary/20 px-3.5 py-1 rounded-full inline-block">
+              <span className="text-[9px] font-extrabold tracking-widest text-white uppercase bg-primary/10 border border-primary/20 px-3.5 py-1 rounded-full inline-block">
                 SOLAR PARTNER
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
                 SunLynk isn't just another installer. <br />
                 <span className="text-primary">We're your long-term solar partner.</span>
               </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 From custom structural 3D design to waterproof warranties and certified energy generation protection, we stand by your system for the next three decades.
               </p>
             </div>
@@ -625,9 +611,9 @@ export default function SunLynkAdvantage() {
             <div className="shrink-0 w-full lg:w-auto">
               <Link
                 href="/contact"
-                className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-extrabold px-8 py-4.5 rounded-full shadow-lg transition-all duration-300 group text-sm tracking-wide shrink-0"
+                className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-[#065F46] font-extrabold px-8 py-4.5 rounded-xl shadow-lg transition-all duration-300 group text-sm tracking-wide shrink-0"
               >
-                <span>Get a Free Solar Assessment</span>
+                <span>Connect With Our Solar Expert</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
