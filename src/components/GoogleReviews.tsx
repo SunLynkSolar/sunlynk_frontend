@@ -61,6 +61,7 @@ const reviews: Review[] = [
       { type: "video", url: "/review/franky/VIDEO-2026-06-19-18-54-36.mp4" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.33.jpeg" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.33 (1).jpeg" },
+      { type: "image", url: "/review/franky/1.jpeg" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.36.jpeg" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.37.jpeg" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.37 (1).jpeg" },
