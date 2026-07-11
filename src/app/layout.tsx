@@ -161,7 +161,7 @@ export default function RootLayout({
                 "url": "https://www.sunlynksolar.com",
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://www.sunlynksolar.com/new_assets/logo.jpeg"
+                  "url": "https://www.sunlynksolar.com/new_assets/logo.png"
                 },
                 "contactPoint": {
                   "@type": "ContactPoint",
