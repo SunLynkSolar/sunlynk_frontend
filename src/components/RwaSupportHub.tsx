@@ -1,20 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Sun, 
-  Zap, 
-  Sparkles, 
-  Building, 
-  Users, 
-  HelpCircle, 
-  FileText, 
-  CheckCircle, 
-  ShieldCheck, 
-  ArrowRight, 
-  Shield, 
-  BookOpen, 
-  Check 
+import {
+  Sun,
+  Zap,
+  Sparkles,
+  Building,
+  Users,
+  HelpCircle,
+  FileText,
+  CheckCircle,
+  ShieldCheck,
+  ArrowRight,
+  Shield,
+  BookOpen,
+  Check
 } from "lucide-react";
 import Link from "next/link";
 
@@ -107,11 +107,11 @@ export default function RwaSupportHub() {
       <div className="absolute right-[-10%] top-[15%] w-[40%] h-[40%] bg-emerald-100/40 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-3">
           <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/50 rounded-full py-1.5 px-4 shadow-sm">
-            <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+            <BookOpen className="w-3.5 h-3.5 text-primary" />
             <span className="text-[10px] sm:text-xs uppercase tracking-wider font-extrabold text-emerald-700">RWA Committee Resource</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
@@ -127,21 +127,19 @@ export default function RwaSupportHub() {
           <div className="inline-flex p-1 bg-slate-100 border border-slate-200/60 rounded-2xl w-full max-w-md shadow-sm">
             <button
               onClick={() => setActiveSubTab("roadmap")}
-              className={`flex-1 py-3.5 px-5 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer outline-none ${
-                activeSubTab === "roadmap"
+              className={`flex-1 py-3.5 px-5 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer outline-none ${activeSubTab === "roadmap"
                   ? "bg-white text-emerald-700 border border-emerald-100 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
-              }`}
+                }`}
             >
               RWA Approval Roadmap
             </button>
             <button
               onClick={() => setActiveSubTab("objections")}
-              className={`flex-1 py-3.5 px-5 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer outline-none ${
-                activeSubTab === "objections"
+              className={`flex-1 py-3.5 px-5 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer outline-none ${activeSubTab === "objections"
                   ? "bg-white text-emerald-700 border border-emerald-100 shadow-sm"
                   : "text-slate-500 hover:text-slate-800"
-              }`}
+                }`}
             >
               Resident Objection Buster
             </button>
@@ -160,15 +158,13 @@ export default function RwaSupportHub() {
                   <button
                     key={idx}
                     onClick={() => setSelectedStep(idx)}
-                    className={`flex items-start gap-4 p-5 rounded-2xl text-left border transition-all duration-300 w-full cursor-pointer ${
-                      isSelected
+                    className={`flex items-start gap-4 p-5 rounded-2xl text-left border transition-all duration-300 w-full cursor-pointer ${isSelected
                         ? "bg-white border-emerald-500 shadow-lg scale-[1.01]"
                         : "bg-white/80 border-slate-200/50 hover:border-slate-300 shadow-sm"
-                    }`}
+                      }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-all duration-300 ${
-                      isSelected ? "bg-emerald-500 text-white border-emerald-600" : "bg-emerald-50 text-emerald-600 border-emerald-100/60"
-                    }`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-all duration-300 ${isSelected ? "bg-emerald-500 text-white border-emerald-600" : "bg-emerald-50 text-primary border-emerald-100/60"
+                      }`}>
                       <StepIcon size={18} />
                     </div>
                     <div className="flex-grow">
@@ -176,15 +172,13 @@ export default function RwaSupportHub() {
                         <span className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
                           {step.subtitle}
                         </span>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                          isSelected ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"
-                        }`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${isSelected ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"
+                          }`}>
                           {step.timeline.split(": ")[1]}
                         </span>
                       </div>
-                      <h4 className={`text-base font-black tracking-tight mt-1 transition-colors ${
-                        isSelected ? "text-emerald-700" : "text-slate-900"
-                      }`}>
+                      <h4 className={`text-base font-black tracking-tight mt-1 transition-colors ${isSelected ? "text-emerald-700" : "text-slate-900"
+                        }`}>
                         {step.title}
                       </h4>
                     </div>
@@ -197,23 +191,23 @@ export default function RwaSupportHub() {
             <div className="lg:col-span-6">
               <div className="bg-white border border-slate-200/70 rounded-3xl p-6 sm:p-8 shadow-xl text-left relative overflow-hidden h-full min-h-[420px] flex flex-col justify-between">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50/50 rounded-full blur-2xl pointer-events-none" />
-                
+
                 <div>
                   <span className="bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-wider py-1 px-3.5 rounded-full inline-block">
                     Detail Breakdown
                   </span>
-                  
+
                   <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-6 leading-tight">
                     {roadmapSteps[selectedStep].title}
                   </h3>
-                  
+
                   <p className="text-sm text-slate-600 leading-relaxed font-medium mt-3.5">
                     {roadmapSteps[selectedStep].desc}
                   </p>
 
                   <div className="flex flex-col gap-4 mt-8">
                     <div className="flex gap-3 items-start">
-                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-primary border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
                         <Check size={12} className="stroke-[3]" />
                       </div>
                       <div>
@@ -225,7 +219,7 @@ export default function RwaSupportHub() {
                     </div>
 
                     <div className="flex gap-3 items-start">
-                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-primary border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
                         <Check size={12} className="stroke-[3]" />
                       </div>
                       <div>
@@ -278,22 +272,20 @@ export default function RwaSupportHub() {
                         {obj.question}
                       </h4>
                     </div>
-                    <span className={`w-6 h-6 rounded-full border border-slate-200 flex items-center justify-center shrink-0 text-slate-400 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 text-emerald-600 border-emerald-200" : ""
-                    }`}>
+                    <span className={`w-6 h-6 rounded-full border border-slate-200 flex items-center justify-center shrink-0 text-slate-400 transition-transform duration-300 ${isOpen ? "rotate-180 text-primary border-emerald-200" : ""
+                      }`}>
                       ▼
                     </span>
                   </button>
 
-                  <div className={`transition-all duration-300 overflow-hidden ${
-                    isOpen ? "max-h-[300px] border-t border-slate-100" : "max-h-0"
-                  }`}>
+                  <div className={`transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[300px] border-t border-slate-100" : "max-h-0"
+                    }`}>
                     <div className="p-6 bg-slate-50/45 text-left flex gap-4 items-start">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-50 text-primary border border-emerald-100/40 flex items-center justify-center shrink-0 mt-0.5">
                         <ObjIcon size={16} />
                       </div>
                       <div>
-                        <span className="text-[10px] text-emerald-600 font-extrabold uppercase tracking-wider block">
+                        <span className="text-[10px] text-primary font-extrabold uppercase tracking-wider block">
                           SunLynk Solution: {obj.solution}
                         </span>
                         <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mt-2">

@@ -292,7 +292,7 @@ export default function PopupForm() {
                 /* ── Success State ── */
                 <div className="flex flex-col items-center justify-center flex-1 text-center gap-4 py-6">
                   <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center">
-                    <CheckCircle2 size={32} className="text-emerald-600" />
+                    <CheckCircle2 size={32} className="text-primary" />
                   </div>
                   <div>
                     <h3 className="text-xl font-extrabold text-gray-900">Thank You! 🎉</h3>
@@ -308,7 +308,7 @@ export default function PopupForm() {
                 /* ── Form State ── */
                 <>
                   <div className="mb-5">
-                    <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-1">
+                    <p className="text-xs font-bold text-primary uppercase tracking-wider mb-1">
                       Quick Enquiry
                     </p>
                     <h3 className="text-xl font-extrabold text-gray-900 leading-snug">
@@ -331,7 +331,7 @@ export default function PopupForm() {
                         htmlFor="popup-fullName"
                         className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                       >
-                        <User size={12} className="text-emerald-600" />
+                        <User size={12} className="text-primary" />
                         Full Name
                       </label>
                       <input
@@ -361,7 +361,7 @@ export default function PopupForm() {
                         htmlFor="popup-whatsappNumber"
                         className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                       >
-                        <Phone size={12} className="text-emerald-600" />
+                        <Phone size={12} className="text-primary" />
                         WhatsApp Number
                       </label>
                       <div className="flex">
@@ -398,7 +398,7 @@ export default function PopupForm() {
                         htmlFor="popup-pinCode"
                         className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                       >
-                        <MapPin size={12} className="text-emerald-600" />
+                        <MapPin size={12} className="text-primary" />
                         Pincode
                       </label>
                       <input

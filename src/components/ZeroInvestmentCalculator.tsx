@@ -66,20 +66,20 @@ export default function ZeroInvestmentCalculator() {
             </div>
 
             {/* Got Questions Card */}
-            <div className="relative bg-gradient-to-br from-[#E6FDF4] to-[#C2F3DF] rounded-xl p-6 md:p-8 flex items-center justify-between shadow-xl shadow-emerald-950/20 border border-emerald-200/50 overflow-hidden group mt-4">
+            <div className="relative bg-gradient-to-br from-[#f6fbe8] to-[#ecf7d0] rounded-xl p-6 md:p-8 flex items-center justify-between shadow-xl shadow-[#132005]/20 border border-[#d7ecaa]/50 overflow-hidden group mt-4">
               {/* Corner soft glow */}
               <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/20 rounded-full blur-xl pointer-events-none" />
 
               <div className="flex flex-col gap-2.5 z-10 text-slate-900 max-w-[65%]">
-                <h3 className="font-extrabold text-lg sm:text-xl text-emerald-950 tracking-tight">Got questions?</h3>
-                <p className="text-[11px] sm:text-xs text-emerald-800 font-bold leading-normal">
+                <h3 className="font-extrabold text-lg sm:text-xl text-[#132005] tracking-tight">Got questions?</h3>
+                <p className="text-[11px] sm:text-xs text-[#416c17] font-bold leading-normal">
                   Our solar experts are just a call away.
                 </p>
                 <a
                   href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20EMI%20Interest%20rates%20and%20Subsidy%20Process."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-800 hover:bg-emerald-950 text-white font-black text-xs py-2.5 px-5 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-emerald-950/15 hover:shadow-lg hover:shadow-emerald-950/25 active:scale-98 transition-all self-start mt-2"
+                  className="bg-primary hover:bg-[#132005] text-white font-black text-xs py-2.5 px-5 rounded-full inline-flex items-center gap-1.5 shadow-md shadow-[#132005]/15 hover:shadow-lg hover:shadow-[#132005]/25 active:scale-98 transition-all self-start mt-2"
                 >
                   Talk to our expert <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
                 </a>
@@ -122,7 +122,7 @@ export default function ZeroInvestmentCalculator() {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`p-4 rounded-xl text-left border transition-all duration-300 flex flex-col gap-1 outline-none cursor-pointer ${isActive
-                        ? "border-primary bg-[#0A1611]/80 shadow-lg ring-2 ring-primary/20"
+                        ? "border-primary bg-[#0c1505]/80 shadow-lg ring-2 ring-primary/20"
                         : "border-white/[0.08] bg-[#111827]/60 hover:border-white/[0.15]"
                         }`}
                     >
@@ -167,7 +167,7 @@ export default function ZeroInvestmentCalculator() {
                       key={tenure}
                       onClick={() => setSelectedTenure(tenure)}
                       className={`px-6 py-2.5 rounded-xl font-bold text-xs border transition-all duration-300 outline-none cursor-pointer ${isActive
-                        ? "border-primary bg-[#0A1611] text-white"
+                        ? "border-primary bg-[#0c1505] text-white"
                         : "border-white/[0.08] bg-[#111827]/60 text-slate-400 hover:border-white/[0.15] hover:text-white"
                         }`}
                     >
@@ -184,7 +184,7 @@ export default function ZeroInvestmentCalculator() {
                 <span className="block text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                   Your Monthly Saving
                 </span>
-                <span className="block text-2xl sm:text-3xl font-black text-emerald-400">
+                <span className="block text-2xl sm:text-3xl font-black text-primary">
                   ₹{activeData.saving}
                 </span>
                 <span className="block text-[10px] sm:text-[11px] text-slate-400 font-semibold mt-0.5">

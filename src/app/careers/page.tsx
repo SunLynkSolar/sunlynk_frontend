@@ -181,7 +181,7 @@ export default function Careers() {
       <section className="py-20 bg-slate-50/50 border-t border-slate-200/40">
         <div className="max-w-5xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-wider font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 rounded-full">
+            <span className="text-xs uppercase tracking-wider font-extrabold text-primary bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 rounded-full">
               Opportunity
             </span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-4 leading-tight">
@@ -298,7 +298,7 @@ export default function Careers() {
             <div className="px-6 py-6">
               {applySuccess ? (
                 <div className="flex flex-col items-center justify-center py-8 text-center gap-4">
-                  <div className="w-14 h-14 bg-emerald-50 border border-emerald-200 text-emerald-600 rounded-full flex items-center justify-center">
+                  <div className="w-14 h-14 bg-emerald-50 border border-emerald-200 text-primary rounded-full flex items-center justify-center">
                     <Check size={28} />
                   </div>
                   <div>

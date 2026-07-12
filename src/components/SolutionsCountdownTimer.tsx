@@ -34,7 +34,7 @@ export default function SolutionsCountdownTimer() {
   const displayTime = mounted ? timeLeft : placeholderTime;
 
   return (
-    <div className="w-full bg-[#051f1a] border-y border-emerald-900/30 py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-inner">
+    <div className="w-full bg-[#132005] border-y border-[#2c4910]/30 py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-inner">
       <div className="flex flex-col text-center sm:text-left">
         <span className="text-secondary font-black text-xs uppercase tracking-widest flex items-center gap-1.5 justify-center sm:justify-start">
           <span className="animate-pulse text-sm">⚡</span> Govt Solar Subsidy Alert

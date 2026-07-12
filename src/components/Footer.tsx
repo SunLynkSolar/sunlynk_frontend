@@ -74,7 +74,7 @@ const SolarGridBackground: React.FC = () => {
             {/* Glowing intersection diamond markers representing green energy conversion */}
             <path
               d="M 120,0 L 118,0 L 120,2 Z M 0,0 L 2,0 L 0,2 Z M 0,120 L 2,120 L 0,118 Z M 120,120 L 118,120 L 120,118 Z"
-              fill="#2ecc71"
+              fill="#6CB327"
               opacity={0.25}
             />
           </pattern>

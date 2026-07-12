@@ -139,18 +139,18 @@ function QuotePopup({
   const serviceTheme = {
     residential: {
       badge: "🏠 Residential Solar",
-      gradient: "from-emerald-700 to-emerald-900",
-      accent: "bg-emerald-600",
+      gradient: "from-[#568f1f] to-[#2c4910]",
+      accent: "bg-[#6CB327]",
     },
     society: {
       badge: "🏢 Housing Society Solar",
-      gradient: "from-blue-700 to-emerald-800",
-      accent: "bg-emerald-600",
+      gradient: "from-blue-700 to-[#33560f]",
+      accent: "bg-[#6CB327]",
     },
     commercial: {
       badge: "🏭 Commercial Solar",
-      gradient: "from-slate-700 to-emerald-800",
-      accent: "bg-emerald-600",
+      gradient: "from-slate-700 to-[#33560f]",
+      accent: "bg-[#6CB327]",
     },
   }[service.type];
 
@@ -191,7 +191,7 @@ function QuotePopup({
             </button>
 
             {/* Badge + Title */}
-            <span className="inline-block text-[10px] font-bold text-emerald-200 uppercase tracking-widest bg-white/10 border border-white/20 rounded-full px-3 py-1 mb-3">
+            <span className="inline-block text-[10px] font-bold text-[#ebf5d2] uppercase tracking-widest bg-white/10 border border-white/20 rounded-full px-3 py-1 mb-3">
               {serviceTheme.badge}
             </span>
             <h2
@@ -201,7 +201,7 @@ function QuotePopup({
               Get Your <span className="text-amber-300">Free</span>{" "}
               {service.label} Quote
             </h2>
-            <p className="text-sm text-emerald-100 mt-1.5">
+            <p className="text-sm text-[#f5faeb] mt-1.5">
               Fill in your details — our expert will reach out via WhatsApp
               within 24 hours.
             </p>
@@ -215,8 +215,8 @@ function QuotePopup({
           <div className="px-6 py-6">
             {status === "success" ? (
               <div className="flex flex-col items-center text-center gap-4 py-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center">
-                  <CheckCircle2 size={28} className="text-emerald-600" />
+                <div className="w-14 h-14 rounded-full bg-[#f6fbe8] border-2 border-[#d7ecaa] flex items-center justify-center">
+                  <CheckCircle2 size={28} className="text-[#6CB327]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-extrabold text-gray-900">
@@ -228,7 +228,7 @@ function QuotePopup({
                   </p>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-1 overflow-hidden">
-                  <div className="h-full bg-emerald-500 animate-[progress_1.8s_linear_forwards]" />
+                  <div className="h-full bg-[#6CB327] animate-[progress_1.8s_linear_forwards]" />
                 </div>
               </div>
             ) : (
@@ -244,7 +244,7 @@ function QuotePopup({
                     htmlFor="quote-fullName"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <User size={11} className="text-emerald-600" />
+                    <User size={11} className="text-[#6CB327]" />
                     Full Name
                   </label>
                   <input
@@ -255,7 +255,7 @@ function QuotePopup({
                     placeholder="e.g. Rahul Sharma"
                     value={form.fullName}
                     onChange={handleChange}
-                    className={`w-full h-11 px-3.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-emerald-400/40 focus:border-emerald-500 ${errors.fullName
+                    className={`w-full h-11 px-3.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#6CB327]/40 focus:border-[#6CB327] ${errors.fullName
                       ? "border-red-400 bg-red-50"
                       : "border-gray-200 bg-gray-50 hover:border-gray-300"
                       }`}
@@ -273,7 +273,7 @@ function QuotePopup({
                     htmlFor="quote-whatsappNumber"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <Phone size={11} className="text-emerald-600" />
+                    <Phone size={11} className="text-[#6CB327]" />
                     WhatsApp Number
                   </label>
                   <div className="flex">
@@ -290,7 +290,7 @@ function QuotePopup({
                       value={form.whatsappNumber}
                       onChange={handleChange}
                       maxLength={10}
-                      className={`flex-1 h-11 px-3.5 rounded-r-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-emerald-400/40 focus:border-emerald-500 ${errors.whatsappNumber
+                      className={`flex-1 h-11 px-3.5 rounded-r-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#6CB327]/40 focus:border-[#6CB327] ${errors.whatsappNumber
                         ? "border-red-400 bg-red-50"
                         : "border-gray-200 bg-gray-50 hover:border-gray-300"
                         }`}
@@ -309,7 +309,7 @@ function QuotePopup({
                     htmlFor="quote-pinCode"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <MapPin size={11} className="text-emerald-600" />
+                    <MapPin size={11} className="text-[#6CB327]" />
                     Pincode
                   </label>
                   <input
@@ -322,7 +322,7 @@ function QuotePopup({
                     value={form.pinCode}
                     onChange={handleChange}
                     maxLength={6}
-                    className={`w-full h-11 px-3.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-emerald-400/40 focus:border-emerald-500 ${errors.pinCode
+                    className={`w-full h-11 px-3.5 rounded-xl border text-sm text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-[#6CB327]/40 focus:border-[#6CB327] ${errors.pinCode
                       ? "border-red-400 bg-red-50"
                       : "border-gray-200 bg-gray-50 hover:border-gray-300"
                       }`}
@@ -347,8 +347,8 @@ function QuotePopup({
                   type="submit"
                   disabled={status === "loading"}
                   className={`w-full h-12 rounded-xl font-extrabold text-sm text-white flex items-center justify-center gap-2 transition-all duration-200 shadow-md ${status === "loading"
-                    ? "bg-emerald-400 cursor-not-allowed"
-                    : "bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] hover:shadow-lg hover:shadow-emerald-600/25"
+                    ? "bg-[#a5e05a] cursor-not-allowed"
+                    : "bg-[#6CB327] hover:bg-[#568F1F] active:scale-[0.98] hover:shadow-lg hover:shadow-[#6CB327]/25"
                     }`}
                 >
                   {status === "loading" ? (
@@ -439,21 +439,21 @@ export default function ServicesSection() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 object-bottom"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
+                <div className="absolute top-4 left-4 bg-[#6CB327] text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
                   Save Up to 90%
                 </div>
               </div>
 
               <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#6CB327] flex items-center justify-center text-white shadow-md">
                     <HomeIcon size={22} />
                   </div>
                   <div className="flex flex-col">
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Homes
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-[#6CB327] mt-0.5">
                       Reduce Your Electricity Bill by Up to 90%
                     </span>
                   </div>
@@ -478,7 +478,7 @@ export default function ServicesSection() {
                     onClick={() =>
                       open({ label: "Residential", type: "residential", redirectUrl: "/homes" })
                     }
-                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+                    className="flex-grow bg-[#6CB327] text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-[#568F1F] shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
                   >
                     <span>Get Free Quote</span>
                     <ArrowRight size={15} />
@@ -488,12 +488,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-[#6CB327]" />
                   </Link>
                 </div>
 
-                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <TrendingUp size={15} className="text-emerald-600 shrink-0" />
+                <div className="bg-[#f6fbe8]/50 border border-[#ebf5d2]/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <TrendingUp size={15} className="text-[#6CB327] shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -514,21 +514,21 @@ export default function ServicesSection() {
                   className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
+                <div className="absolute top-4 left-4 bg-[#6CB327] text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
                   Save Lakhs Every Year
                 </div>
               </div>
 
               <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#6CB327] flex items-center justify-center text-white shadow-md">
                     <Building2 size={22} />
                   </div>
                   <div className="flex flex-col">
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Housing Societies
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-[#6CB327] mt-0.5">
                       Reduce Common Area Costs Significantly
                     </span>
                   </div>
@@ -553,7 +553,7 @@ export default function ServicesSection() {
                     onClick={() =>
                       open({ label: "Society", type: "society", redirectUrl: "/contact" })
                     }
-                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+                    className="flex-grow bg-[#6CB327] text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-[#568F1F] shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
                   >
                     <span>Get Free Consultation</span>
                     <ArrowRight size={15} />
@@ -563,12 +563,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-[#6CB327]" />
                   </Link>
                 </div>
 
-                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <Users size={15} className="text-emerald-600 shrink-0" />
+                <div className="bg-[#f6fbe8]/50 border border-[#ebf5d2]/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <Users size={15} className="text-[#6CB327] shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -588,21 +588,21 @@ export default function ServicesSection() {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
+                <div className="absolute top-4 left-4 bg-[#6CB327] text-white text-xs font-extrabold py-1.5 px-4 rounded-full shadow-md z-10">
                   Boost Your Profits
                 </div>
               </div>
 
               <div className="p-6 sm:p-8 flex flex-col flex-grow gap-5">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-md">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#6CB327] flex items-center justify-center text-white shadow-md">
                     <Briefcase size={22} />
                   </div>
                   <div className="flex flex-col">
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Commercial
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-[#6CB327] mt-0.5">
                       Lower Operating Costs. Increase Profits.
                     </span>
                   </div>
@@ -627,7 +627,7 @@ export default function ServicesSection() {
                     onClick={() =>
                       open({ label: "Commercial", type: "commercial", redirectUrl: "/contact" })
                     }
-                    className="flex-grow bg-emerald-600 text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-emerald-700 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
+                    className="flex-grow bg-[#6CB327] text-white font-extrabold py-2.5 px-4 rounded-lg text-center text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:bg-[#568F1F] shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
                   >
                     <span>Get Free Consultation</span>
                     <ArrowRight size={15} />
@@ -637,12 +637,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-[#6CB327]" />
                   </Link>
                 </div>
 
-                <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <Building2 size={15} className="text-emerald-600 shrink-0" />
+                <div className="bg-[#f6fbe8]/50 border border-[#ebf5d2]/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
+                  <Building2 size={15} className="text-[#6CB327] shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -684,7 +684,7 @@ function SpecItem({
         }`}
       style={border ? { paddingLeft: 0 } : {}}
     >
-      <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+      <div className="w-7 h-7 rounded-full bg-[#f6fbe8] border border-[#ebf5d2] text-[#6CB327] flex items-center justify-center shrink-0">
         {icon}
       </div>
       <div className="flex flex-col">

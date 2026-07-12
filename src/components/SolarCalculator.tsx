@@ -113,7 +113,7 @@ export default function SolarCalculator() {
                 {isPincodeFilled && (
                   <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
                     {isValidLucknow ? (
-                      <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
+                      <span className="bg-[#f6fbe8] text-[#568f1f] text-[10px] font-bold py-1 px-2 rounded-full border border-[#d7ecaa]">
                         Lucknow
                       </span>
                     ) : (
@@ -229,29 +229,29 @@ export default function SolarCalculator() {
                     Your Solar Savings
                   </h3>
 
-                  <div className="bg-emerald-50/45 border border-emerald-100/50 rounded-2xl p-6 relative overflow-hidden">
+                  <div className="bg-[#f6fbe8]/45 border border-[#ebf5d2]/50 rounded-2xl p-6 relative overflow-hidden">
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 relative z-10">
 
                       {/* Monthly */}
                       <div className="flex flex-col gap-1">
-                        <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider">Monthly*</p>
-                        <p className="text-lg sm:text-xl font-black text-emerald-700">
+                        <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider">Monthly*</p>
+                        <p className="text-lg sm:text-xl font-black text-[#568f1f]">
                           {formatRupee(monthlySavings)}
                         </p>
                       </div>
 
                       {/* Yearly */}
-                      <div className="flex flex-col gap-1 border-none lg:border-l border-emerald-100 lg:pl-4 sm:pl-0">
-                        <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider">Yearly*</p>
-                        <p className="text-lg sm:text-xl font-black text-emerald-700">
+                      <div className="flex flex-col gap-1 border-none lg:border-l border-[#ebf5d2] lg:pl-4 sm:pl-0">
+                        <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider">Yearly*</p>
+                        <p className="text-lg sm:text-xl font-black text-[#568f1f]">
                           {formatRupee(yearlySavings)}
                         </p>
                       </div>
 
                       {/* Lifetime */}
-                      <div className="flex flex-col gap-1 border-none lg:border-l border-emerald-100 lg:pl-4 sm:pl-0">
-                        <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider">Lifetime*</p>
-                        <p className="text-lg sm:text-xl font-black text-emerald-700">
+                      <div className="flex flex-col gap-1 border-none lg:border-l border-[#ebf5d2] lg:pl-4 sm:pl-0">
+                        <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider">Lifetime*</p>
+                        <p className="text-lg sm:text-xl font-black text-[#568f1f]">
                           {formatRupee(lifetimeSavings)}
                         </p>
                       </div>
@@ -259,7 +259,7 @@ export default function SolarCalculator() {
                     </div>
 
                     {/* Banner bottom inside savings */}
-                    <div className="mt-6 pt-4 border-t border-emerald-100/80 flex items-center gap-2.5 text-xs text-emerald-800 font-bold">
+                    <div className="mt-6 pt-4 border-t border-[#ebf5d2]/80 flex items-center gap-2.5 text-xs text-[#416c17] font-bold">
                       <ShieldCheck size={16} className="text-primary shrink-0" />
                       <span>We offer 5-year guaranteed savings with complete generation protection.</span>
                     </div>

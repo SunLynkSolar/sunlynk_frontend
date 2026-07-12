@@ -435,7 +435,7 @@ export default function CommercialPage() {
                 </div>
                 <div>
                   <span className="text-xs font-extrabold text-slate-950 leading-none block">Tier-1 Hardware</span>
-                  <span className="block text-[9px] text-emerald-600 font-extrabold uppercase mt-1">● 25-Yr Guarantee</span>
+                  <span className="block text-[9px] text-primary font-extrabold uppercase mt-1">● 25-Yr Guarantee</span>
                 </div>
               </div>
 
@@ -454,7 +454,7 @@ export default function CommercialPage() {
                 </div>
                 <div>
                   <span className="text-xs font-extrabold text-slate-950 leading-none block">Smart Grid Integration</span>
-                  <span className="block text-[9px] text-emerald-600 font-extrabold uppercase mt-1">● Active Monitoring</span>
+                  <span className="block text-[9px] text-primary font-extrabold uppercase mt-1">● Active Monitoring</span>
                 </div>
               </div>
             </div>
