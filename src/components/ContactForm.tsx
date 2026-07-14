@@ -233,7 +233,7 @@ export default function ContactForm({ hideTabs = false, defaultTab = "residentia
           <div className="py-8 md:py-12 px-4 text-center">
             {/* Header Success Section */}
             <div className="flex flex-col items-center justify-center mb-8">
-              <div className="w-20 h-20 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-full flex items-center justify-center mb-5 animate-pulse shadow-md shadow-emerald-500/10">
+              <div className="w-20 h-20 bg-emerald-50 text-primary border border-emerald-100 rounded-full flex items-center justify-center mb-5 animate-pulse shadow-md shadow-emerald-500/10">
                 <Check size={40} className="stroke-[2.5]" />
               </div>
               <h4 className="font-black text-2xl md:text-3xl text-slate-900 tracking-tight">Consultation Booked!</h4>

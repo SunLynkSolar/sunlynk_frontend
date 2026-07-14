@@ -113,7 +113,7 @@ export default function SolarCalculator() {
                 {isPincodeFilled && (
                   <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
                     {isValidLucknow ? (
-                      <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
+                      <span className="bg-emerald-50 text-primary text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
                         Lucknow
                       </span>
                     ) : (

@@ -216,7 +216,7 @@ function QuotePopup({
             {status === "success" ? (
               <div className="flex flex-col items-center text-center gap-4 py-4">
                 <div className="w-14 h-14 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center">
-                  <CheckCircle2 size={28} className="text-emerald-600" />
+                  <CheckCircle2 size={28} className="text-primary" />
                 </div>
                 <div>
                   <h3 className="text-lg font-extrabold text-gray-900">
@@ -244,7 +244,7 @@ function QuotePopup({
                     htmlFor="quote-fullName"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <User size={11} className="text-emerald-600" />
+                    <User size={11} className="text-primary" />
                     Full Name
                   </label>
                   <input
@@ -273,7 +273,7 @@ function QuotePopup({
                     htmlFor="quote-whatsappNumber"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <Phone size={11} className="text-emerald-600" />
+                    <Phone size={11} className="text-primary" />
                     WhatsApp Number
                   </label>
                   <div className="flex">
@@ -309,7 +309,7 @@ function QuotePopup({
                     htmlFor="quote-pinCode"
                     className="text-xs font-bold text-gray-600 flex items-center gap-1.5"
                   >
-                    <MapPin size={11} className="text-emerald-600" />
+                    <MapPin size={11} className="text-primary" />
                     Pincode
                   </label>
                   <input
@@ -453,7 +453,7 @@ export default function ServicesSection() {
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Homes
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-primary mt-0.5">
                       Reduce Your Electricity Bill by Up to 90%
                     </span>
                   </div>
@@ -488,12 +488,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-primary" />
                   </Link>
                 </div>
 
                 <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <TrendingUp size={15} className="text-emerald-600 shrink-0" />
+                  <TrendingUp size={15} className="text-primary shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -528,7 +528,7 @@ export default function ServicesSection() {
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Housing Societies
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-primary mt-0.5">
                       Reduce Common Area Costs Significantly
                     </span>
                   </div>
@@ -563,12 +563,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-primary" />
                   </Link>
                 </div>
 
                 <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <Users size={15} className="text-emerald-600 shrink-0" />
+                  <Users size={15} className="text-primary shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -602,7 +602,7 @@ export default function ServicesSection() {
                     <h3 className="text-xl font-extrabold text-gray-900 group-hover:text-primary transition-colors duration-300">
                       Commercial
                     </h3>
-                    <span className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">
+                    <span className="text-xs sm:text-sm font-bold text-primary mt-0.5">
                       Lower Operating Costs. Increase Profits.
                     </span>
                   </div>
@@ -637,12 +637,12 @@ export default function ServicesSection() {
                     className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-gray-800 hover:text-primary transition-colors duration-300 shrink-0"
                   >
                     <span>Know More</span>
-                    <ArrowRight size={14} className="text-emerald-600" />
+                    <ArrowRight size={14} className="text-primary" />
                   </Link>
                 </div>
 
                 <div className="bg-emerald-50/50 border border-emerald-100/50 rounded-xl px-3.5 py-2.5 flex items-center gap-2 mt-auto">
-                  <Building2 size={15} className="text-emerald-600 shrink-0" />
+                  <Building2 size={15} className="text-primary shrink-0" />
                   <span className="text-xs font-bold text-gray-700">
                     Best for:{" "}
                     <span className="font-normal text-gray-600">
@@ -684,7 +684,7 @@ function SpecItem({
         }`}
       style={border ? { paddingLeft: 0 } : {}}
     >
-      <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+      <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-100 text-primary flex items-center justify-center shrink-0">
         {icon}
       </div>
       <div className="flex flex-col">

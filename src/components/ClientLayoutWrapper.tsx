@@ -48,7 +48,7 @@ export default function ClientLayoutWrapper({
             href="https://wa.me/918573003001?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20free%20Solar%20Consultation."
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#2ecc71] text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
             aria-label="Chat on WhatsApp"
           >
             <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
@@ -62,7 +62,7 @@ export default function ClientLayoutWrapper({
           {/* Phone Button */}
           <a
             href="tel:8573003001"
-            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#2ecc71] text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
             aria-label="Call 8573003001"
           >
             <Phone size={20} />
@@ -74,7 +74,7 @@ export default function ClientLayoutWrapper({
           {/* Email Button */}
           <a
             href="mailto:info@sunlynksolar.com"
-            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-green-600 text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#2ecc71] text-white shadow-lg hover:scale-110 active:scale-95 transition-all duration-200"
             aria-label="Email info@sunlynksolar.com"
           >
             <Mail size={20} />
@@ -88,19 +88,19 @@ export default function ClientLayoutWrapper({
         <div className="relative">
           {/* "Connect Now" label that hides when isOpen is true */}
           <span
-            className={`absolute right-16 top-1/2 -translate-y-1/2 bg-emerald-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg pointer-events-none whitespace-nowrap transition-all duration-300 border border-emerald-700/50 flex items-center gap-1.5 ${isOpen
-                ? "opacity-0 scale-75 translate-x-4 pointer-events-none"
-                : "opacity-100 scale-100 translate-x-0"
+            className={`absolute right-16 top-1/2 -translate-y-1/2 bg-[#2ecc71] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg pointer-events-none whitespace-nowrap transition-all duration-300 border border-emerald-700/50 flex items-center gap-1.5 ${isOpen
+              ? "opacity-0 scale-75 translate-x-4 pointer-events-none"
+              : "opacity-100 scale-100 translate-x-0"
               }`}
           >
             Connect Now
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-            <div className="absolute top-1/2 -translate-y-1/2 left-full border-4 border-transparent border-l-emerald-800" />
+            <div className="absolute top-1/2 -translate-y-1/2 left-full border-4 border-transparent border-l-[#2ecc71]" />
           </span>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-800 text-white shadow-xl hover:bg-emerald-950 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none"
+            className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-[#2ecc71] text-white shadow-xl hover:bg-emerald-600 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none"
             aria-label="Contact Options Menu"
           >
             {/* Icon transition */}
@@ -109,7 +109,7 @@ export default function ClientLayoutWrapper({
             ) : (
               <div className="flex items-center justify-center relative">
                 <MessageCircle size={24} className="scale-100 transition-transform duration-300" />
-                <span className="absolute text-[9px] font-black text-emerald-800 bg-white w-3.5 h-3.5 rounded-full flex items-center justify-center -top-1 -right-1 border border-emerald-800/10 shadow-sm">
+                <span className="absolute text-[9px] font-black text-emerald-800 bg-white w-3.5 h-3.5 rounded-full flex items-center justify-center -top-1 -right-1 border border-emerald-600/10 shadow-sm">
                   i
                 </span>
               </div>

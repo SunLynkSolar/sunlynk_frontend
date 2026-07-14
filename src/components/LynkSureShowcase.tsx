@@ -95,11 +95,11 @@ export default function LynkSureShowcase() {
         {/* Section Header */}
         <div className="text-center max-w-5xl mx-auto mb-16 flex flex-col items-center gap-4">
           <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/60 rounded-full py-1.5 px-4 backdrop-blur-md shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+            <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
             <span className="text-[10px] sm:text-xs uppercase tracking-wider font-extrabold text-emerald-700">SunLynk Core Technology</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
-            Engineered with <span className="text-emerald-600">LynkShield</span> for 25 Yrs.<br className="hidden sm:inline" />
+            Engineered with <span className="text-primary">LynkShield</span> for 25 Yrs.<br className="hidden sm:inline" />
 
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-xl leading-relaxed">
@@ -122,7 +122,7 @@ export default function LynkSureShowcase() {
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/40"
                     }`}
                 >
-                  <TabIcon size={16} className={isActive ? "text-emerald-600 animate-pulse" : "text-slate-500"} />
+                  <TabIcon size={16} className={isActive ? "text-primary animate-pulse" : "text-slate-500"} />
                   <span>{tab.label}</span>
                   {isActive && (
                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(46,204,113,0.4)]" />
@@ -143,7 +143,7 @@ export default function LynkSureShowcase() {
               {/* Left Column (Interactive Cards list - 5 cols) */}
               <div className="lg:col-span-5 flex flex-col gap-5 order-2 lg:order-1">
                 <div className="text-left mb-2">
-                  <span className="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">
+                  <span className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-widest block mb-1">
                     Proprietary Structure
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
@@ -169,7 +169,7 @@ export default function LynkSureShowcase() {
                           }`}
                       >
                         <div className="flex items-start gap-4">
-                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${isHighlighted ? "bg-emerald-500 text-white scale-110 shadow-md" : "bg-emerald-50 text-emerald-600"
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${isHighlighted ? "bg-emerald-500 text-white scale-110 shadow-md" : "bg-emerald-50 text-primary"
                             }`}>
                             <FeatIcon size={18} />
                           </div>
@@ -229,7 +229,7 @@ export default function LynkSureShowcase() {
                         <span className={`absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 ${isHighlighted ? "animate-ping scale-150" : "animate-pulse"
                           }`} />
                         {/* Main central core */}
-                        <span className={`relative inline-flex rounded-full h-4.5 w-4.5 items-center justify-center shadow-lg border-2 border-white transition-all duration-300 ${isHighlighted ? "bg-emerald-600 text-white scale-125" : "bg-white text-emerald-600 border border-emerald-200"
+                        <span className={`relative inline-flex rounded-full h-4.5 w-4.5 items-center justify-center shadow-lg border-2 border-white transition-all duration-300 ${isHighlighted ? "bg-emerald-600 text-white scale-125" : "bg-white text-primary border border-emerald-200"
                           }`}>
                           <span className="text-[9px] font-black leading-none">{feat.id + 1}</span>
                         </span>
@@ -316,7 +316,7 @@ export default function LynkSureShowcase() {
           {activeTab === "guarantee" && (
             <div className="flex flex-col gap-10">
               <div className="text-center max-w-5xl mx-auto">
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">
+                <span className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-widest block mb-1">
                   Complete peace-of-mind backing
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">
@@ -332,11 +332,11 @@ export default function LynkSureShowcase() {
                 {/* Card 1: Zero Repair Cost */}
                 <div className="group relative bg-white border border-slate-200/60 hover:border-emerald-500/80 rounded-2xl p-6.5 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl hover:shadow-emerald-100/20 text-left shadow-sm">
                   <div>
-                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-primary flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                       <Wrench size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">₹0</span>
+                      <span className="text-3xl font-black text-primary">₹0</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Repair Cost</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -356,11 +356,11 @@ export default function LynkSureShowcase() {
                 {/* Card 2: Guaranteed Generation */}
                 <div className="group relative bg-white border border-slate-200/60 hover:border-emerald-500/80 rounded-2xl p-6.5 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl hover:shadow-emerald-100/20 text-left shadow-sm">
                   <div>
-                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-primary flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                       <Zap size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">₹8</span>
+                      <span className="text-3xl font-black text-primary">₹8</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">per unit short</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -380,11 +380,11 @@ export default function LynkSureShowcase() {
                 {/* Card 3: After Sales Service */}
                 <div className="group relative bg-white border border-slate-200/60 hover:border-emerald-500/80 rounded-2xl p-6.5 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl hover:shadow-emerald-100/20 text-left shadow-sm">
                   <div>
-                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-primary flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                       <Headphones size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">5 yrs+</span>
+                      <span className="text-3xl font-black text-primary">5 yrs+</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dedicated Care</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -404,11 +404,11 @@ export default function LynkSureShowcase() {
                 {/* Card 4: 5 Year Commitment */}
                 <div className="group relative bg-white border border-slate-200/60 hover:border-emerald-500/80 rounded-2xl p-6.5 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl hover:shadow-emerald-100/20 text-left shadow-sm">
                   <div>
-                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 text-primary flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                       <Calendar size={20} />
                     </div>
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-3xl font-black text-emerald-600">30 yrs</span>
+                      <span className="text-3xl font-black text-primary">30 yrs</span>
                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Commitment</span>
                     </div>
                     <h4 className="text-base font-extrabold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -433,7 +433,7 @@ export default function LynkSureShowcase() {
           {activeTab === "finance" && (
             <div className="flex flex-col gap-10">
               <div className="text-center max-w-3xl mx-auto mb-2">
-                <span className="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">
+                <span className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-widest block mb-1">
                   Built to Outlast. Engineered to Perform
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">
@@ -449,11 +449,11 @@ export default function LynkSureShowcase() {
                 {/* Subsidy Process Card */}
                 <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg">
                   <div className="flex items-center gap-3.5 mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60 shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center border border-emerald-100/60 shadow-sm">
                       <FileText size={22} />
                     </div>
                     <div>
-                      <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest block">
+                      <span className="text-[10px] text-primary font-bold uppercase tracking-widest block">
                         Hassle-Free Approval
                       </span>
                       <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900">
@@ -471,7 +471,7 @@ export default function LynkSureShowcase() {
                         1
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Portal Registration</h4>
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-primary transition-colors">Portal Registration</h4>
                         <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
                           We register your roof layout and customer metrics on the PM Surya Ghar National Portal.
                         </p>
@@ -484,7 +484,7 @@ export default function LynkSureShowcase() {
                         2
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">DISCOM Liaisoning</h4>
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-primary transition-colors">DISCOM Liaisoning</h4>
                         <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
                           We file feasibility reports with grid operators and obtain administrative approvals. No follow-ups needed on your end.
                         </p>
@@ -497,7 +497,7 @@ export default function LynkSureShowcase() {
                         3
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Net-Metering Sync</h4>
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-primary transition-colors">Net-Metering Sync</h4>
                         <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
                           Following physical installation, we synchronize bidirectional net-meter setups to start tracking power return.
                         </p>
@@ -510,7 +510,7 @@ export default function LynkSureShowcase() {
                         4
                       </div>
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-emerald-600 transition-colors">Direct Subsidy Credit</h4>
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-primary transition-colors">Direct Subsidy Credit</h4>
                         <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
                           Under PM Surya Ghar Muft Bijli Yojana, up to ₹1,08,000 subsidy is deposited directly into your bank account.
                         </p>
@@ -524,11 +524,11 @@ export default function LynkSureShowcase() {
                 <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 text-left shadow-lg flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-3.5 mb-8">
-                      <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60 shadow-sm">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center border border-emerald-100/60 shadow-sm">
                         <Building2 size={22} />
                       </div>
                       <div>
-                        <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest block">
+                        <span className="text-[10px] text-primary font-bold uppercase tracking-widest block">
                           Official Bank Financing
                         </span>
                         <h3 className="font-extrabold text-xl sm:text-2xl text-slate-900">
@@ -541,11 +541,11 @@ export default function LynkSureShowcase() {
                     <div className="flex flex-col gap-6">
 
                       <div className="flex gap-4 group">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-primary flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                           <TrendingUp size={16} />
                         </div>
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-primary">
                             Low Interest Rates
                           </h4>
                           <p className="text-xs sm:text-sm text-slate-600 leading-normal">
@@ -555,11 +555,11 @@ export default function LynkSureShowcase() {
                       </div>
 
                       <div className="flex gap-4 group">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-primary flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                           <Shield size={16} />
                         </div>
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-primary">
                             Collateral-Free Option
                           </h4>
                           <p className="text-xs sm:text-sm text-slate-600 leading-normal">
@@ -569,11 +569,11 @@ export default function LynkSureShowcase() {
                       </div>
 
                       <div className="flex gap-4 group">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-primary flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                           <Coins size={16} />
                         </div>
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-primary">
                             Self-Paying EMI Scheme
                           </h4>
                           <p className="text-xs sm:text-sm text-slate-600 leading-normal">
@@ -583,11 +583,11 @@ export default function LynkSureShowcase() {
                       </div>
 
                       <div className="flex gap-4 group">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-50 text-primary flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
                           <CheckCircle2 size={16} />
                         </div>
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-emerald-600">
+                          <h4 className="text-sm sm:text-base font-bold text-slate-900 mb-1 transition-colors group-hover:text-primary">
                             Fast &amp; Simple Sanctions
                           </h4>
                           <p className="text-xs sm:text-sm text-slate-600 leading-normal">

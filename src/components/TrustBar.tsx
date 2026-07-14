@@ -9,7 +9,7 @@ export default function TrustBar() {
       title: "Zero Upfront Payment",
       subtitle: "Easy EMI Available",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-primary shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <Wallet className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -18,7 +18,7 @@ export default function TrustBar() {
       title: "Govt. Subsidy Support",
       subtitle: "Up to ₹1,08,000",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-primary shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <BadgeCheck className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -27,7 +27,7 @@ export default function TrustBar() {
       title: "Hassle-Free Installation",
       subtitle: "In Just 8 Hours",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-primary shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <Wrench className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -36,7 +36,7 @@ export default function TrustBar() {
       title: "Lifetime Support",
       subtitle: "We're With You Always",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-primary shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <HeartHandshake className="w-6 h-6 stroke-[2]" />
         </div>
       )

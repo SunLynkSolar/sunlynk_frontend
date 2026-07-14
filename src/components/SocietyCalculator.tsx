@@ -236,7 +236,7 @@ export default function SocietyCalculator() {
                       <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider flex items-center gap-1">
                         <span>Flat-wise Relief/Mo.</span>
                         <span title="Estimated reduction in maintenance bill per flat, assuming collective sharing" className="cursor-pointer flex items-center">
-                          <HelpCircle size={10} className="text-emerald-600" />
+                          <HelpCircle size={10} className="text-primary" />
                         </span>
                       </p>
                       <p className="text-lg sm:text-xl font-black text-indigo-700">

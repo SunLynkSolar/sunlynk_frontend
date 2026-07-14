@@ -208,25 +208,25 @@ export default function About() {
             {/* Green Accent Checklist */}
             <div className="bg-emerald-50/50 border border-emerald-500/10 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
+                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-primary">
                   <Check size={12} className="stroke-[3]" />
                 </span>
                 <span className="text-sm font-semibold text-emerald-800">Sustainability Impact</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
+                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-primary">
                   <Check size={12} className="stroke-[3]" />
                 </span>
                 <span className="text-sm font-semibold text-emerald-800">Trusted Projects</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
+                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-primary">
                   <Check size={12} className="stroke-[3]" />
                 </span>
                 <span className="text-sm font-semibold text-emerald-800">Affordable & Reliable</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600">
+                <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-primary">
                   <Check size={12} className="stroke-[3]" />
                 </span>
                 <span className="text-sm font-semibold text-emerald-800">Expert Team Members</span>
