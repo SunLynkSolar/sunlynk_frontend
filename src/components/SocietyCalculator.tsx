@@ -220,23 +220,23 @@ export default function SocietyCalculator() {
                   Society Savings Breakdown
                 </h3>
 
-                <div className="bg-[#f6fbe8]/45 border border-[#ebf5d2]/50 rounded-2xl p-6 relative overflow-hidden text-left">
+                <div className="bg-emerald-50/45 border border-emerald-100/50 rounded-2xl p-6 relative overflow-hidden text-left">
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 relative z-10">
 
                     {/* Monthly */}
                     <div className="flex flex-col gap-1">
-                      <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider">Monthly Savings</p>
-                      <p className="text-lg sm:text-xl font-black text-[#568f1f]">
+                      <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider">Monthly Savings</p>
+                      <p className="text-lg sm:text-xl font-black text-emerald-700">
                         {formatRupee(monthlySavings)}
                       </p>
                     </div>
 
                     {/* Resident Flat Relief */}
-                    <div className="flex flex-col gap-1 border-none lg:border-l border-[#ebf5d2] lg:pl-4 sm:pl-0">
-                      <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider flex items-center gap-1">
+                    <div className="flex flex-col gap-1 border-none lg:border-l border-emerald-100 lg:pl-4 sm:pl-0">
+                      <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider flex items-center gap-1">
                         <span>Flat-wise Relief/Mo.</span>
                         <span title="Estimated reduction in maintenance bill per flat, assuming collective sharing" className="cursor-pointer flex items-center">
-                          <HelpCircle size={10} className="text-[#568f1f]" />
+                          <HelpCircle size={10} className="text-emerald-600" />
                         </span>
                       </p>
                       <p className="text-lg sm:text-xl font-black text-indigo-700">
@@ -245,9 +245,9 @@ export default function SocietyCalculator() {
                     </div>
 
                     {/* Lifetime Collective */}
-                    <div className="flex flex-col gap-1 border-none lg:border-l border-[#ebf5d2] lg:pl-4 sm:pl-0">
-                      <p className="text-[10px] font-bold text-[#416c17]/80 uppercase tracking-wider">25-Yr Total Savings</p>
-                      <p className="text-lg sm:text-xl font-black text-[#568f1f]">
+                    <div className="flex flex-col gap-1 border-none lg:border-l border-emerald-100 lg:pl-4 sm:pl-0">
+                      <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider">25-Yr Total Savings</p>
+                      <p className="text-lg sm:text-xl font-black text-emerald-700">
                         {formatRupee(lifetimeSavings)}
                       </p>
                     </div>
@@ -255,7 +255,7 @@ export default function SocietyCalculator() {
                   </div>
 
                   {/* Banner bottom inside savings */}
-                  <div className="mt-6 pt-4 border-t border-[#ebf5d2]/80 flex items-center gap-2 text-xs text-[#416c17] font-bold">
+                  <div className="mt-6 pt-4 border-t border-emerald-100/80 flex items-center gap-2 text-xs text-emerald-800 font-bold">
                     <ShieldCheck size={16} className="text-primary shrink-0" />
                     <span>Reduces community carbon footprint while cutting maintenance overhead.</span>
                   </div>

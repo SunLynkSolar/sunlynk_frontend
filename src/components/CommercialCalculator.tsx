@@ -123,7 +123,7 @@ export default function CommercialCalculator() {
                 {isPincodeFilled && (
                   <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
                     {isLucknow ? (
-                      <span className="bg-emerald-50 text-primary text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
+                      <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold py-1 px-2 rounded-full border border-emerald-200">
                         Lucknow
                       </span>
                     ) : (
@@ -240,7 +240,7 @@ export default function CommercialCalculator() {
                       <p className="text-[10px] font-bold text-emerald-800/80 uppercase tracking-wider flex items-center gap-1">
                         <span>1st Yr AD Tax Benefit</span>
                         <span title="40% Accelerated Depreciation tax write-off in Year 1" className="cursor-pointer flex items-center">
-                          <HelpCircle size={10} className="text-primary" />
+                          <HelpCircle size={10} className="text-emerald-600" />
                         </span>
                       </p>
                       <p className="text-lg sm:text-xl font-black text-indigo-700">

@@ -56,7 +56,7 @@ const reviews: Review[] = [
     time: "1 month ago • Verified Owner",
     text: "The entire process was smooth and transparent. The SunLynk Solar team guided me from site inspection to subsidy documentation and installation and even Meter installation was done very timely, proactively. I am happy with my 3KW Plant installation.",
     avatarBg: "bg-emerald-100 dark:bg-emerald-950/40",
-    avatarText: "text-primary dark:text-emerald-400",
+    avatarText: "text-emerald-600 dark:text-emerald-400",
     media: [
       { type: "video", url: "/review/franky/VIDEO-2026-06-19-18-54-36.mp4" },
       { type: "image", url: "/review/franky/WhatsApp Image 2026-06-20 at 09.09.33.jpeg" },

@@ -255,8 +255,8 @@ export default async function SolutionDetailPage({ params }: PageProps) {
       {/* Dynamic Bottom CTA Banner */}
       <section className="bg-dark text-white py-20 relative overflow-hidden">
         {/* Soft decorative background circles */}
-        <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#6CB327]/10 to-[#38bdf8]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-gradient-to-br from-[#6CB327]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-[#2ecc71]/10 to-[#38bdf8]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-gradient-to-br from-[#2ecc71]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-4xl mx-auto text-center px-4 relative z-10 flex flex-col items-center gap-6">
           <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full">

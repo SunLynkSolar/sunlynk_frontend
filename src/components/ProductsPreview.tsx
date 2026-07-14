@@ -127,18 +127,18 @@ export default function ProductsPreview() {
                 <svg viewBox="0 0 200 200" className="w-44 h-44 mx-auto">
                   {/* Outer ring */}
                   <circle cx="100" cy="100" r="85" fill="none" stroke="#fca311" strokeWidth="2" strokeDasharray="4,4" />
-                  <circle cx="100" cy="100" r="80" fill="none" stroke="#6CB327" strokeWidth="1.5" />
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="#2ecc71" strokeWidth="1.5" />
 
                   {/* Inner background */}
                   <circle cx="100" cy="100" r="70" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" />
 
                   {/* Text labels inside stamp */}
                   <text x="100" y="65" textAnchor="middle" fontSize="10" fontWeight="950" fill="#1c1c1c" letterSpacing="1">5 YEAR</text>
-                  <text x="100" y="80" textAnchor="middle" fontSize="12" fontWeight="950" fill="#6CB327" letterSpacing="0.5">WARRANTY</text>
+                  <text x="100" y="80" textAnchor="middle" fontSize="12" fontWeight="950" fill="#2ecc71" letterSpacing="0.5">WARRANTY</text>
 
                   {/* Inner Shield */}
                   <g transform="translate(85, 93) scale(1.25)">
-                    <path d="M 12 22 C 12 22 20 18 20 12 L 20 5 L 12 2 L 4 5 L 4 12 C 4 18 12 22 12 22 Z" fill="#6CB327" />
+                    <path d="M 12 22 C 12 22 20 18 20 12 L 20 5 L 12 2 L 4 5 L 4 12 C 4 18 12 22 12 22 Z" fill="#2ecc71" />
                     <path d="M 9 12 L 11 14 L 15 10" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </g>
 

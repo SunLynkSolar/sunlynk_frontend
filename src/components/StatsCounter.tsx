@@ -134,7 +134,7 @@ export default function StatsCounter() {
         </div>
 
         {/* Bottom Banner */}
-        <div className="bg-gradient-to-r from-slate-50 to-[#f6fbe8]/20 border border-gray-300 rounded-xl p-6 md:p-8 flex flex-col lg:flex-row justify-between items-center gap-6 mt-10 w-full shadow-sm hover:shadow-md transition-all duration-300">
+        <div className="bg-gradient-to-r from-slate-50 to-emerald-50/20 border border-gray-300 rounded-xl p-6 md:p-8 flex flex-col lg:flex-row justify-between items-center gap-6 mt-10 w-full shadow-sm hover:shadow-md transition-all duration-300">
           <div className="flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-4 text-center sm:text-left">
             <div className="relative w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0 shadow-sm border border-primary/10">
               {/* <div className="absolute inset-0 bg-primary/20 rounded-2xl animate-ping scale-75 opacity-75" /> */}

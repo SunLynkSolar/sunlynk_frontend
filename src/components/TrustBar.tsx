@@ -9,7 +9,7 @@ export default function TrustBar() {
       title: "Zero Upfront Payment",
       subtitle: "Easy EMI Available",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-[#f6fbe8] border border-[#ebf5d2]/80 flex items-center justify-center text-[#6CB327] shrink-0 shadow-sm hover:scale-105 hover:bg-[#ebf5d2]/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <Wallet className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -18,7 +18,7 @@ export default function TrustBar() {
       title: "Govt. Subsidy Support",
       subtitle: "Up to ₹1,08,000",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-[#f6fbe8] border border-[#ebf5d2]/80 flex items-center justify-center text-[#6CB327] shrink-0 shadow-sm hover:scale-105 hover:bg-[#ebf5d2]/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <BadgeCheck className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -27,7 +27,7 @@ export default function TrustBar() {
       title: "Hassle-Free Installation",
       subtitle: "In Just 8 Hours",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-[#f6fbe8] border border-[#ebf5d2]/80 flex items-center justify-center text-[#6CB327] shrink-0 shadow-sm hover:scale-105 hover:bg-[#ebf5d2]/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <Wrench className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -36,7 +36,7 @@ export default function TrustBar() {
       title: "Lifetime Support",
       subtitle: "We're With You Always",
       icon: (
-        <div className="w-12 h-12 rounded-2xl bg-[#f6fbe8] border border-[#ebf5d2]/80 flex items-center justify-center text-[#6CB327] shrink-0 shadow-sm hover:scale-105 hover:bg-[#ebf5d2]/50 transition-all duration-300">
+        <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100/80 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm hover:scale-105 hover:bg-emerald-100/50 transition-all duration-300">
           <HeartHandshake className="w-6 h-6 stroke-[2]" />
         </div>
       )
@@ -46,8 +46,8 @@ export default function TrustBar() {
   return (
     <section className="py-6 bg-white w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8 rounded-sm">
-        <div className="bg-[#f5faeb]/80 border border-[#ebf5d2]/50 rounded-sm shadow-[0_4px_20px_rgba(108,179,39,0.03)] py-5 px-6 md:px-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y sm:divide-y-0 md:divide-x divide-[#ebf5d2]/60 items-center">
+        <div className="bg-[#f4faf6]/80 border border-emerald-100/50 rounded-sm shadow-[0_4px_20px_rgba(46,204,113,0.03)] py-5 px-6 md:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y sm:divide-y-0 md:divide-x divide-emerald-100/60 items-center">
             {pillars.map((pillar, idx) => (
               <div
                 key={idx}

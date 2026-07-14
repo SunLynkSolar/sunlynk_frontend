@@ -185,7 +185,7 @@ export default function HousingSocietiesPage() {
 
               {/* Star badge */}
               <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-full py-1.5 px-3.5 self-start text-[11px] sm:text-xs font-bold text-slate-600 shadow-sm">
-                <span className="text-primary text-sm leading-none">🏢</span>
+                <span className="text-emerald-600 text-sm leading-none">🏢</span>
                 <span>Green Community Living</span>
                 <span className="hidden sm:inline text-slate-300">|</span>
                 <span className="hidden sm:inline">RWA Support Assured</span>
@@ -284,7 +284,7 @@ export default function HousingSocietiesPage() {
                 key={idx}
                 className="bg-white/95 border border-slate-200/60 rounded-2xl p-6 hover:border-emerald-500/35 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex gap-4 text-left group backdrop-blur-sm"
               >
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-primary border border-emerald-100/40 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100/40 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
                   {item.icon}
                 </div>
                 <div>
@@ -470,11 +470,11 @@ export default function HousingSocietiesPage() {
               <span className="font-extrabold text-sm text-slate-800 block">RWA Technical Consultation</span>
               <div className="flex flex-col gap-2">
                 <a href="tel:+918573003001" className="flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-emerald-700 transition-colors">
-                  <Phone size={14} className="text-primary" />
+                  <Phone size={14} className="text-emerald-600" />
                   <span>+91 8573003001</span>
                 </a>
                 <a href="mailto:info@sunlynksolar.com" className="flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-emerald-700 transition-colors">
-                  <Mail size={14} className="text-primary" />
+                  <Mail size={14} className="text-emerald-600" />
                   <span>info@sunlynksolar.com</span>
                 </a>
               </div>

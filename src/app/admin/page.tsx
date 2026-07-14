@@ -2375,7 +2375,7 @@ export default function AdminDashboard() {
                                 <div className="flex sm:flex-col gap-2 items-start sm:items-end shrink-0">
                                   <button onClick={() => handleToggleJob(job._id)} disabled={actionLoading}
                                     className="flex items-center gap-1.5 text-xs font-bold py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">
-                                    {job.isActive ? <ToggleRight size={13} className="text-primary" /> : <ToggleLeft size={13} />}
+                                    {job.isActive ? <ToggleRight size={13} className="text-emerald-600" /> : <ToggleLeft size={13} />}
                                     {job.isActive ? "Deactivate" : "Activate"}
                                   </button>
                                   <button onClick={() => fetchApplicationsForJob(job)}
@@ -2610,8 +2610,8 @@ export default function AdminDashboard() {
                           type="button"
                           onClick={() => setAnalyticsPeriod(period)}
                           className={`py-1.5 px-3 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer ${analyticsPeriod === period
-                            ? "bg-primary text-white shadow-sm"
-                            : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                              ? "bg-primary text-white shadow-sm"
+                              : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                             }`}
                         >
                           {period === "daily" ? "Daily (30d)" : period === "monthly" ? "Monthly (12m)" : "Yearly"}
@@ -2919,10 +2919,10 @@ export default function AdminDashboard() {
                                     <td className="py-3 px-4">
                                       <span
                                         className={`px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wide uppercase ${log.eventType === "pageview"
-                                          ? "bg-blue-50 text-blue-700 border border-blue-200/50"
-                                          : log.eventType === "click"
-                                            ? "bg-green-50 text-green-700 border border-green-200/50"
-                                            : "bg-purple-50 text-purple-700 border border-purple-200/50"
+                                            ? "bg-blue-50 text-blue-700 border border-blue-200/50"
+                                            : log.eventType === "click"
+                                              ? "bg-green-50 text-green-700 border border-green-200/50"
+                                              : "bg-purple-50 text-purple-700 border border-purple-200/50"
                                           }`}
                                       >
                                         {log.eventType}

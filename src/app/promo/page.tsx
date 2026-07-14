@@ -665,7 +665,7 @@ export default function PromoLandingPage() {
           <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center gap-3">
             <div className="inline-flex items-center gap-2">
               <span className="h-[2px] w-6 bg-emerald-600"></span>
-              <span className="text-base uppercase tracking-wider font-bold text-primary">Comparison</span>
+              <span className="text-base uppercase tracking-wider font-bold text-emerald-600">Comparison</span>
               <span className="h-[2px] w-6 bg-emerald-600"></span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-tight">
@@ -747,11 +747,11 @@ export default function PromoLandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left: Info */}
             <div className="lg:col-span-5 flex flex-col gap-5">
-              <span className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-widest block mb-1">
+              <span className="text-[10px] sm:text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">
                 Structure Quality Claim
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">
-                Engineered with <span className="text-primary">LynkShield</span> Structural Safety
+                Engineered with <span className="text-emerald-600">LynkShield</span> Structural Safety
               </h2>
               <p className="text-sm text-slate-500 leading-relaxed">
                 Rooftops are subjected to intense weather patterns, heavy monsoons, and extreme storm winds. Our proprietary LynkShield layout ensures that structural safety is prioritized.
@@ -765,7 +765,7 @@ export default function PromoLandingPage() {
                       key={feat.id}
                       className="group flex gap-4 p-4 border border-slate-100 hover:border-emerald-500 bg-slate-50/50 rounded-xl transition-all duration-300"
                     >
-                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-primary flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
                         <FeatIcon size={18} />
                       </div>
                       <div>
@@ -801,7 +801,7 @@ export default function PromoLandingPage() {
                     }}
                   >
                     <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 animate-ping" />
-                    <span className="relative inline-flex rounded-full h-5 w-5 items-center justify-center bg-white text-primary font-extrabold text-xs shadow-md border border-emerald-250">
+                    <span className="relative inline-flex rounded-full h-5 w-5 items-center justify-center bg-white text-emerald-600 font-extrabold text-xs shadow-md border border-emerald-250">
                       {feat.id + 1}
                     </span>
                   </div>

@@ -32,10 +32,10 @@ const DATA = {
     foot: "Net-metered core",
     pill: "Payback mode",
     tags: ["Net metering", "DISCOM approved", "Zero battery cost"],
-    accent: "#6CB327",
-    accentHover: "#568F1F",
-    accentLight: "#f6fbe8",
-    accentText: "#47761a",
+    accent: "#2ecc71",
+    accentHover: "#25a55a",
+    accentLight: "#e6faf1",
+    accentText: "#0d6e35",
     metrics: [
       { icon: Coins, label: "Payback period", value: "3.5 – 4 yrs", detail: "Fastest capital recovery" },
       { icon: Zap, label: "Bill savings", value: "Up to 90%", detail: "Common area cost offset" },
@@ -141,7 +141,7 @@ function MatrixCell({ cell, isOnGrid }: MatrixCellProps) {
   return (
     <span className="flex items-start gap-2">
       {cell.icon === "check" ? (
-        <Check size={14} className="mt-0.5 shrink-0 text-[#6CB327]" />
+        <Check size={14} className="mt-0.5 shrink-0 text-[#2ecc71]" />
       ) : (
         <X size={14} className="mt-0.5 shrink-0 text-red-400" />
       )}
@@ -171,7 +171,7 @@ export default function SocietySolutionsSelector() {
               key={t}
               onClick={() => setTab(t)}
               className={`flex-1 flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 ${active
-                ? "bg-[#33560f] text-white shadow-sm"
+                ? "bg-[#065F46] text-white shadow-sm"
                 : "text-zinc-500 hover:text-zinc-800"
                 }`}
             >
@@ -194,7 +194,7 @@ export default function SocietySolutionsSelector() {
 
       {/* ── Hero Band ── */}
       <div className="rounded-2xl overflow-hidden border border-zinc-200 mb-6">
-        <div className="bg-[#33560f] p-7 flex gap-6 items-stretch">
+        <div className="bg-[#065F46] p-7 flex gap-6 items-stretch">
 
           {/* Left */}
           <div className="flex-1 flex flex-col justify-between gap-5">
@@ -373,7 +373,7 @@ export default function SocietySolutionsSelector() {
         <div className="mb-5">
           <span
             className="inline-block text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2"
-            style={{ background: "#f6fbe8", color: "#47761a" }}
+            style={{ background: "#e6faf1", color: "#0d6e35" }}
           >
             Decision framework
           </span>
@@ -392,7 +392,7 @@ export default function SocietySolutionsSelector() {
                 <th className="w-[22%] px-5 py-3.5 text-[10px] font-bold uppercase tracking-wider text-zinc-500">
                   Parameter
                 </th>
-                <th className="w-[39%] px-5 py-3.5 text-[10px] font-bold uppercase tracking-wider text-[#6CB327]">
+                <th className="w-[39%] px-5 py-3.5 text-[10px] font-bold uppercase tracking-wider text-[#2ecc71]">
                   On-grid layout
                 </th>
                 <th className="w-[39%] px-5 py-3.5 text-[10px] font-bold uppercase tracking-wider text-[#fca311]">
@@ -404,18 +404,18 @@ export default function SocietySolutionsSelector() {
               {MATRIX.map((row, i) => (
                 <tr
                   key={i}
-                  className={`border-t border-zinc-100 transition-colors hover:bg-zinc-50 ${row.highlight ? "bg-[#f3fbe3]" : ""
+                  className={`border-t border-zinc-100 transition-colors hover:bg-zinc-50 ${row.highlight ? "bg-[#f0fdf6]" : ""
                     }`}
                 >
                   <td
-                    className={`px-5 py-3.5 text-[12px] font-semibold align-top ${row.highlight ? "text-[#47761a]" : "text-zinc-800"
+                    className={`px-5 py-3.5 text-[12px] font-semibold align-top ${row.highlight ? "text-[#0d6e35]" : "text-zinc-800"
                       }`}
                   >
                     {row.param}
                   </td>
                   <td
                     className={`px-5 py-3.5 text-[12px] align-top leading-relaxed ${row.highlight
-                      ? "text-[#47761a] font-semibold"
+                      ? "text-[#0d6e35] font-semibold"
                       : "text-zinc-500"
                       }`}
                   >

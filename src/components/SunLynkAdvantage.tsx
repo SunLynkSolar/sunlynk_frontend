@@ -419,7 +419,7 @@ export default function SunLynkAdvantage() {
             {/* Header row */}
             <div className="grid grid-cols-12 bg-slate-50 border-b border-slate-200/80 text-slate-800 font-extrabold text-xs uppercase tracking-wider items-center">
               <div className="col-span-4 p-6">Comparison Parameter</div>
-              <div className="col-span-4 p-6  bg-[#6CB327] text-white text-center rounded-t-3xl relative">
+              <div className="col-span-4 p-6  bg-[#065F46] text-white text-center rounded-t-3xl relative">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none" />
                 SunLynk Solar Advantage
               </div>
@@ -446,7 +446,7 @@ export default function SunLynkAdvantage() {
 
                     {/* SunLynk Advantage */}
                     <div className="col-span-4 p-6 bg-primary/5 border-x border-primary/10 flex flex-col justify-center relative group-hover:bg-primary/10 transition-all duration-300">
-                      <div className="absolute left-0 inset-y-0 w-[3px] bg-[#6CB327]" />
+                      <div className="absolute left-0 inset-y-0 w-[3px] bg-[#065F46]" />
 
                       <div className="flex items-start gap-4">
                         <div className="w-10 h-10 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-center shrink-0">
@@ -611,7 +611,7 @@ export default function SunLynkAdvantage() {
             <div className="shrink-0 w-full lg:w-auto">
               <Link
                 href="/contact"
-                className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-[#33560f] font-extrabold px-8 py-4.5 rounded-xl shadow-lg transition-all duration-300 group text-sm tracking-wide shrink-0"
+                className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-[#065F46] font-extrabold px-8 py-4.5 rounded-xl shadow-lg transition-all duration-300 group text-sm tracking-wide shrink-0"
               >
                 <span>Connect With Our Solar Expert</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
