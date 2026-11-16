@@ -268,6 +268,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/solar-glossary" className="hover:text-primary transition-colors flex items-center gap-1">
+                  <span>•</span> Solar Glossary
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="hover:text-primary transition-colors flex items-center gap-1">
                   <span>•</span> About Us
                 </Link>

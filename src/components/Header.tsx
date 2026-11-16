@@ -145,6 +145,9 @@ export default function Header() {
                 <Link href="/faqs" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-medium">
                   FAQs
                 </Link>
+                <Link href="/solar-glossary" className="block px-4 py-2 hover:bg-gray-1000 text-sm text-gray-700 hover:text-primary font-medium">
+                  Solar Glossary
+                </Link>
               </div>
             </div>
 
@@ -242,6 +245,7 @@ export default function Header() {
                     <Link href="/support/warranty" className="py-1">Warranty Claims</Link>
                     <Link href="/blog" className="py-1 border-t border-gray-50 pt-2 mt-1">Blog</Link>
                     <Link href="/faqs" className="py-1">FAQs</Link>
+                    <Link href="/solar-glossary" className="py-1">Solar Glossary</Link>
                   </div>
                 )}
               </div>

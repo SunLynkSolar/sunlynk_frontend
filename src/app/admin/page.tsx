@@ -35,7 +35,9 @@ import {
   ToggleLeft,
   ToggleRight,
   ExternalLink,
+  BookOpen,
 } from "lucide-react";
+import GlossaryManager from "@/components/admin/GlossaryManager";
 import {
   parseMarkdownToBlocks,
   parseBlocksToMarkdown,
@@ -178,7 +180,7 @@ export default function AdminDashboard() {
   });
 
   const [careersSubTab, setCareersSubTab] = useState<"jobs" | "applications">("jobs");
-  const [blogsSubTab, setBlogsSubTab] = useState<"articles" | "editor" | "categories" | "tags">("articles");
+  const [blogsSubTab, setBlogsSubTab] = useState<"articles" | "editor" | "categories" | "tags" | "glossary">("articles");
 
   const [categories, setCategories] = useState<{ _id: string; name: string; slug: string }[]>([]);
   const [tags, setTags] = useState<{ _id: string; name: string; slug: string }[]>([]);
@@ -1005,13 +1007,28 @@ export default function AdminDashboard() {
             </button>
           )}
           {(role === "superadmin" || role === "co_admin" || role === "content_editor") && (
-            <button
-              onClick={() => setActiveTab("blogs")}
-              className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "blogs" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
-            >
-              <FileText size={16} />
-              <span className="whitespace-nowrap">Blog Articles</span>
-            </button>
+            <>
+              <button
+                onClick={() => {
+                  setActiveTab("blogs");
+                  if (blogsSubTab === "glossary") setBlogsSubTab("articles");
+                }}
+                className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "blogs" && blogsSubTab !== "glossary" ? "bg-primary text-white shadow-md shadow-primary/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
+              >
+                <FileText size={16} />
+                <span className="whitespace-nowrap">Blog Articles</span>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("blogs");
+                  setBlogsSubTab("glossary");
+                }}
+                className={`flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2.5 py-3 px-4 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === "blogs" && blogsSubTab === "glossary" ? "bg-amber-600 text-white shadow-md shadow-amber-600/10" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
+              >
+                <BookOpen size={16} />
+                <span className="whitespace-nowrap">Solar Glossary</span>
+              </button>
+            </>
           )}
           {(role === "superadmin" || role === "co_admin") && (
             <button
@@ -1310,12 +1327,13 @@ export default function AdminDashboard() {
                 <div className="flex-1 flex flex-col gap-6">
 
                   {/* Blogs Sub-tabs */}
-                  <div className="flex border-b border-slate-200 mb-6 shrink-0 bg-white p-2 rounded-2xl shadow-sm gap-2">
+                  <div className="flex border-b border-slate-200 mb-6 shrink-0 bg-white p-2 rounded-2xl shadow-sm gap-2 flex-wrap">
                     {([
                       { id: "articles", label: "Published Articles", icon: Newspaper },
                       { id: "editor", label: editingBlogId ? "Edit Article" : "Write Article", icon: PenLine },
                       { id: "categories", label: "Categories", icon: List },
                       { id: "tags", label: "Tags", icon: Hash },
+                      { id: "glossary", label: "Solar Glossary", icon: BookOpen },
                     ] as const).map((tab) => {
                       const Icon = tab.icon;
                       return (
@@ -1753,13 +1771,45 @@ export default function AdminDashboard() {
                                           )}
                                           {block.type === "paragraph" && (
                                             selectedBlockIdx === idx ? (
-                                              <textarea
-                                                rows={4}
-                                                value={(block as ParagraphBlock).text}
-                                                onChange={(e) => updateBlock(idx, { text: e.target.value })}
-                                                placeholder="Write your paragraph..."
-                                                className="w-full bg-slate-550 border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary resize-y leading-relaxed"
-                                              />
+                                              <div className="flex flex-col gap-1.5">
+                                                <div className="flex items-center gap-2 text-[10px]">
+                                                  <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      const url = prompt("Enter hyperlink URL (e.g. /solutions/on-grid-solar or https://...):", "https://");
+                                                      const text = prompt("Enter link text:", "link text");
+                                                      if (url && text) {
+                                                        updateBlock(idx, { text: (block as ParagraphBlock).text + ` [${text}](${url})` });
+                                                      }
+                                                    }}
+                                                    className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-2 py-0.5 rounded cursor-pointer transition-colors"
+                                                  >
+                                                    + Insert Hyperlink
+                                                  </button>
+                                                  <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      const term = prompt("Enter glossary term name or ID (e.g. On-Grid Solar or on-grid-solar):");
+                                                      if (term) {
+                                                        const cleanSlug = term.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
+                                                        updateBlock(idx, { text: (block as ParagraphBlock).text + ` [${term}](/solar-glossary#${cleanSlug})` });
+                                                      }
+                                                    }}
+                                                    className="bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-2 py-0.5 rounded cursor-pointer transition-colors"
+                                                  >
+                                                    + Link Glossary Term
+                                                  </button>
+                                                </div>
+                                                <textarea
+                                                  rows={4}
+                                                  value={(block as ParagraphBlock).text}
+                                                  onChange={(e) => updateBlock(idx, { text: e.target.value })}
+                                                  placeholder="Write your paragraph..."
+                                                  className="w-full bg-slate-550 border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-700 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary resize-y leading-relaxed"
+                                                />
+                                              </div>
                                             ) : (
                                               <p className="text-sm text-slate-650 leading-relaxed line-clamp-3">{(block as ParagraphBlock).text || <span className="text-slate-300">Paragraph text...</span>}</p>
                                             )
@@ -2168,6 +2218,11 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     </div>
+                  )}
+
+                  {/* SUB-TAB: Solar Glossary */}
+                  {blogsSubTab === "glossary" && (
+                    <GlossaryManager token={token} role={role} blogs={blogs} />
                   )}
 
                 </div>
