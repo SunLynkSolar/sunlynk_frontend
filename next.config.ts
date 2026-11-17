@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  experimental: {
+    turbopackPluginRuntimeStrategy: "workerThreads",
+  },
 };
 
 export default nextConfig;
