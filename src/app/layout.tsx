@@ -245,6 +245,8 @@ export default function RootLayout({
           }}
         />
 
+        <script async src="https://news.google.com/swg/js/v1/publisher.js"></script> <div google-add-preferred-source-btn></div>
+
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
